@@ -1,0 +1,38 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source "../**/*.blade.php";
+@source "../**/*.js";
+@source "../**/*.vue";
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-display: 'Instrument Serif', ui-serif, Georgia, serif;
+
+    --color-brand-50: #fdf8ec;
+    --color-brand-100: #f9eccb;
+    --color-brand-200: #f2d793;
+    --color-brand-300: #eabc5a;
+    --color-brand-400: #e3a532;
+    --color-brand-500: #d48a1e;
+    --color-brand-600: #b86a17;
+    --color-brand-700: #934d16;
+    --color-brand-800: #783e19;
+    --color-brand-900: #663519;
+    --color-brand-950: #3b1b0b;
+
+    --color-ink-50: #f6f6f4;
+    --color-ink-100: #e7e6e2;
+    --color-ink-200: #d1cfc8;
+    --color-ink-300: #b3b0a6;
+    --color-ink-400: #8e8b80;
+    --color-ink-500: #736f65;
+    --color-ink-600: #5a574f;
+    --color-ink-700: #494741;
+    --color-ink-800: #3f3d38;
+    --color-ink-900: #373531;
+    --color-ink-950: #1f1e1b;
+}
