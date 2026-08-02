@@ -1,7 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
+use App\Models\GalleryCategory;
+use App\Models\Mission;
+use App\Models\NewsCategory;
+use App\Models\OrganizationalStructure;
+use App\Models\Role;
+use App\Models\User;
+use App\Models\VideoCategory;
+use App\Models\Village;
+use App\Models\VillageHistory;
+use App\Models\VillageOfficial;
+use App\Models\VillagePotential;
+use App\Models\VillageProfile;
+use App\Models\Vision;
+use App\Policies\CategoryPolicy;
+use App\Policies\OfficialPolicy;
+use App\Policies\PotentialPolicy;
+use App\Policies\ProfilePolicy;
+use App\Policies\StructurePolicy;
+use App\Policies\UserPolicy;
+use App\Policies\VillagePolicy;
+use App\Policies\VisionMissionPolicy;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +43,48 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $this->configureGates();
+    }
+
+    /**
+     * Registrasi otorisasi berbasis policy + permission (RBAC).
+     *
+     * Pendekatan "catch-all" dipilih agar:
+     * 1. Tidak bergantung pada tabel permission saat aplikasi boot (aman sebelum migrasi).
+     * 2. Tidak ada cache basi permission di lingkungan testing.
+     * 3. Setiap slug permission otomatis berlaku sebagai ability (mis. news-create).
+     */
+    private function configureGates(): void
+    {
+        Gate::policy(User::class, UserPolicy::class);
+
+        // Master Data
+        Gate::policy(Village::class, VillagePolicy::class);
+        Gate::policy(OrganizationalStructure::class, StructurePolicy::class);
+        Gate::policy(VillageOfficial::class, OfficialPolicy::class);
+        Gate::policy(NewsCategory::class, CategoryPolicy::class);
+        Gate::policy(GalleryCategory::class, CategoryPolicy::class);
+        Gate::policy(VideoCategory::class, CategoryPolicy::class);
+
+        // Profil Desa
+        Gate::policy(VillageProfile::class, ProfilePolicy::class);
+        Gate::policy(VillageHistory::class, ProfilePolicy::class);
+        Gate::policy(Vision::class, VisionMissionPolicy::class);
+        Gate::policy(Mission::class, VisionMissionPolicy::class);
+        Gate::policy(VillagePotential::class, PotentialPolicy::class);
+
+        Gate::before(function ($user, string $ability): bool|null {
+            if (! $user instanceof User) {
+                return null;
+            }
+
+            // Super Admin melewati seluruh pemeriksaan.
+            if ($user->hasRole(Role::SUPER_ADMIN)) {
+                return true;
+            }
+
+            // Ability lain (mis. 'update', 'delete', 'view') diteruskan ke policy.
+            return $user->hasPermission($ability) ? true : null;
+        });
     }
 }
