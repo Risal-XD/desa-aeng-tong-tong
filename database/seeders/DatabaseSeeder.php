@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             ContentSeeder::class,
             MediaSeeder::class,
             EconomySeeder::class,
+            DataReportSeeder::class,
         ]);
     }
 }

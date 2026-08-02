@@ -5,6 +5,9 @@ use App\Http\Controllers\Admin\Content\AnnouncementController;
 use App\Http\Controllers\Admin\Content\FaqController as AdminFaqController;
 use App\Http\Controllers\Admin\Content\NewsController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\Data\ApbdesController;
+use App\Http\Controllers\Admin\Data\DocumentController as AdminDocumentController;
+use App\Http\Controllers\Admin\Data\StatisticController;
 use App\Http\Controllers\Admin\Economy\KerisController;
 use App\Http\Controllers\Admin\Economy\TourismController;
 use App\Http\Controllers\Admin\Economy\UmkmController;
@@ -24,13 +27,16 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Frontend\AboutController;
 use App\Http\Controllers\Frontend\AgendaController as FrontendAgendaController;
 use App\Http\Controllers\Frontend\AnnouncementController as FrontendAnnouncementController;
+use App\Http\Controllers\Frontend\ApbdesController as FrontendApbdesController;
 use App\Http\Controllers\Frontend\ContactController;
+use App\Http\Controllers\Frontend\DocumentController as FrontendDocumentController;
 use App\Http\Controllers\Frontend\FaqController;
 use App\Http\Controllers\Frontend\GalleryController as FrontendGalleryController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\KerisController as FrontendKerisController;
 use App\Http\Controllers\Frontend\NewsController as FrontendNewsController;
 use App\Http\Controllers\Frontend\PotentialController as FrontendPotentialController;
+use App\Http\Controllers\Frontend\StatisticController as FrontendStatisticController;
 use App\Http\Controllers\Frontend\TourismController as FrontendTourismController;
 use App\Http\Controllers\Frontend\UmkmController as FrontendUmkmController;
 use App\Http\Controllers\Frontend\VideoController as FrontendVideoController;
@@ -70,6 +76,12 @@ Route::get('kerajinan-keris', [FrontendKerisController::class, 'index'])->name('
 Route::get('kerajinan-keris/{keris_artisan:slug}', [FrontendKerisController::class, 'show'])->name('keris.show');
 Route::get('umkm', [FrontendUmkmController::class, 'index'])->name('umkms.index');
 Route::get('umkm/{umkm:slug}', [FrontendUmkmController::class, 'show'])->name('umkms.show');
+
+Route::get('statistik', [FrontendStatisticController::class, 'index'])->name('statistics.index');
+Route::get('statistik/{statistic:slug}', [FrontendStatisticController::class, 'show'])->name('statistics.show');
+Route::get('apbdes', [FrontendApbdesController::class, 'index'])->name('apbdes.index');
+Route::get('dokumen', [FrontendDocumentController::class, 'index'])->name('documents.index');
+Route::get('dokumen/{document:slug}/unduh', [FrontendDocumentController::class, 'download'])->name('documents.download');
 
 /*
 |--------------------------------------------------------------------------
@@ -201,6 +213,20 @@ Route::prefix('admin')
                     ->except(['show']);
 
                 Route::resource('umkms', UmkmController::class)
+                    ->except(['show']);
+            });
+
+            // ===== Data & Laporan =====
+            Route::prefix('data-report')->name('data-report.')->group(function () {
+                Route::resource('statistics', StatisticController::class)
+                    ->except(['show']);
+
+                Route::resource('apbdes', ApbdesController::class)
+                    ->parameters(['apbdes' => 'apbdes'])
+                    ->except(['show']);
+
+                Route::resource('documents', AdminDocumentController::class)
+                    ->parameters(['document' => 'document'])
                     ->except(['show']);
             });
         });

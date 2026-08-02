@@ -3,10 +3,12 @@ import Alpine from 'alpinejs';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import Swal from 'sweetalert2';
+import Chart from 'chart.js/auto';
 
 window.Alpine = Alpine;
 window.Swal = Swal;
 window.AOS = AOS;
+window.Chart = Chart;
 
 document.addEventListener('alpine:init', () => {
     Alpine.store('mobileNav', {
@@ -53,6 +55,76 @@ document.addEventListener('alpine:init', () => {
         },
         next() {
             this.openIndex = (this.openIndex + 1) % this.items.length;
+        },
+    }));
+
+    Alpine.data('chartBar', (labels, values, label) => ({
+        init() {
+            this.$nextTick(() => {
+                new Chart(this.$el, {
+                    type: 'bar',
+                    data: {
+                        labels,
+                        datasets: [{
+                            label,
+                            data: values,
+                            backgroundColor: 'rgba(212, 138, 30, 0.75)',
+                            borderRadius: 6,
+                        }],
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: { color: 'rgba(120, 113, 108, 0.12)' },
+                            },
+                            x: {
+                                grid: { display: false },
+                            },
+                        },
+                    },
+                });
+            });
+        },
+    }));
+
+    Alpine.data('chartDoughnut', (labels, values) => ({
+        init() {
+            this.$nextTick(() => {
+                new Chart(this.$el, {
+                    type: 'doughnut',
+                    data: {
+                        labels,
+                        datasets: [{
+                            data: values,
+                            backgroundColor: [
+                                'rgba(212, 138, 30, 0.85)',
+                                'rgba(120, 62, 25, 0.85)',
+                                'rgba(80, 120, 90, 0.85)',
+                                'rgba(70, 100, 160, 0.85)',
+                                'rgba(180, 80, 90, 0.85)',
+                            ],
+                            borderWidth: 0,
+                        }],
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '65%',
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { usePointStyle: true },
+                            },
+                        },
+                    },
+                });
+            });
         },
     }));
 });

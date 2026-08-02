@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Agenda;
 use App\Models\Banner;
 use App\Models\News;
+use App\Models\Statistic;
 use App\Services\ProfileService;
 use Illuminate\View\View;
 
@@ -35,6 +36,12 @@ class HomeController extends Controller
             ->orderBy('event_date')
             ->limit(3)
             ->get();
+        $latestStatistics = Statistic::active()
+            ->with('populationStatistics')
+            ->orderByDesc('year')
+            ->orderBy('id', 'desc')
+            ->limit(3)
+            ->get();
 
         return view('frontend.home.index', [
             'village' => $village,
@@ -42,6 +49,7 @@ class HomeController extends Controller
             'banners' => $banners,
             'latestNews' => $latestNews,
             'upcomingAgendas' => $upcomingAgendas,
+            'latestStatistics' => $latestStatistics,
         ]);
     }
 }

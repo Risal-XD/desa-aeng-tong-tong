@@ -6,7 +6,9 @@ namespace App\Providers;
 
 use App\Models\Agenda;
 use App\Models\Announcement;
+use App\Models\Apbdes;
 use App\Models\Banner;
+use App\Models\Document;
 use App\Models\Faq;
 use App\Models\Gallery;
 use App\Models\GalleryCategory;
@@ -16,6 +18,7 @@ use App\Models\News;
 use App\Models\NewsCategory;
 use App\Models\OrganizationalStructure;
 use App\Models\Role;
+use App\Models\Statistic;
 use App\Models\TourismDestination;
 use App\Models\Umkm;
 use App\Models\User;
@@ -29,8 +32,10 @@ use App\Models\VillageProfile;
 use App\Models\Vision;
 use App\Policies\AgendaPolicy;
 use App\Policies\AnnouncementPolicy;
+use App\Policies\ApbdesPolicy;
 use App\Policies\BannerPolicy;
 use App\Policies\CategoryPolicy;
+use App\Policies\DocumentPolicy;
 use App\Policies\FaqPolicy;
 use App\Policies\GalleryPolicy;
 use App\Policies\KerisPolicy;
@@ -38,6 +43,7 @@ use App\Policies\NewsPolicy;
 use App\Policies\OfficialPolicy;
 use App\Policies\PotentialPolicy;
 use App\Policies\ProfilePolicy;
+use App\Policies\StatisticPolicy;
 use App\Policies\StructurePolicy;
 use App\Policies\TourismPolicy;
 use App\Policies\UmkmPolicy;
@@ -108,6 +114,11 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(TourismDestination::class, TourismPolicy::class);
         Gate::policy(KerisArtisan::class, KerisPolicy::class);
         Gate::policy(Umkm::class, UmkmPolicy::class);
+
+        // Data & Laporan
+        Gate::policy(Statistic::class, StatisticPolicy::class);
+        Gate::policy(Apbdes::class, ApbdesPolicy::class);
+        Gate::policy(Document::class, DocumentPolicy::class);
 
         Gate::before(function ($user, string $ability): ?bool {
             if (! $user instanceof User) {

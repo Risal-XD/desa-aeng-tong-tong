@@ -292,6 +292,75 @@
         </section>
     @endif
 
+    {{-- Transparansi & Data --}}
+    <section class="bg-white py-16 sm:py-20">
+        <div class="mx-auto max-w-6xl px-4 sm:px-6">
+            <x-frontend.section-heading
+                eyebrow="Transparansi"
+                title="Data & Laporan Desa"
+                subtitle="Statistik, anggaran, dan dokumen publik yang dapat diakses serta diunduh masyarakat."
+                align="center"
+            />
+
+            <div class="mt-10 grid gap-6 md:grid-cols-3">
+                <a href="{{ route('statistics.index') }}" class="group rounded-2xl border border-ink-200 bg-ink-50 p-6 transition hover:-translate-y-1 hover:border-brand-300 hover:shadow-lg">
+                    <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-100 text-brand-700">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>
+                    </span>
+                    <p class="mt-4 text-xs font-semibold uppercase tracking-widest text-brand-600">Statistik Desa</p>
+                    <h3 class="mt-1 font-display text-lg font-semibold text-ink-900">Data &amp; Grafik</h3>
+                    <p class="mt-2 text-sm text-ink-500">Statistik kependudukan, pendidikan, dan kesehatan dalam tabel serta grafik.</p>
+                </a>
+
+                <a href="{{ route('apbdes.index') }}" class="group rounded-2xl border border-ink-200 bg-ink-50 p-6 transition hover:-translate-y-1 hover:border-brand-300 hover:shadow-lg">
+                    <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-100 text-brand-700">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+                    </span>
+                    <p class="mt-4 text-xs font-semibold uppercase tracking-widest text-brand-600">APBDes</p>
+                    <h3 class="mt-1 font-display text-lg font-semibold text-ink-900">Anggaran Desa</h3>
+                    <p class="mt-2 text-sm text-ink-500">Pendapatan, belanja, dan pembiayaan desa secara terbuka.</p>
+                </a>
+
+                <a href="{{ route('documents.index') }}" class="group rounded-2xl border border-ink-200 bg-ink-50 p-6 transition hover:-translate-y-1 hover:border-brand-300 hover:shadow-lg">
+                    <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-100 text-brand-700">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    </span>
+                    <p class="mt-4 text-xs font-semibold uppercase tracking-widest text-brand-600">Dokumen</p>
+                    <h3 class="mt-1 font-display text-lg font-semibold text-ink-900">Unduhan Publik</h3>
+                    <p class="mt-2 text-sm text-ink-500">Buku profil, laporan APBDes, dan peraturan desa yang dapat diunduh.</p>
+                </a>
+            </div>
+
+            @if ($latestStatistics->isNotEmpty())
+                <div class="mt-10 grid gap-4 md:grid-cols-3">
+                    @foreach ($latestStatistics as $statistic)
+                        <div class="rounded-2xl border border-ink-200 bg-white p-6 shadow-sm">
+                            <p class="text-xs font-semibold uppercase tracking-widest text-brand-600">
+                                {{ $statistic->category->label() }} · {{ $statistic->year }}
+                            </p>
+                            <h4 class="mt-1 font-display text-base font-semibold text-ink-900">{{ $statistic->name }}</h4>
+                            @if ($statistic->populationStatistics->isNotEmpty())
+                                <dl class="mt-4 grid grid-cols-2 gap-3">
+                                    @foreach ($statistic->populationStatistics->take(4) as $row)
+                                        <div class="rounded-xl bg-ink-50 p-3">
+                                            <dt class="text-xs text-ink-500">{{ $row->label }}</dt>
+                                            <dd class="mt-1 text-sm font-semibold text-ink-900">
+                                                {{ number_format((float) $row->value, 0, ',', '.') }}
+                                                @if ($row->unit)
+                                                    <span class="text-xs font-normal text-ink-500">{{ $row->unit }}</span>
+                                                @endif
+                                            </dd>
+                                        </div>
+                                    @endforeach
+                                </dl>
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+        </div>
+    </section>
+
     {{-- CTA --}}
     <section class="bg-ink-950 py-16">
         <div class="mx-auto max-w-4xl px-4 text-center sm:px-6">
