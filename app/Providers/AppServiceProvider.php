@@ -10,11 +10,14 @@ use App\Models\Banner;
 use App\Models\Faq;
 use App\Models\Gallery;
 use App\Models\GalleryCategory;
+use App\Models\KerisArtisan;
 use App\Models\Mission;
 use App\Models\News;
 use App\Models\NewsCategory;
 use App\Models\OrganizationalStructure;
 use App\Models\Role;
+use App\Models\TourismDestination;
+use App\Models\Umkm;
 use App\Models\User;
 use App\Models\Video;
 use App\Models\VideoCategory;
@@ -30,11 +33,14 @@ use App\Policies\BannerPolicy;
 use App\Policies\CategoryPolicy;
 use App\Policies\FaqPolicy;
 use App\Policies\GalleryPolicy;
+use App\Policies\KerisPolicy;
 use App\Policies\NewsPolicy;
 use App\Policies\OfficialPolicy;
 use App\Policies\PotentialPolicy;
 use App\Policies\ProfilePolicy;
 use App\Policies\StructurePolicy;
+use App\Policies\TourismPolicy;
+use App\Policies\UmkmPolicy;
 use App\Policies\UserPolicy;
 use App\Policies\VideoPolicy;
 use App\Policies\VillagePolicy;
@@ -97,6 +103,11 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Vision::class, VisionMissionPolicy::class);
         Gate::policy(Mission::class, VisionMissionPolicy::class);
         Gate::policy(VillagePotential::class, PotentialPolicy::class);
+
+        // Ekonomi & Budaya
+        Gate::policy(TourismDestination::class, TourismPolicy::class);
+        Gate::policy(KerisArtisan::class, KerisPolicy::class);
+        Gate::policy(Umkm::class, UmkmPolicy::class);
 
         Gate::before(function ($user, string $ability): ?bool {
             if (! $user instanceof User) {

@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             VillageSeeder::class,
             ContentSeeder::class,
             MediaSeeder::class,
+            EconomySeeder::class,
         ]);
     }
 }

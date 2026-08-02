@@ -5,6 +5,9 @@ use App\Http\Controllers\Admin\Content\AnnouncementController;
 use App\Http\Controllers\Admin\Content\FaqController as AdminFaqController;
 use App\Http\Controllers\Admin\Content\NewsController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\Economy\KerisController;
+use App\Http\Controllers\Admin\Economy\TourismController;
+use App\Http\Controllers\Admin\Economy\UmkmController;
 use App\Http\Controllers\Admin\MasterData\CategoryController;
 use App\Http\Controllers\Admin\MasterData\OfficialController;
 use App\Http\Controllers\Admin\MasterData\StructureController;
@@ -25,8 +28,11 @@ use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\FaqController;
 use App\Http\Controllers\Frontend\GalleryController as FrontendGalleryController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\KerisController as FrontendKerisController;
 use App\Http\Controllers\Frontend\NewsController as FrontendNewsController;
 use App\Http\Controllers\Frontend\PotentialController as FrontendPotentialController;
+use App\Http\Controllers\Frontend\TourismController as FrontendTourismController;
+use App\Http\Controllers\Frontend\UmkmController as FrontendUmkmController;
 use App\Http\Controllers\Frontend\VideoController as FrontendVideoController;
 use Illuminate\Support\Facades\Route;
 
@@ -57,6 +63,13 @@ Route::get('pengumuman/{announcement:slug}', [FrontendAnnouncementController::cl
 Route::get('agenda', [FrontendAgendaController::class, 'index'])->name('agendas.index');
 Route::get('galeri', [FrontendGalleryController::class, 'index'])->name('galleries.index');
 Route::get('video', [FrontendVideoController::class, 'index'])->name('videos.index');
+
+Route::get('wisata', [FrontendTourismController::class, 'index'])->name('tourism.index');
+Route::get('wisata/{tourism_destination:slug}', [FrontendTourismController::class, 'show'])->name('tourism.show');
+Route::get('kerajinan-keris', [FrontendKerisController::class, 'index'])->name('keris.index');
+Route::get('kerajinan-keris/{keris_artisan:slug}', [FrontendKerisController::class, 'show'])->name('keris.show');
+Route::get('umkm', [FrontendUmkmController::class, 'index'])->name('umkms.index');
+Route::get('umkm/{umkm:slug}', [FrontendUmkmController::class, 'show'])->name('umkms.show');
 
 /*
 |--------------------------------------------------------------------------
@@ -174,6 +187,20 @@ Route::prefix('admin')
                     ->except(['show']);
 
                 Route::resource('banners', BannerController::class)
+                    ->except(['show']);
+            });
+
+            // ===== Ekonomi & Budaya =====
+            Route::prefix('economy')->name('economy.')->group(function () {
+                Route::resource('tourism', TourismController::class)
+                    ->parameters(['tourism' => 'tourism_destination'])
+                    ->except(['show']);
+
+                Route::resource('keris', KerisController::class)
+                    ->parameters(['keris' => 'keris_artisan'])
+                    ->except(['show']);
+
+                Route::resource('umkms', UmkmController::class)
                     ->except(['show']);
             });
         });
