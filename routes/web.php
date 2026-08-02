@@ -1,10 +1,17 @@
 <?php
 
+use App\Http\Controllers\Admin\Content\AgendaController;
+use App\Http\Controllers\Admin\Content\AnnouncementController;
+use App\Http\Controllers\Admin\Content\FaqController as AdminFaqController;
+use App\Http\Controllers\Admin\Content\NewsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MasterData\CategoryController;
 use App\Http\Controllers\Admin\MasterData\OfficialController;
 use App\Http\Controllers\Admin\MasterData\StructureController;
 use App\Http\Controllers\Admin\MasterData\VillageController;
+use App\Http\Controllers\Admin\Media\BannerController;
+use App\Http\Controllers\Admin\Media\GalleryController;
+use App\Http\Controllers\Admin\Media\VideoController;
 use App\Http\Controllers\Admin\Profile\PotentialController;
 use App\Http\Controllers\Admin\Profile\VillageHistoryController;
 use App\Http\Controllers\Admin\Profile\VillageProfileController;
@@ -12,10 +19,15 @@ use App\Http\Controllers\Admin\Profile\VisionMissionController;
 use App\Http\Controllers\Admin\System\ProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Frontend\AboutController;
+use App\Http\Controllers\Frontend\AgendaController as FrontendAgendaController;
+use App\Http\Controllers\Frontend\AnnouncementController as FrontendAnnouncementController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\FaqController;
+use App\Http\Controllers\Frontend\GalleryController as FrontendGalleryController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\NewsController as FrontendNewsController;
 use App\Http\Controllers\Frontend\PotentialController as FrontendPotentialController;
+use App\Http\Controllers\Frontend\VideoController as FrontendVideoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,6 +49,14 @@ Route::prefix('tentang')->name('about.')->group(function () {
 Route::get('potensi-desa', [FrontendPotentialController::class, 'index'])->name('potensi');
 Route::get('kontak', [ContactController::class, 'index'])->name('kontak');
 Route::get('faq', [FaqController::class, 'index'])->name('faq');
+
+Route::get('berita', [FrontendNewsController::class, 'index'])->name('news.index');
+Route::get('berita/{news:slug}', [FrontendNewsController::class, 'show'])->name('news.show');
+Route::get('pengumuman', [FrontendAnnouncementController::class, 'index'])->name('announcements.index');
+Route::get('pengumuman/{announcement:slug}', [FrontendAnnouncementController::class, 'show'])->name('announcements.show');
+Route::get('agenda', [FrontendAgendaController::class, 'index'])->name('agendas.index');
+Route::get('galeri', [FrontendGalleryController::class, 'index'])->name('galleries.index');
+Route::get('video', [FrontendVideoController::class, 'index'])->name('videos.index');
 
 /*
 |--------------------------------------------------------------------------
@@ -127,6 +147,33 @@ Route::prefix('admin')
                     ->name('vision-mission.update');
 
                 Route::resource('potentials', PotentialController::class)
+                    ->except(['show']);
+            });
+
+            // ===== Konten =====
+            Route::prefix('content')->name('content.')->group(function () {
+                Route::resource('news', NewsController::class)
+                    ->except(['show']);
+
+                Route::resource('announcements', AnnouncementController::class)
+                    ->except(['show']);
+
+                Route::resource('agendas', AgendaController::class)
+                    ->except(['show']);
+
+                Route::resource('faqs', AdminFaqController::class)
+                    ->except(['show']);
+            });
+
+            // ===== Media =====
+            Route::prefix('media')->name('media.')->group(function () {
+                Route::resource('galleries', GalleryController::class)
+                    ->except(['show']);
+
+                Route::resource('videos', VideoController::class)
+                    ->except(['show']);
+
+                Route::resource('banners', BannerController::class)
                     ->except(['show']);
             });
         });

@@ -4,12 +4,19 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Models\Agenda;
+use App\Models\Announcement;
+use App\Models\Banner;
+use App\Models\Faq;
+use App\Models\Gallery;
 use App\Models\GalleryCategory;
 use App\Models\Mission;
+use App\Models\News;
 use App\Models\NewsCategory;
 use App\Models\OrganizationalStructure;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Video;
 use App\Models\VideoCategory;
 use App\Models\Village;
 use App\Models\VillageHistory;
@@ -17,12 +24,19 @@ use App\Models\VillageOfficial;
 use App\Models\VillagePotential;
 use App\Models\VillageProfile;
 use App\Models\Vision;
+use App\Policies\AgendaPolicy;
+use App\Policies\AnnouncementPolicy;
+use App\Policies\BannerPolicy;
 use App\Policies\CategoryPolicy;
+use App\Policies\FaqPolicy;
+use App\Policies\GalleryPolicy;
+use App\Policies\NewsPolicy;
 use App\Policies\OfficialPolicy;
 use App\Policies\PotentialPolicy;
 use App\Policies\ProfilePolicy;
 use App\Policies\StructurePolicy;
 use App\Policies\UserPolicy;
+use App\Policies\VideoPolicy;
 use App\Policies\VillagePolicy;
 use App\Policies\VisionMissionPolicy;
 use Illuminate\Support\Facades\Gate;
@@ -66,6 +80,17 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(GalleryCategory::class, CategoryPolicy::class);
         Gate::policy(VideoCategory::class, CategoryPolicy::class);
 
+        // Konten
+        Gate::policy(News::class, NewsPolicy::class);
+        Gate::policy(Announcement::class, AnnouncementPolicy::class);
+        Gate::policy(Agenda::class, AgendaPolicy::class);
+        Gate::policy(Faq::class, FaqPolicy::class);
+
+        // Media
+        Gate::policy(Gallery::class, GalleryPolicy::class);
+        Gate::policy(Video::class, VideoPolicy::class);
+        Gate::policy(Banner::class, BannerPolicy::class);
+
         // Profil Desa
         Gate::policy(VillageProfile::class, ProfilePolicy::class);
         Gate::policy(VillageHistory::class, ProfilePolicy::class);
@@ -73,7 +98,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Mission::class, VisionMissionPolicy::class);
         Gate::policy(VillagePotential::class, PotentialPolicy::class);
 
-        Gate::before(function ($user, string $ability): bool|null {
+        Gate::before(function ($user, string $ability): ?bool {
             if (! $user instanceof User) {
                 return null;
             }

@@ -34,6 +34,20 @@
                 Potensi
             </a>
 
+            <div class="relative" x-data="{ infoOpen: false }" @mouseenter="infoOpen = true" @mouseleave="infoOpen = false">
+                <button type="button" class="flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium transition {{ request()->routeIs('news.*', 'announcements.*', 'agendas.*', 'galleries.*', 'videos.*') ? 'text-brand-600' : 'text-ink-600 hover:text-ink-900' }}">
+                    Informasi
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div x-show="infoOpen" x-transition x-cloak class="absolute left-0 top-full w-56 rounded-xl border border-ink-200 bg-white p-2 shadow-lg">
+                    <a href="{{ route('news.index') }}" class="block rounded-lg px-3 py-2 text-sm text-ink-600 transition hover:bg-brand-50 hover:text-brand-700">Berita</a>
+                    <a href="{{ route('announcements.index') }}" class="block rounded-lg px-3 py-2 text-sm text-ink-600 transition hover:bg-brand-50 hover:text-brand-700">Pengumuman</a>
+                    <a href="{{ route('agendas.index') }}" class="block rounded-lg px-3 py-2 text-sm text-ink-600 transition hover:bg-brand-50 hover:text-brand-700">Agenda</a>
+                    <a href="{{ route('galleries.index') }}" class="block rounded-lg px-3 py-2 text-sm text-ink-600 transition hover:bg-brand-50 hover:text-brand-700">Galeri Foto</a>
+                    <a href="{{ route('videos.index') }}" class="block rounded-lg px-3 py-2 text-sm text-ink-600 transition hover:bg-brand-50 hover:text-brand-700">Video</a>
+                </div>
+            </div>
+
             <a href="{{ route('kontak') }}" class="rounded-lg px-3 py-2 text-sm font-medium transition {{ request()->routeIs('kontak') ? 'text-brand-600' : 'text-ink-600 hover:text-ink-900' }}">
                 Kontak
             </a>
@@ -82,6 +96,19 @@
                 </div>
             </div>
             <a href="{{ route('potensi') }}" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 transition hover:bg-brand-50 hover:text-brand-700">Potensi</a>
+            <div x-data="{ open: request()->routeIs('news.*', 'announcements.*', 'agendas.*', 'galleries.*', 'videos.*') }">
+                <button type="button" @click="open = !open" class="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 transition hover:bg-brand-50 hover:text-brand-700">
+                    Informasi
+                    <svg class="h-4 w-4" :class="open ? 'rotate-180' : ''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div x-show="open" x-cloak class="space-y-1 border-l-2 border-brand-200 pl-3">
+                    <a href="{{ route('news.index') }}" class="block rounded-lg px-3 py-2 text-sm text-ink-600 hover:text-brand-700">Berita</a>
+                    <a href="{{ route('announcements.index') }}" class="block rounded-lg px-3 py-2 text-sm text-ink-600 hover:text-brand-700">Pengumuman</a>
+                    <a href="{{ route('agendas.index') }}" class="block rounded-lg px-3 py-2 text-sm text-ink-600 hover:text-brand-700">Agenda</a>
+                    <a href="{{ route('galleries.index') }}" class="block rounded-lg px-3 py-2 text-sm text-ink-600 hover:text-brand-700">Galeri Foto</a>
+                    <a href="{{ route('videos.index') }}" class="block rounded-lg px-3 py-2 text-sm text-ink-600 hover:text-brand-700">Video</a>
+                </div>
+            </div>
             <a href="{{ route('kontak') }}" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 transition hover:bg-brand-50 hover:text-brand-700">Kontak</a>
             <a href="{{ route('faq') }}" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 transition hover:bg-brand-50 hover:text-brand-700">FAQ</a>
 

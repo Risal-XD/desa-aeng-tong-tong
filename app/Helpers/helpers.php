@@ -21,7 +21,7 @@ if (! function_exists('format_tanggal')) {
     /**
      * Format tanggal dalam Bahasa Indonesia.
      */
-    function format_tanggal(string|null $date, string $format = 'd F Y'): string
+    function format_tanggal(?string $date, string $format = 'd F Y'): string
     {
         if (! $date) {
             return '-';
