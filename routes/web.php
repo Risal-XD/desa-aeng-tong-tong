@@ -11,6 +11,11 @@ use App\Http\Controllers\Admin\Profile\VillageProfileController;
 use App\Http\Controllers\Admin\Profile\VisionMissionController;
 use App\Http\Controllers\Admin\System\ProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Frontend\AboutController;
+use App\Http\Controllers\Frontend\ContactController;
+use App\Http\Controllers\Frontend\FaqController;
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\PotentialController as FrontendPotentialController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,9 +24,19 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// ===== Frontend Publik =====
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::prefix('tentang')->name('about.')->group(function () {
+    Route::get('sejarah', [AboutController::class, 'sejarah'])->name('sejarah');
+    Route::get('visi-misi', [AboutController::class, 'visiMisi'])->name('visi-misi');
+    Route::get('struktur-organisasi', [AboutController::class, 'struktur'])->name('struktur');
+    Route::get('perangkat-desa', [AboutController::class, 'perangkat'])->name('perangkat');
 });
+
+Route::get('potensi-desa', [FrontendPotentialController::class, 'index'])->name('potensi');
+Route::get('kontak', [ContactController::class, 'index'])->name('kontak');
+Route::get('faq', [FaqController::class, 'index'])->name('faq');
 
 /*
 |--------------------------------------------------------------------------

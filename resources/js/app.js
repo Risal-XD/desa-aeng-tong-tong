@@ -9,7 +9,15 @@ window.Swal = Swal;
 window.AOS = AOS;
 
 document.addEventListener('alpine:init', () => {
-    // Register global Alpine data/components untuk frontend publik di sini.
+    Alpine.store('mobileNav', {
+        open: false,
+        toggle() {
+            this.open = !this.open;
+        },
+        close() {
+            this.open = false;
+        },
+    });
 });
 
 document.addEventListener('DOMContentLoaded', () => {
