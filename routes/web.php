@@ -22,7 +22,13 @@ use App\Http\Controllers\Admin\Profile\PotentialController;
 use App\Http\Controllers\Admin\Profile\VillageHistoryController;
 use App\Http\Controllers\Admin\Profile\VillageProfileController;
 use App\Http\Controllers\Admin\Profile\VisionMissionController;
+use App\Http\Controllers\Admin\Service\ContactController as ServiceContactController;
+use App\Http\Controllers\Admin\Service\MessageController;
+use App\Http\Controllers\Admin\System\ActivityLogController;
 use App\Http\Controllers\Admin\System\ProfileController;
+use App\Http\Controllers\Admin\System\RoleController;
+use App\Http\Controllers\Admin\System\SettingController;
+use App\Http\Controllers\Admin\System\UserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Frontend\AboutController;
 use App\Http\Controllers\Frontend\AgendaController as FrontendAgendaController;
@@ -60,6 +66,9 @@ Route::prefix('tentang')->name('about.')->group(function () {
 
 Route::get('potensi-desa', [FrontendPotentialController::class, 'index'])->name('potensi');
 Route::get('kontak', [ContactController::class, 'index'])->name('kontak');
+Route::post('kontak', [ContactController::class, 'store'])
+    ->middleware('throttle:5,1')
+    ->name('kontak.store');
 Route::get('faq', [FaqController::class, 'index'])->name('faq');
 
 Route::get('berita', [FrontendNewsController::class, 'index'])->name('news.index');
@@ -228,6 +237,34 @@ Route::prefix('admin')
                 Route::resource('documents', AdminDocumentController::class)
                     ->parameters(['document' => 'document'])
                     ->except(['show']);
+            });
+
+            // ===== Layanan =====
+            Route::prefix('service')->name('service.')->group(function () {
+                Route::resource('messages', MessageController::class)
+                    ->except(['create', 'store', 'edit', 'destroy']);
+
+                Route::get('contacts', [ServiceContactController::class, 'index'])
+                    ->name('contacts.index');
+                Route::put('contacts', [ServiceContactController::class, 'update'])
+                    ->name('contacts.update');
+            });
+
+            // ===== Sistem =====
+            Route::prefix('system')->name('system.')->group(function () {
+                Route::resource('users', UserController::class)
+                    ->except(['show']);
+
+                Route::resource('roles', RoleController::class)
+                    ->only(['index', 'edit', 'update']);
+
+                Route::get('settings', [SettingController::class, 'index'])
+                    ->name('settings.index');
+                Route::put('settings', [SettingController::class, 'update'])
+                    ->name('settings.update');
+
+                Route::get('activity-log', [ActivityLogController::class, 'index'])
+                    ->name('activity-log.index');
             });
         });
     });

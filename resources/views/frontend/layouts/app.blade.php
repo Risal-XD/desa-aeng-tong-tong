@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @if (session('success'))
+        <meta name="flash-success" content="{{ session('success') }}">
+    @endif
     <meta name="description" content="@yield('meta_description', 'Website resmi Desa Aeng Tong-Tong, Kecamatan Saronggi, Kabupaten Sumenep, Jawa Timur — desa wisata sentra kerajinan keris.')">
     <title>@yield('title', 'Desa Aeng Tong-Tong') · Website Resmi Desa</title>
 

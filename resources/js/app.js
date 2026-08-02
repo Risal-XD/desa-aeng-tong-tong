@@ -136,6 +136,18 @@ document.addEventListener('DOMContentLoaded', () => {
         offset: 80,
         easing: 'ease-out-cubic',
     });
+
+    const flashSuccess = document.querySelector('meta[name="flash-success"]');
+    if (flashSuccess && flashSuccess.content) {
+        window.Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: flashSuccess.content,
+            confirmButtonColor: '#d48a1e',
+            timer: 3500,
+            timerProgressBar: true,
+        });
+    }
 });
 
 Alpine.start();

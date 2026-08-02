@@ -1,6 +1,10 @@
 @props(['active' => null])
 
 @php
+    $unreadMessages = auth()->user()->can('message-view')
+        ? \App\Models\Message::unread()->count()
+        : 0;
+
     $icons = [
         'dashboard' => '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>',
         'user' => '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
@@ -145,7 +149,12 @@
                                     <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         {!! $iconPath !!}
                                     </svg>
-                                    {{ $label }}
+                                    <span class="flex-1">{{ $label }}</span>
+                                    @if ($item['route'] === 'admin.service.messages.index' && $unreadMessages > 0)
+                                        <span class="rounded-full bg-amber-500 px-2 py-0.5 text-[10px] font-bold text-white">
+                                            {{ $unreadMessages }}
+                                        </span>
+                                    @endif
                                 </a>
                             </li>
                         @endforeach

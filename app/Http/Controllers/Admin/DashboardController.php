@@ -5,22 +5,22 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Permission;
-use App\Models\Role;
-use App\Models\User;
+use App\Services\DashboardService;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
+    public function __construct(
+        private readonly DashboardService $dashboard,
+    ) {}
+
     public function index(): View
     {
-        $stats = [
-            'total_users' => User::count(),
-            'active_users' => User::active()->count(),
-            'total_roles' => Role::count(),
-            'total_permissions' => Permission::count(),
-        ];
+        $stats = $this->dashboard->getStats();
+        $charts = $this->dashboard->getCharts();
+        $recentActivity = $this->dashboard->recentActivity();
+        $recentMessages = $this->dashboard->recentMessages();
 
-        return view('admin.dashboard.index', compact('stats'));
+        return view('admin.dashboard.index', compact('stats', 'charts', 'recentActivity', 'recentMessages'));
     }
 }

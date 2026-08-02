@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Models\ActivityLog;
 use App\Models\Agenda;
 use App\Models\Announcement;
 use App\Models\Apbdes;
@@ -13,11 +14,13 @@ use App\Models\Faq;
 use App\Models\Gallery;
 use App\Models\GalleryCategory;
 use App\Models\KerisArtisan;
+use App\Models\Message;
 use App\Models\Mission;
 use App\Models\News;
 use App\Models\NewsCategory;
 use App\Models\OrganizationalStructure;
 use App\Models\Role;
+use App\Models\Setting;
 use App\Models\Statistic;
 use App\Models\TourismDestination;
 use App\Models\Umkm;
@@ -30,6 +33,7 @@ use App\Models\VillageOfficial;
 use App\Models\VillagePotential;
 use App\Models\VillageProfile;
 use App\Models\Vision;
+use App\Policies\ActivityLogPolicy;
 use App\Policies\AgendaPolicy;
 use App\Policies\AnnouncementPolicy;
 use App\Policies\ApbdesPolicy;
@@ -39,10 +43,13 @@ use App\Policies\DocumentPolicy;
 use App\Policies\FaqPolicy;
 use App\Policies\GalleryPolicy;
 use App\Policies\KerisPolicy;
+use App\Policies\MessagePolicy;
 use App\Policies\NewsPolicy;
 use App\Policies\OfficialPolicy;
 use App\Policies\PotentialPolicy;
 use App\Policies\ProfilePolicy;
+use App\Policies\RolePolicy;
+use App\Policies\SettingPolicy;
 use App\Policies\StatisticPolicy;
 use App\Policies\StructurePolicy;
 use App\Policies\TourismPolicy;
@@ -83,6 +90,7 @@ class AppServiceProvider extends ServiceProvider
     private function configureGates(): void
     {
         Gate::policy(User::class, UserPolicy::class);
+        Gate::policy(Role::class, RolePolicy::class);
 
         // Master Data
         Gate::policy(Village::class, VillagePolicy::class);
@@ -119,6 +127,11 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Statistic::class, StatisticPolicy::class);
         Gate::policy(Apbdes::class, ApbdesPolicy::class);
         Gate::policy(Document::class, DocumentPolicy::class);
+
+        // Sistem & Layanan
+        Gate::policy(Setting::class, SettingPolicy::class);
+        Gate::policy(ActivityLog::class, ActivityLogPolicy::class);
+        Gate::policy(Message::class, MessagePolicy::class);
 
         Gate::before(function ($user, string $ability): ?bool {
             if (! $user instanceof User) {
