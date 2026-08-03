@@ -32,7 +32,7 @@ class VisionMissionController extends Controller
 
     public function update(VisionMissionRequest $request): RedirectResponse
     {
-        $this->authorize('update', Vision::class);
+        $this->authorize('update', new Vision);
 
         $village = $this->villageService->getDefaultVillage();
         abort_unless($village !== null, 404, 'Data desa belum tersedia.');

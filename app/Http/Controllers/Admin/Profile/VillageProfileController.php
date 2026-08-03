@@ -30,7 +30,7 @@ class VillageProfileController extends Controller
 
     public function update(VillageProfileRequest $request): RedirectResponse
     {
-        $this->authorize('update', VillageProfile::class);
+        $this->authorize('update', new VillageProfile);
 
         $village = $this->villageService->getDefaultVillage();
         abort_unless($village !== null, 404, 'Data desa belum tersedia.');

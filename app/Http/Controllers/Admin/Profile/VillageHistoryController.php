@@ -30,7 +30,7 @@ class VillageHistoryController extends Controller
 
     public function update(HistoryRequest $request): RedirectResponse
     {
-        $this->authorize('update', VillageHistory::class);
+        $this->authorize('update', new VillageHistory);
 
         $village = $this->villageService->getDefaultVillage();
         abort_unless($village !== null, 404, 'Data desa belum tersedia.');
