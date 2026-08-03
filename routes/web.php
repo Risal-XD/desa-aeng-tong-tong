@@ -42,6 +42,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\KerisController as FrontendKerisController;
 use App\Http\Controllers\Frontend\NewsController as FrontendNewsController;
 use App\Http\Controllers\Frontend\PotentialController as FrontendPotentialController;
+use App\Http\Controllers\Frontend\SitemapController;
 use App\Http\Controllers\Frontend\StatisticController as FrontendStatisticController;
 use App\Http\Controllers\Frontend\TourismController as FrontendTourismController;
 use App\Http\Controllers\Frontend\UmkmController as FrontendUmkmController;
@@ -56,6 +57,9 @@ use Illuminate\Support\Facades\Route;
 
 // ===== Frontend Publik =====
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('/sitemap.xml', [SitemapController::class, 'index']);
+Route::get('/robots.txt', [SitemapController::class, 'robots']);
 
 Route::prefix('tentang')->name('about.')->group(function () {
     Route::get('sejarah', [AboutController::class, 'sejarah'])->name('sejarah');

@@ -33,6 +33,7 @@ use App\Models\VillageOfficial;
 use App\Models\VillagePotential;
 use App\Models\VillageProfile;
 use App\Models\Vision;
+use App\Observers\FrontendCacheObserver;
 use App\Policies\ActivityLogPolicy;
 use App\Policies\AgendaPolicy;
 use App\Policies\AnnouncementPolicy;
@@ -77,6 +78,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureGates();
+
+        foreach (FrontendCacheObserver::models() as $model) {
+            $model::observe(FrontendCacheObserver::class);
+        }
     }
 
     /**

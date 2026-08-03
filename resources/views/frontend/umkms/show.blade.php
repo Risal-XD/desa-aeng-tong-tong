@@ -2,6 +2,7 @@
 
 @section('title', $umkm->name)
 @section('meta_description', $umkm->description ? Str::limit(strip_tags((string) $umkm->description), 160) : 'UMKM Desa Aeng Tong-Tong.')
+@section('og_image', $umkm->cover_image ? asset('storage/'.$umkm->cover_image) : '')
 
 @section('content')
     <x-frontend.page-hero title="UMKM" />

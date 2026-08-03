@@ -2,6 +2,8 @@
 
 @section('title', $news->title)
 @section('meta_description', $news->excerpt ?? Str::limit(strip_tags((string) $news->content), 160))
+@section('og_type', 'article')
+@section('og_image', $news->cover_image ? asset('storage/'.$news->cover_image) : '')
 
 @section('content')
     <x-frontend.page-hero title="Berita" />

@@ -10,42 +10,46 @@ use App\Models\Banner;
 use App\Models\News;
 use App\Models\Statistic;
 use App\Services\ProfileService;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
 class HomeController extends Controller
 {
+    private const CACHE_TTL = 300;
+
     public function __construct(
         private readonly ProfileService $profileService,
     ) {}
 
     public function index(): View
     {
-        $village = $this->profileService->getPublicVillage();
-        $featuredPotentials = $this->profileService->getFeaturedPotentials(3);
-        $banners = Banner::active()
+        $banners = Cache::remember('frontend.home.banners', self::CACHE_TTL, fn () => Banner::active()
             ->where('position', 'slider')
             ->orderBy('sort_order')
-            ->get();
-        $latestNews = News::published()
+            ->get());
+
+        $latestNews = Cache::remember('frontend.home.latest_news', self::CACHE_TTL, fn () => News::published()
             ->with('category')
             ->latest('published_at')
             ->limit(3)
-            ->get();
-        $upcomingAgendas = Agenda::published()
+            ->get());
+
+        $upcomingAgendas = Cache::remember('frontend.home.agendas', self::CACHE_TTL, fn () => Agenda::published()
             ->where('event_date', '>=', now()->startOfDay())
             ->orderBy('event_date')
             ->limit(3)
-            ->get();
-        $latestStatistics = Statistic::active()
+            ->get());
+
+        $latestStatistics = Cache::remember('frontend.home.statistics', self::CACHE_TTL, fn () => Statistic::active()
             ->with('populationStatistics')
             ->orderByDesc('year')
             ->orderBy('id', 'desc')
             ->limit(3)
-            ->get();
+            ->get());
 
         return view('frontend.home.index', [
-            'village' => $village,
-            'featuredPotentials' => $featuredPotentials,
+            'village' => $this->profileService->getPublicVillage(),
+            'featuredPotentials' => $this->profileService->getFeaturedPotentials(3),
             'banners' => $banners,
             'latestNews' => $latestNews,
             'upcomingAgendas' => $upcomingAgendas,

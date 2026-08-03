@@ -2,6 +2,7 @@
 
 @section('title', $keris_artisan->name)
 @section('meta_description', $keris_artisan->bio ? Str::limit(strip_tags((string) $keris_artisan->bio), 160) : 'Profil Mpu Desa Aeng Tong-Tong.')
+@section('og_image', $keris_artisan->photo ? asset('storage/'.$keris_artisan->photo) : '')
 
 @section('content')
     <x-frontend.page-hero title="Kerajinan Keris" />

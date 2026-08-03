@@ -2,6 +2,7 @@
 
 @section('title', $tourism_destination->title)
 @section('meta_description', $tourism_destination->description ? Str::limit(strip_tags((string) $tourism_destination->description), 160) : 'Destinasi wisata Desa Aeng Tong-Tong.')
+@section('og_image', $tourism_destination->image ? asset('storage/'.$tourism_destination->image) : '')
 
 @section('content')
     <x-frontend.page-hero title="Wisata" />
