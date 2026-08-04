@@ -58,45 +58,6 @@ document.addEventListener('alpine:init', () => {
         },
     }));
 
-    Alpine.data('zoomParallax', (layers) => ({
-        layers,
-        progress: 0,
-        raf: null,
-        init() {
-            const update = () => {
-                const rect = this.$el.getBoundingClientRect();
-                const viewport = window.innerHeight;
-                const total = rect.height - viewport;
-                this.progress = total > 0
-                    ? Math.min(1, Math.max(0, -rect.top / total))
-                    : 0;
-            };
-            const onScroll = () => {
-                if (this.raf) return;
-                this.raf = requestAnimationFrame(() => {
-                    this.raf = null;
-                    update();
-                });
-            };
-            this.update = update;
-            window.addEventListener('scroll', onScroll, { passive: true });
-            window.addEventListener('resize', onScroll);
-            this.cleanup = () => {
-                window.removeEventListener('scroll', onScroll);
-                window.removeEventListener('resize', onScroll);
-                if (this.raf) cancelAnimationFrame(this.raf);
-            };
-            update();
-        },
-        destroy() {
-            if (this.cleanup) this.cleanup();
-        },
-        scale(index) {
-            const [from, to] = this.layers[index].scale;
-            return from + (to - from) * this.progress;
-        },
-    }));
-
     Alpine.data('chartBar', (labels, values, label) => ({
         init() {
             this.$nextTick(() => {
