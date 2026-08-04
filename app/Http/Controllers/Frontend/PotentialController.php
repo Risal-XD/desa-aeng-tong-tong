@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Gallery;
 use App\Services\ProfileService;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
 class PotentialController extends Controller
@@ -18,7 +20,10 @@ class PotentialController extends Controller
     {
         $village = $this->profileService->getPublicVillage();
         $potentials = $village?->potentials ?? collect();
+        $heroImage = Cache::remember('frontend.potential.hero_image', 300, fn () => Gallery::active()
+            ->whereNotNull('image')
+            ->first()?->image);
 
-        return view('frontend.potential.index', compact('village', 'potentials'));
+        return view('frontend.potential.index', compact('village', 'potentials', 'heroImage'));
     }
 }

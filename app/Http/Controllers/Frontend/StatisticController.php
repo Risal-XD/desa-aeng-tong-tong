@@ -6,8 +6,10 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Enums\StatisticCategory;
 use App\Http\Controllers\Controller;
+use App\Models\Gallery;
 use App\Models\Statistic;
 use App\Services\ProfileService;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
 class StatisticController extends Controller
@@ -32,8 +34,11 @@ class StatisticController extends Controller
             ->orderByDesc('year')
             ->orderBy('category')
             ->get();
+        $heroImage = Cache::remember('frontend.statistics.hero_image', 300, fn () => Gallery::active()
+            ->whereNotNull('image')
+            ->first()?->image);
 
-        return view('frontend.statistics.index', compact('village', 'categories', 'years', 'statistics'));
+        return view('frontend.statistics.index', compact('village', 'categories', 'years', 'statistics', 'heroImage'));
     }
 
     public function show(Statistic $statistic): View

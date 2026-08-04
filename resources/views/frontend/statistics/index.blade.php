@@ -7,6 +7,9 @@
     <x-frontend.page-hero
         title="Statistik Desa"
         subtitle="Data dan grafik perkembangan Desa Aeng Tong-Tong untuk transparansi dan akuntabilitas publik."
+        :image="$heroImage"
+        imagePosition="right center"
+        backgroundSize="280%"
     />
 
     <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">

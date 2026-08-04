@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Gallery;
 use App\Models\Umkm;
 use App\Services\ProfileService;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
 class UmkmController extends Controller
@@ -23,8 +25,11 @@ class UmkmController extends Controller
             ->orderBy('sort_order')
             ->orderBy('id')
             ->paginate(12);
+        $heroImage = Cache::remember('frontend.umkm.hero_image', 300, fn () => Gallery::active()
+            ->whereNotNull('image')
+            ->first()?->image);
 
-        return view('frontend.umkms.index', compact('village', 'umkms'));
+        return view('frontend.umkms.index', compact('village', 'umkms', 'heroImage'));
     }
 
     public function show(Umkm $umkm): View

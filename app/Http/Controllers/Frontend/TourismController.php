@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Gallery;
 use App\Models\TourismDestination;
 use App\Services\ProfileService;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
 class TourismController extends Controller
@@ -22,8 +24,11 @@ class TourismController extends Controller
             ->orderBy('is_featured', 'desc')
             ->latest('id')
             ->paginate(9);
+        $heroImage = Cache::remember('frontend.tourism.hero_image', 300, fn () => Gallery::active()
+            ->whereNotNull('image')
+            ->first()?->image);
 
-        return view('frontend.tourism.index', compact('village', 'destinations'));
+        return view('frontend.tourism.index', compact('village', 'destinations', 'heroImage'));
     }
 
     public function show(TourismDestination $tourism_destination): View
