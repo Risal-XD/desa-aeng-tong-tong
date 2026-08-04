@@ -9,6 +9,18 @@
         subtitle="Dokumentasi kegiatan dan keindahan Desa Aeng Tong-Tong."
     />
 
+    @if ($galleries->isNotEmpty())
+        @php
+            $items = $galleries->map(fn ($item) => [
+                'title' => $item->title,
+                'image' => $item->image ? asset('storage/'.$item->image) : null,
+                'first' => mb_substr($item->title, 0, 1),
+            ])->values();
+        @endphp
+
+        <x-frontend.zoom-parallax :items="$items" title="Galeri Foto" />
+    @endif
+
     <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
         @if ($galleries->isNotEmpty())
             @php
