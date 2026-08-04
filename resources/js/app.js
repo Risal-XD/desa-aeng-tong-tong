@@ -21,6 +21,23 @@ document.addEventListener('alpine:init', () => {
         },
     });
 
+    Alpine.data('typewriter', (text, speed = 50) => ({
+        displayText: '',
+        fullText: text,
+        speed,
+        index: 0,
+        init() {
+            this.type();
+        },
+        type() {
+            if (this.index < this.fullText.length) {
+                this.displayText += this.fullText.charAt(this.index);
+                this.index++;
+                setTimeout(() => this.type(), this.speed);
+            }
+        },
+    }));
+
     Alpine.data('fadeSlider', (photos) => ({
         photos,
         current: 0,
