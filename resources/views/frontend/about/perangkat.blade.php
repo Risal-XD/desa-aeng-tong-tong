@@ -7,6 +7,9 @@
     <x-frontend.page-hero
         title="Perangkat Desa"
         subtitle="Perangkat yang mengabdi untuk masyarakat Desa Aeng Tong-Tong."
+        :image="$heroImage"
+        imagePosition="right center"
+        backgroundSize="280%"
     />
 
     <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
