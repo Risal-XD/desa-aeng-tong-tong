@@ -20,18 +20,30 @@
             @endphp
 
             <div x-data="galleryLightbox(@js($items))">
-                <div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+                <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3" style="perspective: 1000px">
                     <template x-for="(item, index) in items" :key="index">
                         <button
                             type="button"
+                            x-data="tiltCard"
+                            @mousemove="tilt($event)"
+                            @mouseleave="reset"
                             @click="open(index)"
-                            class="group relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl bg-brand-100"
+                            :style="'transform: rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) scale(1.02); transform-style: preserve-3d; transition: transform 0.3s ease'"
+                            class="group relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-brand-100 text-left shadow-sm"
                         >
-                            <img x-show="item.image" :src="item.image" :alt="item.title" x-cloak class="h-full w-full object-cover transition duration-300 group-hover:scale-105">
-                            <span x-show="!item.image" x-cloak class="font-display text-2xl font-semibold text-brand-600" x-text="item.first"></span>
-                            <span class="absolute inset-0 flex items-end bg-gradient-to-t from-ink-950/70 via-transparent to-transparent p-3 text-left opacity-0 transition group-hover:opacity-100">
-                                <span class="text-xs font-semibold text-white" x-text="item.title"></span>
-                            </span>
+                            <img x-show="item.image" :src="item.image" :alt="item.title" x-cloak class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105">
+                            <div x-show="!item.image" x-cloak class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-brand-400 to-brand-700">
+                                <span class="font-display text-6xl font-semibold text-white/90" x-text="item.first"></span>
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-ink-950/80 via-ink-950/10 to-transparent"></div>
+                            <div class="absolute inset-x-0 bottom-0 p-5">
+                                <p class="text-[11px] font-semibold uppercase tracking-widest text-brand-300">Galeri Desa</p>
+                                <h3 class="mt-1 font-display text-lg font-semibold text-white" x-text="item.title"></h3>
+                                <span class="mt-3 inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-1.5 text-xs font-semibold text-ink-900 opacity-0 transition group-hover:opacity-100">
+                                    Lihat Foto
+                                    <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                </span>
+                            </div>
                         </button>
                     </template>
                 </div>

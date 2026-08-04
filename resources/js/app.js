@@ -58,6 +58,22 @@ document.addEventListener('alpine:init', () => {
         },
     }));
 
+    Alpine.data('tiltCard', () => ({
+        rx: 0,
+        ry: 0,
+        tilt(e) {
+            const rect = this.$el.getBoundingClientRect();
+            const x = (e.clientX - rect.left - rect.width / 2) / (rect.width / 2);
+            const y = (e.clientY - rect.top - rect.height / 2) / (rect.height / 2);
+            this.rx = -y * 12;
+            this.ry = x * 12;
+        },
+        reset() {
+            this.rx = 0;
+            this.ry = 0;
+        },
+    }));
+
     Alpine.data('chartBar', (labels, values, label) => ({
         init() {
             this.$nextTick(() => {
