@@ -1,6 +1,8 @@
 @props(['active' => null])
 
 @php
+    $user = auth()->user();
+    $roles = $user->roles->pluck('name')->implode(', ');
     $unreadMessages = auth()->user()->can('message-view')
         ? \App\Models\Message::unread()->count()
         : 0;
@@ -80,12 +82,6 @@
             ],
         ],
         [
-            'group' => 'Akun',
-            'items' => [
-                ['label' => 'Profil Saya', 'icon' => 'user', 'route' => 'admin.profile.show'],
-            ],
-        ],
-        [
             'group' => 'Sistem',
             'items' => [
                 ['label' => 'Pengguna', 'icon' => 'users', 'route' => 'admin.system.users.index', 'perm' => 'user-view'],
@@ -105,35 +101,47 @@
     x-transition:leave="transition ease-in duration-150"
     x-transition:leave-start="translate-x-0"
     x-transition:leave-end="-translate-x-full"
-    class="fixed inset-y-0 left-0 z-40 w-64 bg-ink-950 text-ink-100 lg:sticky lg:top-0 lg:flex lg:h-screen lg:translate-x-0 lg:flex-col"
+    class="fixed inset-y-0 left-0 z-40 w-64 bg-primary text-on-primary lg:sticky lg:top-0 lg:flex lg:h-screen lg:translate-x-0 lg:flex-col"
 >
-    <div class="flex items-center gap-3 border-b border-ink-800 px-5 py-4">
-        <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-500 text-sm font-bold text-white">
+    <!-- Header/Brand -->
+    <div class="flex items-center gap-3 border-b border-primary-container/30 px-5 py-5 h-16 shrink-0">
+        <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-surface-container-lowest text-sm font-bold text-primary shadow-sm">
             AT
         </div>
         <div class="min-w-0">
-            <p class="truncate text-sm font-semibold text-white">Desa Aeng Tong-Tong</p>
-            <p class="text-xs text-ink-400">Panel Admin</p>
+            <p class="truncate text-sm font-semibold text-on-primary leading-tight">Desa Aeng Tong-Tong</p>
+            <p class="text-[10px] uppercase tracking-wider text-on-primary-container/60 font-medium">Panel Admin</p>
         </div>
     </div>
 
-    <nav class="flex-1 space-y-5 overflow-y-auto px-3 py-4">
+    <!-- Navigation -->
+    <nav class="flex-1 space-y-6 overflow-y-auto px-3 py-6 scrollbar-thin scrollbar-thumb-primary-container/50">
         @foreach ($menus as $menu)
             @php
                 $visibleItems = collect($menu['items'])->filter(function ($item) {
                     $routeExists = Route::has($item['route']);
                     $allowed = ! isset($item['perm']) || auth()->user()->can($item['perm']);
-
                     return $routeExists && $allowed;
                 });
             @endphp
 
             @if ($visibleItems->isNotEmpty())
-                <div>
-                    <p class="px-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-ink-500">
-                        {{ $menu['group'] }}
-                    </p>
-                    <ul class="space-y-1">
+                <div x-data="{ expanded: true }">
+                    <button 
+                        @click="expanded = !expanded"
+                        class="group flex w-full items-center justify-between px-2 pb-2 text-[11px] font-semibold uppercase tracking-widest text-on-primary-container/50 transition-colors hover:text-white"
+                    >
+                        <span>{{ $menu['group'] }}</span>
+                        <svg 
+                            class="h-3 w-3 transition-transform duration-200" 
+                            :class="expanded ? 'rotate-0' : '-rotate-90'"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                        >
+                            <path d="m6 9 6 6 6-6"/>
+                        </svg>
+                    </button>
+                    
+                    <ul x-show="expanded" x-collapse class="space-y-1">
                         @foreach ($visibleItems as $item)
                             @php
                                 $isActive = request()->routeIs($item['route'].'*');
@@ -143,15 +151,19 @@
                             <li>
                                 <a
                                     href="{{ route($item['route']) }}"
-                                    class="group flex items-center gap-3 rounded-md px-3 py-2 text-sm transition
-                                        {{ $isActive ? 'bg-brand-600 text-white' : 'text-ink-300 hover:bg-ink-800 hover:text-white' }}"
+                                    class="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200
+                                        {{ $isActive 
+                                            ? 'bg-primary-container text-white shadow-sm ring-1 ring-white/10' 
+                                            : 'text-on-primary/60 hover:bg-white/5 hover:text-white' 
+                                        }}"
                                 >
-                                    <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg class="h-4.5 w-4.5 shrink-0 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         {!! $iconPath !!}
                                     </svg>
-                                    <span class="flex-1">{{ $label }}</span>
+                                    <span class="flex-1 truncate">{{ $label }}</span>
+                                    
                                     @if ($item['route'] === 'admin.service.messages.index' && $unreadMessages > 0)
-                                        <span class="rounded-full bg-amber-500 px-2 py-0.5 text-[10px] font-bold text-white">
+                                        <span class="flex h-5 min-w-[20px] items-center justify-center rounded-full bg-error px-1.5 text-[10px] font-bold text-on-error ring-1 ring-error/50">
                                             {{ $unreadMessages }}
                                         </span>
                                     @endif
@@ -164,7 +176,29 @@
         @endforeach
     </nav>
 
-    <div class="border-t border-ink-800 px-4 py-3">
-        <p class="text-xs text-ink-500">v0.1.0 · Laravel 12</p>
+    <!-- User Profile Footer -->
+    <div class="border-t border-primary-container/30 p-4 shrink-0 bg-primary/50 backdrop-blur-sm">
+        <div class="flex items-center gap-3">
+            <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary-container text-xs font-bold text-on-primary-container ring-1 ring-white/10 overflow-hidden shadow-sm">
+                @if ($user->avatar)
+                    <img src="{{ asset('storage/'.$user->avatar) }}" alt="{{ $user->name }}" class="h-full w-full object-cover">
+                @else
+                    {{ mb_substr($user->name, 0, 1) }}
+                @endif
+            </div>
+            <div class="min-w-0 flex-1">
+                <p class="truncate text-xs font-semibold text-white leading-none">{{ $user->name }}</p>
+                <p class="mt-1 truncate text-[10px] text-on-primary-container/60 font-medium tracking-wide uppercase">{{ $roles }}</p>
+            </div>
+            <a 
+                href="{{ route('admin.profile.show') }}" 
+                class="flex h-7 w-7 items-center justify-center rounded-md text-on-primary/40 hover:bg-white/10 hover:text-white transition-colors"
+                title="Edit Profil"
+            >
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/>
+                </svg>
+            </a>
+        </div>
     </div>
 </aside>

@@ -58,9 +58,9 @@
     @endif
 
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700|instrument-serif:400,500,600" rel="stylesheet">
+    <link href="https://fonts.bunny.net/css?family=be-vietnam-pro:400,500,600,700|work-sans:400,500,600" rel="stylesheet">
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/frontend.css', 'resources/js/app.js'])
     @stack('styles')
 
     @php
@@ -81,7 +81,7 @@
     }
     </script>
 </head>
-<body class="flex min-h-screen flex-col bg-ink-50 font-sans text-ink-700 antialiased">
+<body class="flex min-h-screen flex-col bg-surface font-sans text-on-surface antialiased">
     <a href="#konten-utama" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-ink-900 focus:px-4 focus:py-2 focus:text-white">
         Langsung ke konten utama
     </a>

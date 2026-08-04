@@ -1,5 +1,6 @@
 import './bootstrap';
 import Alpine from 'alpinejs';
+import collapse from '@alpinejs/collapse';
 import Swal from 'sweetalert2';
 import Chart from 'chart.js/auto';
 import * as pdfjsLib from 'pdfjs-dist';
@@ -117,4 +118,5 @@ document.addEventListener('alpine:init', () => {
     // Register global Alpine data/components untuk panel admin di sini.
 });
 
+Alpine.plugin(collapse);
 Alpine.start();
