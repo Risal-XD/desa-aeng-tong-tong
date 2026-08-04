@@ -29,7 +29,7 @@
                             @mouseleave="reset"
                             @click="open(index)"
                             :style="'transform: rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) scale(1.02); transform-style: preserve-3d; transition: transform 0.3s ease'"
-                            class="group relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-brand-100 text-left shadow-sm"
+                            class="group relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-brand-100 text-left shadow-sm"
                         >
                             <img x-show="item.image" :src="item.image" :alt="item.title" x-cloak class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105">
                             <div x-show="!item.image" x-cloak class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-brand-400 to-brand-700">
