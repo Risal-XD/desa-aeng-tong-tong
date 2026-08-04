@@ -1,8 +1,8 @@
-@props(['title', 'subtitle' => null, 'image' => null, 'imagePosition' => 'center'])
+@props(['title', 'subtitle' => null, 'image' => null, 'imagePosition' => 'center', 'backgroundSize' => 'cover'])
 
-<section class="relative overflow-hidden" :style="image ? `background-image: url('{{ $image ? asset('storage/'.$image) : '' }}'); background-size: cover; background-position: {{ $imagePosition }};` : ''">
+<section class="relative overflow-hidden" :style="image ? `background-image: url('{{ $image ? asset('storage/'.$image) : '' }}'); background-size: {{ $backgroundSize }}; background-position: {{ $imagePosition }};` : ''">
     @if ($image)
-        <img src="{{ asset('storage/'.$image) }}" alt="{{ $title }}" class="absolute inset-0 h-full w-full object-cover" style="object-position: {{ $imagePosition }};" />
+        <img src="{{ asset('storage/'.$image) }}" alt="{{ $title }}" class="absolute inset-0 h-full w-full object-contain" style="object-position: {{ $imagePosition }};" />
     @else
         <div class="absolute inset-0 bg-ink-950"></div>
     @endif
