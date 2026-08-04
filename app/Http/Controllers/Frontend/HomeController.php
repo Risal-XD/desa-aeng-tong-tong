@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Agenda;
 use App\Models\Banner;
+use App\Models\Gallery;
 use App\Models\News;
 use App\Models\Statistic;
 use App\Services\ProfileService;
@@ -47,6 +48,13 @@ class HomeController extends Controller
             ->limit(3)
             ->get());
 
+        $heroPhotos = Cache::remember('frontend.home.hero_photos', self::CACHE_TTL, fn () => Gallery::active()
+            ->whereNotNull('image')
+            ->orderBy('is_cover', 'desc')
+            ->latest('id')
+            ->limit(6)
+            ->get());
+
         return view('frontend.home.index', [
             'village' => $this->profileService->getPublicVillage(),
             'featuredPotentials' => $this->profileService->getFeaturedPotentials(3),
@@ -54,6 +62,7 @@ class HomeController extends Controller
             'latestNews' => $latestNews,
             'upcomingAgendas' => $upcomingAgendas,
             'latestStatistics' => $latestStatistics,
+            'heroPhotos' => $heroPhotos,
         ]);
     }
 }

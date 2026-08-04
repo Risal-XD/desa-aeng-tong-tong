@@ -21,6 +21,26 @@ document.addEventListener('alpine:init', () => {
         },
     });
 
+    Alpine.data('fadeSlider', (photos) => ({
+        photos,
+        current: 0,
+        init() {
+            this.timer = setInterval(() => this.next(), 4000);
+        },
+        destroy() {
+            clearInterval(this.timer);
+        },
+        prev() {
+            this.current = (this.current + this.photos.length - 1) % this.photos.length;
+        },
+        next() {
+            this.current = (this.current + 1) % this.photos.length;
+        },
+        go(index) {
+            this.current = index;
+        },
+    }));
+
     Alpine.data('bannerSlider', (banners) => ({
         banners,
         current: 0,

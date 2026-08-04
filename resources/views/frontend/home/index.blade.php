@@ -31,33 +31,49 @@
             </div>
 
             <div class="hidden lg:block">
-                <div class="relative mx-auto max-w-sm">
+                <div x-data="fadeSlider(@js($heroPhotos->map(fn ($photo) => [
+                    'title' => $photo->title,
+                    'image' => $photo->image ? asset('storage/'.$photo->image) : null,
+                ])->values()))" class="relative mx-auto max-w-sm">
                     <div class="absolute -inset-4 rounded-3xl bg-surface-container-high blur-2xl"></div>
-                    <div class="relative rounded-3xl border border-outline-variant bg-surface-container-low p-8 shadow-xl backdrop-blur">
-                        @if ($village)
-                            <p class="font-display text-xl font-semibold text-on-surface">{{ $village->name }}</p>
-                            <p class="mt-1 text-xs text-on-surface-variant">Kode Desa {{ $village->code }}</p>
-                            <dl class="mt-6 grid grid-cols-2 gap-4">
-                                <div class="rounded-xl bg-surface p-4">
-                                    <dt class="text-xs text-on-surface-variant">Luas Wilayah</dt>
-                                    <dd class="mt-1 text-lg font-semibold text-primary">{{ number_format((float) $village->area, 2, ',', '.') }} km²</dd>
+                    <div class="relative aspect-[4/3] overflow-hidden rounded-3xl border border-outline-variant bg-surface-container-low shadow-xl">
+                        <template x-for="(photo, index) in photos" :key="index">
+                            <div
+                                x-show="index === current"
+                                x-cloak
+                                x-transition:enter="transition-opacity duration-1000 ease-out"
+                                x-transition:enter-start="opacity-0"
+                                x-transition:enter-end="opacity-100"
+                                x-transition:leave="transition-opacity duration-1000 ease-in"
+                                x-transition:leave-start="opacity-100"
+                                x-transition:leave-end="opacity-0"
+                                class="absolute inset-0"
+                            >
+                                <img x-show="photo.image" :src="photo.image" :alt="photo.title" x-cloak class="h-full w-full object-cover">
+                                <div x-show="!photo.image" x-cloak class="flex h-full w-full items-center justify-center bg-gradient-to-br from-primary to-secondary">
+                                    <span class="font-display text-6xl font-semibold text-on-primary/90" x-text="photo.title.charAt(0)"></span>
                                 </div>
-                                <div class="rounded-xl bg-surface p-4">
-                                    <dt class="text-xs text-on-surface-variant">Dusun</dt>
-                                    <dd class="mt-1 text-lg font-semibold text-primary">{{ $village->total_hamlet }}</dd>
-                                </div>
-                                <div class="rounded-xl bg-surface p-4">
-                                    <dt class="text-xs text-on-surface-variant">Potensi Unggulan</dt>
-                                    <dd class="mt-1 text-lg font-semibold text-primary">{{ $featuredPotentials->count() }}</dd>
-                                </div>
-                                <div class="rounded-xl bg-surface p-4">
-                                    <dt class="text-xs text-on-surface-variant">Berdiri Sejak</dt>
-                                    <dd class="mt-1 text-lg font-semibold text-primary">{{ $village->history?->founded_year ?? '-' }}</dd>
-                                </div>
-                            </dl>
-                        @else
-                            <p class="text-sm text-on-surface-variant">Data desa belum tersedia.</p>
-                        @endif
+                            </div>
+                        </template>
+
+                        <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink-950/80 to-transparent p-5">
+                            <p class="text-[11px] font-semibold uppercase tracking-widest text-brand-300">
+                                Galeri Desa · <span x-text="(current + 1) + ' / ' + photos.length"></span>
+                            </p>
+                            <h3 class="mt-1 font-display text-lg font-semibold text-white" x-text="photos[current].title"></h3>
+                        </div>
+
+                        <div x-show="photos.length > 1" x-cloak class="absolute bottom-4 right-4 flex gap-1.5">
+                            <template x-for="(photo, index) in photos" :key="'dot-'+index">
+                                <button
+                                    type="button"
+                                    @click="go(index)"
+                                    :class="index === current ? 'bg-white' : 'bg-white/40'"
+                                    class="h-1.5 w-1.5 rounded-full transition"
+                                    :aria-label="'Ke foto ' + (index + 1)"
+                                ></button>
+                            </template>
+                        </div>
                     </div>
                 </div>
             </div>
