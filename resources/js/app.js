@@ -38,9 +38,43 @@ document.addEventListener('alpine:init', () => {
         },
     }));
 
-    Alpine.data('galleryLightbox', (items) => ({
+    Alpine.data('stackingGallery', (items) => ({
         items,
         openIndex: null,
+        progress: 0,
+        imageScales: items.map(() => 2),
+        init() {
+            this.update = () => {
+                const rect = this.$el.getBoundingClientRect();
+                const total = rect.height - window.innerHeight;
+                const scrolled = -rect.top;
+                this.progress = total > 0 ? Math.min(1, Math.max(0, scrolled / total)) : 0;
+
+                this.$el.querySelectorAll('[data-stack-card]').forEach((card, i) => {
+                    const r = card.getBoundingClientRect();
+                    const p = Math.max(0, Math.min(1, (window.innerHeight - r.top) / window.innerHeight));
+                    this.imageScales[i] = (2 - p).toFixed(4);
+                });
+            };
+            this.update();
+            window.addEventListener('scroll', this.update, { passive: true });
+            window.addEventListener('resize', this.update);
+        },
+        destroy() {
+            window.removeEventListener('scroll', this.update);
+            window.removeEventListener('resize', this.update);
+        },
+        scaleFor(index) {
+            const n = this.items.length;
+            const targetScale = 1 - (n - index) * 0.05;
+            const start = index * 0.25;
+            const local = start >= 1 ? 1 : Math.max(0, Math.min(1, (this.progress - start) / (1 - start)));
+            return (1 + (targetScale - 1) * local).toFixed(4);
+        },
+        accentFor(index) {
+            const accents = ['#1b4332', '#7d562d', '#0e4a3a', '#5a4a25', '#012d1d'];
+            return accents[index % accents.length];
+        },
         get current() {
             return this.openIndex === null ? {} : this.items[this.openIndex];
         },
