@@ -14,44 +14,39 @@
             @php
                 $items = $galleries->map(fn ($item) => [
                     'title' => $item->title,
-                    'description' => $item->description,
                     'image' => $item->image ? asset('storage/'.$item->image) : null,
                     'first' => mb_substr($item->title, 0, 1),
                 ])->values();
             @endphp
 
-            <div x-data="stackingGallery(@js($items))">
-                <template x-for="(item, index) in items" :key="index">
-                    <div data-stack-card class="flex h-screen w-full items-center justify-center sticky top-0">
+            <div x-data="galleryLightbox(@js($items))">
+                <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3" style="perspective: 1000px">
+                    <template x-for="(item, index) in items" :key="index">
                         <button
                             type="button"
+                            x-data="tiltCard"
+                            @mousemove="tilt($event)"
+                            @mouseleave="reset"
                             @click="open(index)"
-                            :style="`background-color: ${accentFor(index)}; top: calc(-5vh + ${index * 25}px); transform: scale(${scaleFor(index)});`"
-                            class="relative -top-[25%] flex h-[450px] w-[70%] origin-top flex-col overflow-hidden rounded-2xl p-4 text-left text-white shadow-2xl transition-transform lg:p-10 sm:p-4"
+                            :style="'transform: rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) scale(1.02); transform-style: preserve-3d; transition: transform 0.3s ease'"
+                            class="group relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-brand-100 text-left shadow-sm"
                         >
-                            <h2 class="text-center font-display text-2xl font-semibold" x-text="item.title"></h2>
-                            <div class="mt-5 flex h-full gap-10">
-                                <div class="relative top-[10%] hidden w-[40%] md:block">
-                                    <p class="text-sm leading-relaxed text-white/90" x-text="item.description"></p>
-                                    <span class="mt-3 inline-flex items-center gap-2 text-sm font-semibold underline underline-offset-4">
-                                        Lihat Foto
-                                        <svg width="22" height="12" viewBox="0 0 22 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M21.5303 6.53033C21.8232 6.23744 21.8232 5.76256 21.5303 5.46967L16.7574 0.696699C16.4645 0.403806 15.9896 0.403806 15.6967 0.696699C15.4038 0.989592 15.4038 1.46447 15.6967 1.75736L19.9393 6L15.6967 10.2426C15.4038 10.5355 15.4038 11.0104 15.6967 11.3033C15.9896 11.5962 16.4645 11.5962 16.7574 11.3033L21.5303 6.53033ZM0 6.75L21 6.75V5.25L0 5.25L0 6.75Z" fill="white"/>
-                                        </svg>
-                                    </span>
-                                </div>
-                                <div class="relative h-full w-full overflow-hidden rounded-lg md:w-[60%]">
-                                    <div class="h-full w-full" :style="`transform: scale(${imageScales[index]})`">
-                                        <img x-show="item.image" :src="item.image" :alt="item.title" x-cloak class="h-full w-full object-cover">
-                                        <div x-show="!item.image" x-cloak class="flex h-full w-full items-center justify-center bg-gradient-to-br from-white/20 to-white/5">
-                                            <span class="font-display text-6xl font-semibold text-white/90" x-text="item.first"></span>
-                                        </div>
-                                    </div>
-                                </div>
+                            <img x-show="item.image" :src="item.image" :alt="item.title" x-cloak class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105">
+                            <div x-show="!item.image" x-cloak class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-brand-400 to-brand-700">
+                                <span class="font-display text-6xl font-semibold text-white/90" x-text="item.first"></span>
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-ink-950/80 via-ink-950/10 to-transparent"></div>
+                            <div class="absolute inset-x-0 bottom-0 p-5">
+                                <p class="text-[11px] font-semibold uppercase tracking-widest text-brand-300">Galeri Desa</p>
+                                <h3 class="mt-1 font-display text-lg font-semibold text-white" x-text="item.title"></h3>
+                                <span class="mt-3 inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-1.5 text-xs font-semibold text-ink-900 opacity-0 transition group-hover:opacity-100">
+                                    Lihat Foto
+                                    <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                </span>
                             </div>
                         </button>
-                    </div>
-                </template>
+                    </template>
+                </div>
 
                 <div class="mt-12">
                     {{ $galleries->links() }}
