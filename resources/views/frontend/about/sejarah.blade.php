@@ -7,6 +7,7 @@
     <x-frontend.page-hero
         title="Sejarah Desa"
         subtitle="Perjalanan panjang Desa Aeng Tong-Tong hingga menjadi desa wisata keris yang dikenal luas."
+        :image="$heroImage"
     />
 
     <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
