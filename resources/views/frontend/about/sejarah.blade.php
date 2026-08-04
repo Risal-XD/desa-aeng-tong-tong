@@ -8,7 +8,7 @@
         title="Sejarah Desa"
         subtitle="Perjalanan panjang Desa Aeng Tong-Tong hingga menjadi desa wisata keris yang dikenal luas."
         :image="$heroImage"
-        imagePosition="right top"
+        imagePosition="right center"
         backgroundSize="220%"
     />
 
