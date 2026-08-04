@@ -12,8 +12,12 @@
                     <span class="h-1.5 w-1.5 rounded-full bg-secondary"></span>
                     Juara 1 ADWI 2022 · Rekor MURI
                 </p>
-                <h1 x-data="typewriter('Selamat Datang di\nDesa Aeng Tong-Tong', 50)" class="font-display text-4xl font-semibold leading-tight text-white sm:text-5xl whitespace-pre-line" x-text="displayText"></h1>
-                <p x-data="typewriter('Desa wisata sentra kerajinan keris di Kecamatan Saronggi, Kabupaten Sumenep, Jawa Timur. Menjaga warisan budaya para Mpu sekaligus membangun kesejahteraan masyarakat.', 30)" class="mt-5 max-w-xl text-sm leading-relaxed text-on-primary-container sm:text-base text-justify" x-text="displayText"></p>
+                <div class="min-h-[7.5rem] sm:min-h-[10rem]">
+                    <h1 x-data="typewriter('Selamat Datang di\nDesa Aeng Tong-Tong', 50)" class="font-display text-4xl font-semibold leading-tight text-white sm:text-5xl whitespace-pre-line" x-text="displayText"></h1>
+                </div>
+                <div class="min-h-[6rem]">
+                    <p x-data="typewriter('Desa wisata sentra kerajinan keris di Kecamatan Saronggi, Kabupaten Sumenep, Jawa Timur. Menjaga warisan budaya para Mpu sekaligus membangun kesejahteraan masyarakat.', 30)" class="mt-5 max-w-xl text-sm leading-relaxed text-on-primary-container sm:text-base text-justify" x-text="displayText"></p>
+                </div>
                 <div class="mt-8 flex flex-wrap gap-3">
                     <a href="{{ route('about.sejarah') }}" class="rounded-lg bg-secondary px-6 py-3 text-sm font-semibold text-on-secondary shadow-sm transition hover:bg-secondary-container hover:text-on-secondary-container">
                         Jelajahi Desa
