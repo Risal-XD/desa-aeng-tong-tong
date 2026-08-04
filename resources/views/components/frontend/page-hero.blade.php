@@ -9,7 +9,7 @@
     
     <div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-primary via-primary/70 to-primary/10"></div>
     @if ($image)
-        <div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/60 to-transparent"></div>
+        <div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/40 to-transparent"></div>
     @endif
     <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(212,138,30,0.25),transparent_60%)]"></div>
     
