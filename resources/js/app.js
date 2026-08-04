@@ -21,13 +21,14 @@ document.addEventListener('alpine:init', () => {
         },
     });
 
-    Alpine.data('typewriter', (text, speed = 50) => ({
+    Alpine.data('typewriter', (text, speed = 50, delay = 0) => ({
         displayText: '',
         fullText: text,
         speed,
+        delay,
         index: 0,
         init() {
-            this.type();
+            setTimeout(() => this.type(), this.delay);
         },
         type() {
             if (this.index < this.fullText.length) {
