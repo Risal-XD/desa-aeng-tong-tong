@@ -110,7 +110,7 @@ Route::prefix('admin')
                 ->name('login');
 
             Route::post('login', [AuthenticatedSessionController::class, 'store'])
-                ->middleware('throttle:5,1')
+                ->middleware('throttle:admin-login')
                 ->name('login.store');
         });
 

@@ -59,7 +59,10 @@ use App\Policies\UserPolicy;
 use App\Policies\VideoPolicy;
 use App\Policies\VillagePolicy;
 use App\Policies\VisionMissionPolicy;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -77,11 +80,20 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->configureRateLimiting();
         $this->configureGates();
 
         foreach (FrontendCacheObserver::models() as $model) {
             $model::observe(FrontendCacheObserver::class);
         }
+    }
+
+    private function configureRateLimiting(): void
+    {
+        RateLimiter::for('admin-login', function (Request $request) {
+            $email = (string) $request->input('email', '');
+            return Limit::perMinute(5)->by(mb_strtolower($email).'|'.$request->ip());
+        });
     }
 
     /**
