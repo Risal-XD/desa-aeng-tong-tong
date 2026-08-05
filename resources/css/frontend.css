@@ -93,7 +93,7 @@
     }
 }
 
-/* Dual-Row Marquee Gallery (Smooth & Natural Aspect Ratio) */
+/* Dual-Row Marquee Gallery (Smooth, Stable, Natural Ratio) */
 .marquee-row-viewport {
     overflow: hidden;
     position: relative;
@@ -103,16 +103,18 @@
 }
 .marquee-row-track {
     display: flex;
-    gap: 1.25rem;
+    align-items: center;
+    gap: 1.5rem;
     width: max-content;
     will-change: transform;
     transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
 }
 .marquee-row-1 {
-    animation: scroll-right 22s linear infinite;
+    animation: scroll-right 38s linear infinite;
 }
 .marquee-row-2 {
-    animation: scroll-left 26s linear infinite;
+    animation: scroll-left 44s linear infinite;
 }
 .marquee-row-track:hover {
     animation-play-state: paused;
@@ -121,6 +123,9 @@
     height: 220px;
     flex-shrink: 0;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .marquee-img-card img {
     height: 100%;
@@ -129,6 +134,7 @@
     border-radius: 1rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     transition: transform 300ms ease, box-shadow 300ms ease;
+    backface-visibility: hidden;
 }
 .marquee-img-card img:hover {
     transform: scale(1.03);
