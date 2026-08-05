@@ -54,14 +54,7 @@
                             </div>
                         </template>
 
-                        <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink-950/80 to-transparent p-5">
-                            <p class="text-[11px] font-semibold uppercase tracking-widest text-brand-300">
-                                Galeri Desa · <span x-text="(current + 1) + ' / ' + photos.length"></span>
-                            </p>
-                            <h3 class="mt-1 font-display text-lg font-semibold text-white" x-text="photos[current].title"></h3>
-                        </div>
-
-                        <div x-show="photos.length > 1" x-cloak class="absolute bottom-4 right-4 flex gap-1.5">
+                        <div x-show="photos.length > 1" x-cloak class="absolute bottom-4 inset-x-0 flex justify-center gap-1.5">
                             <template x-for="(photo, index) in photos" :key="'dot-'+index">
                                 <button
                                     type="button"

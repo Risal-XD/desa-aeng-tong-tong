@@ -11,31 +11,42 @@
 
     <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
         @if ($news->isNotEmpty())
-            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                 @foreach ($news as $item)
-                    <a href="{{ route('news.show', $item) }}" class="group flex flex-col overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-brand-300 hover:shadow-lg">
-                        <div class="relative flex h-44 items-center justify-center overflow-hidden bg-brand-100">
+                    <a href="{{ route('news.show', $item) }}" class="group relative flex flex-col overflow-hidden rounded-3xl border border-white/20 bg-surface-container-low/80 backdrop-blur-xl shadow-lg transition duration-500 hover:-translate-y-2 hover:border-primary/40 hover:shadow-2xl">
+                        <div class="relative flex h-52 items-center justify-center overflow-hidden bg-surface-container">
                             @if ($item->cover_image)
-                                <img src="{{ asset('storage/'.$item->cover_image) }}" alt="{{ $item->title }}" class="h-full w-full object-cover transition duration-300 group-hover:scale-105">
+                                <img src="{{ asset('storage/'.$item->cover_image) }}" alt="{{ $item->title }}" class="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-110">
                             @else
-                                <span class="font-display text-4xl font-semibold text-brand-600">{{ mb_substr($item->title, 0, 1) }}</span>
+                                <span class="font-display text-4xl font-semibold text-primary">{{ mb_substr($item->title, 0, 1) }}</span>
                             @endif
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100"></div>
                             @if ($item->category)
-                                <span class="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-brand-700">
+                                <span class="absolute left-4 top-4 rounded-full bg-surface/90 backdrop-blur-md px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-primary shadow-sm">
                                     {{ $item->category->name }}
                                 </span>
                             @endif
                         </div>
-                        <div class="flex flex-1 flex-col p-5">
-                            <p class="text-xs text-ink-400">
-                                {{ $item->published_at?->translatedFormat('d M Y') }} · {{ number_format($item->views_count) }} kali dilihat
-                            </p>
-                            <h2 class="mt-2 font-display text-base font-semibold leading-snug text-ink-900 group-hover:text-brand-600">
+                        <div class="flex flex-1 flex-col p-6">
+                            <div class="flex items-center justify-between text-xs text-on-surface-variant">
+                                <span>{{ $item->published_at?->translatedFormat('d M Y') }}</span>
+                                <span class="flex items-center gap-1">
+                                    <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                                    {{ number_format($item->views_count) }}
+                                </span>
+                            </div>
+                            <h2 class="mt-3 font-display text-lg font-semibold leading-snug text-on-surface transition group-hover:text-primary">
                                 {{ $item->title }}
                             </h2>
                             @if ($item->excerpt)
-                                <p class="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-ink-500">{{ $item->excerpt }}</p>
+                                <p class="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-on-surface-variant">{{ $item->excerpt }}</p>
                             @endif
+                            <div class="mt-6 flex items-center justify-between border-t border-outline-variant/30 pt-4 text-sm font-semibold text-primary">
+                                <span class="group-hover:underline">Baca Selengkapnya</span>
+                                <span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 transition group-hover:bg-primary group-hover:text-on-primary">
+                                    <svg class="h-4 w-4 transition group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                </span>
+                            </div>
                         </div>
                     </a>
                 @endforeach
