@@ -93,48 +93,65 @@
     }
 }
 
-/* Dual-Row Marquee Gallery (Pinterest Style Motion) */
+/* Dual-Row Marquee Gallery (Smooth & Natural Aspect Ratio) */
 .marquee-row-viewport {
     overflow: hidden;
-    mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+    position: relative;
+    width: 100%;
+    mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
 }
 .marquee-row-track {
     display: flex;
     gap: 1.25rem;
     width: max-content;
     will-change: transform;
+    transform: translate3d(0, 0, 0);
 }
 .marquee-row-1 {
-    animation: scroll-right 45s linear infinite;
+    animation: scroll-right 22s linear infinite;
 }
 .marquee-row-2 {
-    animation: scroll-left 50s linear infinite;
+    animation: scroll-left 26s linear infinite;
 }
 .marquee-row-track:hover {
     animation-play-state: paused;
 }
 .marquee-img-card {
-    width: 260px;
+    height: 220px;
     flex-shrink: 0;
     cursor: pointer;
 }
+.marquee-img-card img {
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 300ms ease, box-shadow 300ms ease;
+}
+.marquee-img-card img:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
 @keyframes scroll-right {
-    from {
-        transform: translateX(-50%);
+    0% {
+        transform: translate3d(-50%, 0, 0);
     }
-    to {
-        transform: translateX(0);
+    100% {
+        transform: translate3d(0, 0, 0);
     }
 }
 @keyframes scroll-left {
-    from {
-        transform: translateX(0);
+    0% {
+        transform: translate3d(0, 0, 0);
     }
-    to {
-        transform: translateX(-50%);
+    100% {
+        transform: translate3d(-50%, 0, 0);
     }
 }
+
 @media (prefers-reduced-motion: reduce) {
     .marquee-row-track {
         animation: none;

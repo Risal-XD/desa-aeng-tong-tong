@@ -79,21 +79,21 @@ document.addEventListener('alpine:init', () => {
         row1: [],
         row2: [],
         init() {
-            const aspectRatios = ['aspect-[4/3]', 'aspect-[3/4]', 'aspect-square', 'aspect-[16/10]'];
-            const base = (photos || []).map((p, i) => ({
+            const base = (photos || []).map((p) => ({
                 src: p.image ? '/storage/' + p.image : 'https://images.unsplash.com/photo-1755331039789-7e5680e26e8f?q=80&w=774',
                 alt: p.title || 'Galeri Desa',
-                aspect: aspectRatios[i % aspectRatios.length],
             }));
             
-            // Bagi jadi 2 row dan duplikat agar loop mulus
+            // Bagi jadi 2 row
             const half = Math.ceil(base.length / 2);
-            const r1 = base.slice(0, half);
-            const r2 = base.slice(half);
+            const r1 = base.slice(0, half).length ? base.slice(0, half) : base;
+            const r2 = base.slice(half).length ? base.slice(half) : base;
             
-            // Pastikan tidak kosong
-            const list1 = r1.length ? r1 : base;
-            const list2 = r2.length ? r2 : base;
+            // Duplikat secukupnya (min 6-8 item per row) agar track lebar dan loop -50% mulus tanpa glitch/gap
+            let list1 = [...r1];
+            while (list1.length < 8) list1 = list1.concat(r1);
+            let list2 = [...r2];
+            while (list2.length < 8) list2 = list2.concat(r2);
 
             this.row1 = [...list1, ...list1];
             this.row2 = [...list2, ...list2];

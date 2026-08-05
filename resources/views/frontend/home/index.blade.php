@@ -161,14 +161,14 @@
         </section>
     @endif
 
-    {{-- Dual-Row Pinterest Marquee Gallery --}}
+    {{-- Dual-Row Pinterest Marquee Gallery (Natural Aspect Ratio) --}}
     @if ($heroPhotos->isNotEmpty())
         <section class="relative overflow-hidden bg-surface py-20 sm:py-24" data-parallax-speed="25">
             <div class="mx-auto max-w-6xl px-4 sm:px-6">
                 <x-frontend.section-heading
                     eyebrow="Galeri Desa"
                     title="Galeri Aeng Tong-Tong"
-                    subtitle="Dokumentasi foto keindahan desa dalam animasi mengalir. Arahkan kursor untuk menjeda."
+                    subtitle="Dokumentasi foto keindahan desa dengan orientasi asli (lanskap dan potret) yang mengalir halus."
                     align="center"
                 />
             </div>
@@ -177,25 +177,21 @@
                 class="mx-auto mt-12 max-w-7xl px-2 sm:px-4"
                 x-data="pinterestMarquee(@js($heroPhotos->map(fn ($p) => ['title' => $p->title, 'image' => $p->image])->values()))"
             >
-                <div class="marquee-row-viewport space-y-5">
-                    {{-- Row 1: Bergerak ke kanan (muncul dari kiri) --}}
+                <div class="marquee-row-viewport space-y-4">
+                    {{-- Row 1: Bergerak ke kanan --}}
                     <div class="marquee-row-track marquee-row-1">
                         <template x-for="(it, i) in row1" :key="'r1-'+i">
-                            <div class="marquee-img-card group" @click="openItem(it)">
-                                <div class="overflow-hidden rounded-2xl border border-outline-variant/30 bg-surface-container-low shadow-sm transition duration-300 group-hover:scale-[1.02] group-hover:shadow-lg">
-                                    <img :src="it.src" :alt="it.alt" :class="it.aspect" class="w-full object-cover pointer-events-none select-none transition duration-500" draggable="false">
-                                </div>
+                            <div class="marquee-img-card" @click="openItem(it)">
+                                <img :src="it.src" :alt="it.alt" class="pointer-events-none select-none" draggable="false">
                             </div>
                         </template>
                     </div>
 
-                    {{-- Row 2: Bergerak ke kiri (berlawanan) --}}
+                    {{-- Row 2: Bergerak ke kiri --}}
                     <div class="marquee-row-track marquee-row-2">
                         <template x-for="(it, i) in row2" :key="'r2-'+i">
-                            <div class="marquee-img-card group" @click="openItem(it)">
-                                <div class="overflow-hidden rounded-2xl border border-outline-variant/30 bg-surface-container-low shadow-sm transition duration-300 group-hover:scale-[1.02] group-hover:shadow-lg">
-                                    <img :src="it.src" :alt="it.alt" :class="it.aspect" class="w-full object-cover pointer-events-none select-none transition duration-500" draggable="false">
-                                </div>
+                            <div class="marquee-img-card" @click="openItem(it)">
+                                <img :src="it.src" :alt="it.alt" class="pointer-events-none select-none" draggable="false">
                             </div>
                         </template>
                     </div>
