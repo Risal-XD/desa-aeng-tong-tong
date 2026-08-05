@@ -161,49 +161,64 @@
         </section>
     @endif
 
-    {{-- Parallax Gallery --}}
-    @php
-        $photos = $heroPhotos->values();
-        $columns = [[], [], []];
-        foreach ($photos as $i => $photo) {
-            $columns[$i % 3][] = $photo;
-        }
-        $factors = [0.6, 0, -0.6];
-    @endphp
+    {{-- Dome Gallery 3D --}}
     @if ($heroPhotos->isNotEmpty())
-        <section class="relative overflow-hidden bg-surface py-20 sm:py-24">
-            <div class="mx-auto max-w-6xl px-4 sm:px-6" data-parallax-speed="40">
+        <section class="relative overflow-hidden bg-surface py-20 sm:py-24" data-parallax-speed="25">
+            <div class="mx-auto max-w-6xl px-4 sm:px-6">
                 <x-frontend.section-heading
-                    eyebrow="Jelajah Visual"
-                    title="Suasana Desa dalam Gerak"
-                    subtitle="Pemandangan desa yang menyatu dalam alunan, seiring gulir halaman Anda berjalan."
+                    eyebrow="Galeri Desa"
+                    title="Dome Gallery Aeng Tong-Tong"
+                    subtitle="Seret dan putar untuk menjelajahi momen serta keindahan desa dalam tampilan bola 3D. Klik foto untuk memperbesar."
                     align="center"
                 />
             </div>
-            <div class="parallax-grid mx-auto mt-14 max-w-6xl px-4 sm:px-6">
-                @foreach ($columns as $index => $col)
-                    <div class="space-y-6" data-parallax-speed="{{ $factors[$index] * 120 }}">
-                        @forelse ($col as $photo)
-                            <div class="overflow-hidden rounded-2xl border border-outline-variant/40 bg-surface-container-lowest shadow-sm">
-                                @if ($photo->image)
-                                    <img src="{{ asset('storage/'.$photo->image) }}" alt="{{ $photo->title }}" class="aspect-[4/5] w-full object-cover transition duration-300 hover:scale-105">
-                                @else
-                                    <div class="flex aspect-[4/5] items-center justify-center bg-gradient-to-br from-primary to-secondary">
-                                        <span class="font-display text-5xl font-semibold text-on-primary/90">{{ mb_substr($photo->title, 0, 1) }}</span>
+
+            <div class="mx-auto max-w-6xl mt-10 px-4 sm:px-6">
+                <div
+                    x-data="domeGallery(@js($heroPhotos->map(fn ($p) => ['title' => $p->title, 'image' => $p->image])->values()))"
+                    class="dome-root relative w-full h-[600px] overflow-hidden select-none cursor-grab touch-none"
+                    :class="{ 'cursor-grabbing': dragging }"
+                    @mousedown="startDrag($event)"
+                    @mousemove="onDrag($event)"
+                    @mouseup="stopDrag()"
+                    @mouseleave="stopDrag()"
+                    @touchstart="startDrag($event)"
+                    @touchmove="onDrag($event)"
+                    @touchend="stopDrag()"
+                    @touchcancel="stopDrag()"
+                >
+                    <div class="dome-stage">
+                        <div x-ref="sphere" class="dome-sphere">
+                            <template x-for="(it, i) in items" :key="i">
+                                <div
+                                    class="dome-item"
+                                    :class="{ 'dome-item--enlarged': enlarged === it }"
+                                    :style="`--offset-x: ${it.x}; --offset-y: ${it.y}; --item-size-x: ${it.sizeX}; --item-size-y: ${it.sizeY}; transform: ${itemTransform(it)};`"
+                                >
+                                    <div
+                                        class="dome-item__image bg-surface-container-low shadow-md"
+                                        @click="openItem(it)"
+                                        role="button"
+                                        :aria-label="it.alt"
+                                    >
+                                        <img :src="it.src" :alt="it.alt" class="w-full h-full object-cover pointer-events-none select-none" draggable="false">
                                     </div>
-                                @endif
-                                <div class="p-4">
-                                    <p class="text-xs font-semibold uppercase tracking-widest text-primary">Galeri Desa</p>
-                                    <h3 class="mt-1 font-display text-base font-semibold text-on-surface">{{ $photo->title }}</h3>
                                 </div>
-                            </div>
-                        @empty
-                            <div class="flex aspect-[4/5] items-center justify-center rounded-2xl border border-dashed border-outline-variant bg-surface-container-low">
-                                <span class="font-display text-3xl font-semibold text-on-surface-variant">-</span>
-                            </div>
-                        @endforelse
+                            </template>
+                        </div>
                     </div>
-                @endforeach
+
+                    {{-- Modal perbesar foto --}}
+                    <template x-if="enlarged">
+                        <div class="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4" x-cloak @click.self="closeItem()">
+                            <div class="relative w-full max-w-2xl overflow-hidden rounded-3xl bg-surface p-4 shadow-2xl">
+                                <button type="button" class="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-xl text-white transition hover:bg-black" @click="closeItem()" aria-label="Tutup">&times;</button>
+                                <img :src="enlarged.src" :alt="enlarged.alt" class="w-full max-h-[70vh] rounded-2xl object-cover">
+                                <h3 class="mt-4 font-display text-lg font-semibold text-on-surface" x-text="enlarged.alt"></h3>
+                            </div>
+                        </div>
+                    </template>
+                </div>
             </div>
         </section>
     @endif

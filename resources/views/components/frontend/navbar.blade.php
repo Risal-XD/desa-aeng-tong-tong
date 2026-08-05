@@ -107,7 +107,7 @@
     <div x-show="$store.mobileNav.open" x-cloak x-transition class="border-t border-ink-200 bg-white lg:hidden">
         <div class="space-y-1 px-4 py-4">
             <a href="{{ route('home') }}" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 transition hover:bg-brand-50 hover:text-brand-700">Beranda</a>
-            <div x-data="{ open: request()->routeIs('about.*') }">
+            <div x-data="{ open: @js(request()->routeIs('about.*')) }">
                 <button type="button" @click="open = !open" class="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 transition hover:bg-brand-50 hover:text-brand-700">
                     Tentang
                     <svg class="h-4 w-4" :class="open ? 'rotate-180' : ''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
@@ -120,7 +120,7 @@
                 </div>
             </div>
             <a href="{{ route('potensi') }}" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 transition hover:bg-brand-50 hover:text-brand-700">Potensi</a>
-            <div x-data="{ open: request()->routeIs('news.*', 'announcements.*', 'agendas.*', 'galleries.*', 'videos.*') }">
+            <div x-data="{ open: @js(request()->routeIs('news.*', 'announcements.*', 'agendas.*', 'galleries.*', 'videos.*')) }">
                 <button type="button" @click="open = !open" class="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 transition hover:bg-brand-50 hover:text-brand-700">
                     Informasi
                     <svg class="h-4 w-4" :class="open ? 'rotate-180' : ''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
@@ -133,7 +133,7 @@
                     <a href="{{ route('videos.index') }}" class="block rounded-lg px-3 py-2 text-sm text-ink-600 hover:text-brand-700">Video</a>
                 </div>
             </div>
-            <div x-data="{ open: request()->routeIs('tourism.*', 'keris.*', 'umkms.*') }">
+            <div x-data="{ open: @js(request()->routeIs('tourism.*', 'keris.*', 'umkms.*')) }">
                 <button type="button" @click="open = !open" class="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 transition hover:bg-brand-50 hover:text-brand-700">
                     Ekonomi
                     <svg class="h-4 w-4" :class="open ? 'rotate-180' : ''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
@@ -144,7 +144,7 @@
                     <a href="{{ route('umkms.index') }}" class="block rounded-lg px-3 py-2 text-sm text-ink-600 hover:text-brand-700">UMKM</a>
                 </div>
             </div>
-            <div x-data="{ open: request()->routeIs('statistics.*', 'apbdes.*', 'documents.*') }">
+            <div x-data="{ open: @js(request()->routeIs('statistics.*', 'apbdes.*', 'documents.*')) }">
                 <button type="button" @click="open = !open" class="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 transition hover:bg-brand-50 hover:text-brand-700">
                     Data
                     <svg class="h-4 w-4" :class="open ? 'rotate-180' : ''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
