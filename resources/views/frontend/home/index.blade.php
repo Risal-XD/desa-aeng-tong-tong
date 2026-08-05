@@ -161,64 +161,52 @@
         </section>
     @endif
 
-    {{-- Dome Gallery 3D --}}
+    {{-- Marquee Gallery --}}
     @if ($heroPhotos->isNotEmpty())
         <section class="relative overflow-hidden bg-surface py-20 sm:py-24" data-parallax-speed="25">
             <div class="mx-auto max-w-6xl px-4 sm:px-6">
                 <x-frontend.section-heading
                     eyebrow="Galeri Desa"
-                    title="Dome Gallery Aeng Tong-Tong"
-                    subtitle="Seret dan putar untuk menjelajahi momen serta keindahan desa dalam tampilan bola 3D. Klik foto untuk memperbesar."
+                    title="Galeri Aeng Tong-Tong"
+                    subtitle="Koleksi foto desa yang mengalir terus — setiap foto muncul dari kiri dan bergerak ke kanan. Klik untuk memperbesar."
                     align="center"
                 />
             </div>
 
-            <div class="mx-auto max-w-6xl mt-10 px-4 sm:px-6">
+            <div
+                class="mx-auto mt-12 max-w-6xl px-4 sm:px-6"
+                x-data="marqueeGallery(@js($heroPhotos->map(fn ($p) => ['title' => $p->title, 'image' => $p->image])->values()))"
+            >
                 <div
-                    x-data="domeGallery(@js($heroPhotos->map(fn ($p) => ['title' => $p->title, 'image' => $p->image])->values()))"
-                    class="dome-root relative w-full h-[600px] overflow-hidden select-none cursor-grab touch-none"
-                    :class="{ 'cursor-grabbing': dragging }"
-                    @mousedown="startDrag($event)"
-                    @mousemove="onDrag($event)"
-                    @mouseup="stopDrag()"
-                    @mouseleave="stopDrag()"
-                    @touchstart="startDrag($event)"
-                    @touchmove="onDrag($event)"
-                    @touchend="stopDrag()"
-                    @touchcancel="stopDrag()"
+                    class="marquee-viewport relative"
+                    @mouseenter="pause()"
+                    @mouseleave="play()"
                 >
-                    <div class="dome-stage">
-                        <div x-ref="sphere" class="dome-sphere">
-                            <template x-for="(it, i) in items" :key="i">
-                                <div
-                                    class="dome-item"
-                                    :class="{ 'dome-item--enlarged': enlarged === it }"
-                                    :style="`--offset-x: ${it.x}; --offset-y: ${it.y}; --item-size-x: ${it.sizeX}; --item-size-y: ${it.sizeY}; transform: ${itemTransform(it)};`"
-                                >
-                                    <div
-                                        class="dome-item__image bg-surface-container-low shadow-md"
-                                        @click="openItem(it)"
-                                        role="button"
-                                        :aria-label="it.alt"
-                                    >
-                                        <img :src="it.src" :alt="it.alt" class="w-full h-full object-cover pointer-events-none select-none" draggable="false">
+                    <div class="marquee-track" :class="{ 'marquee-paused': paused }">
+                        <template x-for="(it, i) in loopItems" :key="i">
+                            <div class="marquee-card group" @click="openItem(it)">
+                                <div class="relative overflow-hidden rounded-2xl border border-outline-variant/40 bg-surface-container-low shadow-sm transition group-hover:shadow-lg">
+                                    <img :src="it.src" :alt="it.alt" class="h-56 w-full object-cover pointer-events-none select-none" draggable="false">
+                                    <div class="p-4">
+                                        <p class="text-xs font-semibold uppercase tracking-widest text-primary">Galeri Desa</p>
+                                        <h3 class="mt-1 line-clamp-1 font-display text-base font-semibold text-on-surface" x-text="it.alt"></h3>
                                     </div>
                                 </div>
-                            </template>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+                {{-- Modal perbesar foto --}}
+                <template x-if="enlarged">
+                    <div class="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4" x-cloak @click.self="closeItem()">
+                        <div class="relative w-full max-w-2xl overflow-hidden rounded-3xl bg-surface p-4 shadow-2xl">
+                            <button type="button" class="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-xl text-white transition hover:bg-black" @click="closeItem()" aria-label="Tutup">&times;</button>
+                            <img :src="enlarged.src" :alt="enlarged.alt" class="w-full max-h-[70vh] rounded-2xl object-cover">
+                            <h3 class="mt-4 font-display text-lg font-semibold text-on-surface" x-text="enlarged.alt"></h3>
                         </div>
                     </div>
-
-                    {{-- Modal perbesar foto --}}
-                    <template x-if="enlarged">
-                        <div class="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4" x-cloak @click.self="closeItem()">
-                            <div class="relative w-full max-w-2xl overflow-hidden rounded-3xl bg-surface p-4 shadow-2xl">
-                                <button type="button" class="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-xl text-white transition hover:bg-black" @click="closeItem()" aria-label="Tutup">&times;</button>
-                                <img :src="enlarged.src" :alt="enlarged.alt" class="w-full max-h-[70vh] rounded-2xl object-cover">
-                                <h3 class="mt-4 font-display text-lg font-semibold text-on-surface" x-text="enlarged.alt"></h3>
-                            </div>
-                        </div>
-                    </template>
-                </div>
+                </template>
             </div>
         </section>
     @endif
