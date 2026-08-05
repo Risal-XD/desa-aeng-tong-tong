@@ -71,3 +71,15 @@
     --color-ink-900: #373531;
     --color-ink-950: #1f1e1b;
 }
+
+/* Parallax Scroll Grid */
+.parallax-grid {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 1.5rem;
+}
+@media (min-width: 768px) {
+    .parallax-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}

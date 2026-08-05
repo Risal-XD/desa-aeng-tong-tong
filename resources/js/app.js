@@ -39,6 +39,25 @@ document.addEventListener('alpine:init', () => {
         },
     }));
 
+    Alpine.data('parallaxScrolling', () => ({
+        offset: 0,
+        init() {
+            this.updateScroll = () => {
+                const rect = this.$el.getBoundingClientRect();
+                const vh = window.innerHeight;
+                if (rect.top < vh && rect.bottom > 0) {
+                    const progress = (vh - rect.top) / (vh + rect.height);
+                    this.offset = (progress - 0.5) * 150;
+                }
+            };
+            window.addEventListener('scroll', this.updateScroll, { passive: true });
+            this.updateScroll();
+        },
+        destroy() {
+            window.removeEventListener('scroll', this.updateScroll);
+        },
+    }));
+
     Alpine.data('fadeSlider', (photos) => ({
         photos,
         current: 0,

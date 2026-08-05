@@ -161,6 +161,54 @@
         </section>
     @endif
 
+    {{-- Parallax Gallery --}}
+    @php
+        $photos = $heroPhotos->values();
+        $columns = [
+            $photos->slice(0, 2),
+            $photos->slice(2, 2),
+            $photos->slice(4, 2),
+        ];
+        $factors = [0.6, 0, -0.6];
+    @endphp
+    @if ($heroPhotos->isNotEmpty())
+        <section x-data="parallaxScrolling" class="relative overflow-hidden bg-surface py-20 sm:py-24">
+            <div class="mx-auto max-w-6xl px-4 sm:px-6">
+                <x-frontend.section-heading
+                    eyebrow="Jelajah Visual"
+                    title="Suasana Desa dalam Gerak"
+                    subtitle="Pemandangan desa yang menyatu dalam alunan, seiring gulir halaman Anda berjalan."
+                    align="center"
+                />
+            </div>
+            <div class="parallax-grid mx-auto mt-14 max-w-6xl px-4 sm:px-6">
+                @foreach ($columns as $index => $col)
+                    <div class="space-y-6" :style="'transform: translateY(' + (offset * {{ $factors[$index] }}) + 'px)'">
+                        @forelse ($col as $photo)
+                            <div class="overflow-hidden rounded-2xl border border-outline-variant/40 bg-surface-container-lowest shadow-sm">
+                                @if ($photo->image)
+                                    <img src="{{ asset('storage/'.$photo->image) }}" alt="{{ $photo->title }}" class="aspect-[4/5] w-full object-cover transition duration-300 hover:scale-105">
+                                @else
+                                    <div class="flex aspect-[4/5] items-center justify-center bg-gradient-to-br from-primary to-secondary">
+                                        <span class="font-display text-5xl font-semibold text-on-primary/90">{{ mb_substr($photo->title, 0, 1) }}</span>
+                                    </div>
+                                @endif
+                                <div class="p-4">
+                                    <p class="text-xs font-semibold uppercase tracking-widest text-primary">Galeri Desa</p>
+                                    <h3 class="mt-1 font-display text-base font-semibold text-on-surface">{{ $photo->title }}</h3>
+                                </div>
+                            </div>
+                        @empty
+                            <div class="flex aspect-[4/5] items-center justify-center rounded-2xl border border-dashed border-outline-variant bg-surface-container-low">
+                                <span class="font-display text-3xl font-semibold text-on-surface-variant">-</span>
+                            </div>
+                        @endforelse
+                    </div>
+                @endforeach
+            </div>
+        </section>
+    @endif
+
     {{-- Potensi Unggulan --}}
     @if ($featuredPotentials->isNotEmpty())
         <section class="bg-surface-container-low py-16 sm:py-20">
