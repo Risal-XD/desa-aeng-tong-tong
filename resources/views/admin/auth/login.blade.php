@@ -16,19 +16,13 @@
         }
     </style>
 </head>
-<body class="relative flex min-h-screen items-center justify-center bg-primary px-4 py-12 text-on-primary">
+<body class="relative flex h-screen items-center justify-center overflow-hidden bg-primary px-4 py-6 text-on-primary sm:py-8">
     <div class="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_top_left,rgba(134,175,153,0.28),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(125,86,45,0.24),transparent_38%)]"></div>
     <div class="pointer-events-none fixed inset-0 opacity-30 [background-image:linear-gradient(rgba(255,255,255,.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.05)_1px,transparent_1px)] [background-size:32px_32px]"></div>
 
     <main class="relative w-full max-w-md [perspective:1200px]">
-        <div class="mb-8 text-center">
-            <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-on-primary/20 bg-on-primary/10 shadow-2xl backdrop-blur">
-                <svg class="h-8 w-8 text-secondary-container" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M14.5 2 20 7.5 8 19.5 3 21l1.5-5L14.5 2z"/>
-                    <path d="M12 8l4 4"/>
-                </svg>
-            </div>
-            <h1 class="mt-5 font-display text-2xl font-semibold tracking-tight text-white">Panel Administrasi</h1>
+        <div class="mb-6 text-center">
+            <h1 class="font-display text-2xl font-semibold tracking-tight text-white">Panel Administrasi</h1>
             <p class="mt-2 text-sm text-on-primary-container">Desa Aeng Tong-Tong</p>
         </div>
 
@@ -82,8 +76,6 @@
                         <svg class="h-4 w-4 transition group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                     </button>
                 </form>
-
-                <p class="mt-6 border-t border-on-primary/10 pt-5 text-center text-xs leading-relaxed text-on-primary-container">Dibatasi hingga 5 percobaan masuk per menit untuk setiap email dan alamat IP.</p>
             </div>
         </section>
 
