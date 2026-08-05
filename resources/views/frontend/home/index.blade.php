@@ -164,11 +164,10 @@
     {{-- Parallax Gallery --}}
     @php
         $photos = $heroPhotos->values();
-        $columns = [
-            $photos->slice(0, 2),
-            $photos->slice(2, 2),
-            $photos->slice(4, 2),
-        ];
+        $columns = [[], [], []];
+        foreach ($photos as $i => $photo) {
+            $columns[$i % 3][] = $photo;
+        }
         $factors = [0.6, 0, -0.6];
     @endphp
     @if ($heroPhotos->isNotEmpty())
