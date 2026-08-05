@@ -1,7 +1,15 @@
 @props(['village' => null])
 
-<header class="sticky top-0 z-40 border-b border-outline-variant/30 bg-surface/90 backdrop-blur">
-    <nav class="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6" aria-label="Navigasi utama">
+<header class="sticky top-0 z-40 border-b border-outline-variant/30 bg-surface/95 backdrop-blur shadow-sm">
+    <nav class="mx-auto flex h-20 max-w-6xl items-center justify-between gap-6 px-4 sm:px-6" aria-label="Navigasi utama">
+        <a href="{{ route('home') }}" class="flex items-center gap-3 group py-2">
+            <img src="{{ asset('images/logo1.png') }}" alt="Logo KKN Desa Aeng Tong-Tong" class="h-14 w-14 object-contain transition group-hover:scale-105">
+            <span class="leading-tight hidden sm:block">
+                <span class="block font-display text-sm font-bold text-on-surface">KKN DESA AENG TONG-TONG</span>
+                <span class="block text-[11px] text-on-surface-variant">Universitas Wiraraja</span>
+            </span>
+        </a>
+
         <div class="hidden items-center gap-1 lg:flex" x-data="{ aboutOpen: false }">
             <a href="{{ route('home') }}" class="rounded-md px-3 py-2 text-sm font-medium transition {{ request()->routeIs('home') ? 'text-primary font-semibold' : 'text-on-surface-variant hover:text-on-surface' }}">
                 Beranda
