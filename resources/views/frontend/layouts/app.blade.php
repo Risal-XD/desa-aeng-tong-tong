@@ -88,7 +88,7 @@
 
     <x-frontend.navbar />
 
-    <main id="konten-utama" class="flex-1">
+    <main id="konten-utama" class="flex-1" x-data="pageParallax">
         @yield('content')
     </main>
 

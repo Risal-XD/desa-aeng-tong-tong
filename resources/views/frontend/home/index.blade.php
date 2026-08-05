@@ -12,10 +12,10 @@
                     <span class="h-1.5 w-1.5 rounded-full bg-secondary"></span>
                     Juara 1 ADWI 2022 · Rekor MURI
                 </p>
-                <div class="min-h-[7.5rem] sm:min-h-[10rem]">
+                <div class="min-h-[7.5rem] sm:min-h-[10rem]" data-parallax-speed="30">
                     <h1 x-data="typewriter('Selamat Datang di\nDesa Aeng Tong-Tong', 100, 0)" class="font-display text-4xl font-semibold leading-tight text-white sm:text-5xl whitespace-pre-line" x-text="displayText"></h1>
                 </div>
-                <div class="min-h-[6rem]">
+                <div class="min-h-[6rem]" data-parallax-speed="50">
                     <p x-data="typewriter('Desa wisata sentra kerajinan keris di Kecamatan Saronggi, Kabupaten Sumenep, Jawa Timur. Menjaga warisan budaya para Mpu sekaligus membangun kesejahteraan masyarakat.', 60, 2800)" class="mt-5 max-w-xl text-sm leading-relaxed text-on-primary-container sm:text-base text-justify" x-text="displayText"></p>
                 </div>
                 <div class="mt-8 flex flex-wrap gap-3">
@@ -28,7 +28,7 @@
                 </div>
             </div>
 
-            <div class="hidden lg:block">
+            <div class="hidden lg:block" data-parallax-speed="-40">
                 <div x-data="fadeSlider(@js($heroPhotos->map(fn ($photo) => [
                     'title' => $photo->title,
                     'image' => $photo->image ? asset('storage/'.$photo->image) : null,
@@ -126,7 +126,7 @@
     @if ($village?->profile?->overview)
         <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
             <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
-                <div>
+                <div data-parallax-speed="35">
                     <x-frontend.section-heading
                         eyebrow="Tentang Desa"
                         title="Aeng Tong-Tong dalam Sekilas"
@@ -141,7 +141,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="grid gap-4 sm:grid-cols-2">
+                <div class="grid gap-4 sm:grid-cols-2" data-parallax-speed="-35">
                     <div class="rounded-2xl border border-outline-variant/50 bg-surface-container-lowest p-6 shadow-sm">
                         <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-surface-container text-primary">
                             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -171,8 +171,8 @@
         $factors = [0.6, 0, -0.6];
     @endphp
     @if ($heroPhotos->isNotEmpty())
-        <section x-data="parallaxScrolling" class="relative overflow-hidden bg-surface py-20 sm:py-24">
-            <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <section class="relative overflow-hidden bg-surface py-20 sm:py-24">
+            <div class="mx-auto max-w-6xl px-4 sm:px-6" data-parallax-speed="40">
                 <x-frontend.section-heading
                     eyebrow="Jelajah Visual"
                     title="Suasana Desa dalam Gerak"
@@ -182,7 +182,7 @@
             </div>
             <div class="parallax-grid mx-auto mt-14 max-w-6xl px-4 sm:px-6">
                 @foreach ($columns as $index => $col)
-                    <div class="space-y-6" :style="'transform: translateY(' + (offset * {{ $factors[$index] }}) + 'px)'">
+                    <div class="space-y-6" data-parallax-speed="{{ $factors[$index] * 120 }}">
                         @forelse ($col as $photo)
                             <div class="overflow-hidden rounded-2xl border border-outline-variant/40 bg-surface-container-lowest shadow-sm">
                                 @if ($photo->image)
@@ -212,14 +212,16 @@
     @if ($featuredPotentials->isNotEmpty())
         <section class="bg-surface-container-low py-16 sm:py-20">
             <div class="mx-auto max-w-6xl px-4 sm:px-6">
-                <x-frontend.section-heading
-                    eyebrow="Potensi Desa"
-                    title="Potensi Unggulan"
-                    subtitle="Berbagai potensi unggulan yang menjadikan Desa Aeng Tong-Tong dikenal hingga nasional."
-                    align="center"
-                />
+                <div data-parallax-speed="25">
+                    <x-frontend.section-heading
+                        eyebrow="Potensi Desa"
+                        title="Potensi Unggulan"
+                        subtitle="Berbagai potensi unggulan yang menjadikan Desa Aeng Tong-Tong dikenal hingga nasional."
+                        align="center"
+                    />
+                </div>
 
-                <div class="grid gap-6 md:grid-cols-3">
+                <div class="grid gap-6 md:grid-cols-3" data-parallax-speed="-25">
                     @foreach ($featuredPotentials as $potential)
                         <article class="group rounded-2xl border border-outline-variant/50 bg-surface p-6 transition hover:-translate-y-1 hover:border-primary hover:shadow-lg">
                             @if ($potential->icon)
@@ -245,7 +247,7 @@
     @if ($latestNews->isNotEmpty())
         <section class="bg-surface py-16 sm:py-20">
             <div class="mx-auto max-w-6xl px-4 sm:px-6">
-                <div class="flex flex-wrap items-end justify-between gap-4">
+                <div class="flex flex-wrap items-end justify-between gap-4" data-parallax-speed="30">
                     <x-frontend.section-heading
                         eyebrow="Kabar Desa"
                         title="Berita Terbaru"
@@ -256,7 +258,7 @@
                     </a>
                 </div>
 
-                <div class="mt-10 grid gap-6 md:grid-cols-3">
+                <div class="mt-10 grid gap-6 md:grid-cols-3" data-parallax-speed="-30">
                     @foreach ($latestNews as $item)
                         <a href="{{ route('news.show', $item) }}" class="group flex flex-col overflow-hidden rounded-2xl border border-outline-variant/50 bg-surface-container-lowest transition hover:-translate-y-1 hover:border-primary hover:shadow-lg">
                             <div class="relative flex h-40 items-center justify-center overflow-hidden bg-surface-container">
@@ -283,7 +285,7 @@
     {{-- Agenda Mendatang --}}
     @if ($upcomingAgendas->isNotEmpty())
         <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
-            <div class="flex flex-wrap items-end justify-between gap-4">
+            <div class="flex flex-wrap items-end justify-between gap-4" data-parallax-speed="25">
                 <x-frontend.section-heading
                     eyebrow="Agenda"
                     title="Kegiatan Mendatang"
@@ -294,7 +296,7 @@
                 </a>
             </div>
 
-            <div class="mt-10 grid gap-6 md:grid-cols-3">
+            <div class="mt-10 grid gap-6 md:grid-cols-3" data-parallax-speed="-25">
                 @foreach ($upcomingAgendas as $item)
                     <div class="flex gap-4 rounded-2xl border border-outline-variant/50 bg-surface-container-lowest p-6 shadow-sm">
                         <div class="flex h-20 w-20 shrink-0 flex-col items-center justify-center rounded-xl bg-surface-container text-center">
@@ -321,7 +323,7 @@
     @if ($village?->visions->isNotEmpty() || $village?->missions->isNotEmpty())
         <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
             <div class="grid gap-8 lg:grid-cols-5">
-                <div class="lg:col-span-2">
+                <div class="lg:col-span-2" data-parallax-speed="30">
                     <x-frontend.section-heading
                         eyebrow="Arah Pembangunan"
                         title="Visi &amp; Misi"
@@ -331,7 +333,7 @@
                         <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                     </a>
                 </div>
-                <div class="space-y-4 lg:col-span-3">
+                <div class="space-y-4 lg:col-span-3" data-parallax-speed="-30">
                     @if ($village->visions->isNotEmpty())
                         <div class="rounded-2xl border border-primary-container bg-surface-container-lowest p-6">
                             <p class="text-xs font-semibold uppercase tracking-widest text-primary">Visi</p>
@@ -356,14 +358,16 @@
     {{-- Transparansi & Data --}}
     <section class="bg-surface-container-low py-16 sm:py-20">
         <div class="mx-auto max-w-6xl px-4 sm:px-6">
-            <x-frontend.section-heading
-                eyebrow="Transparansi"
-                title="Data & Laporan Desa"
-                subtitle="Statistik, anggaran, dan dokumen publik yang dapat diakses serta diunduh masyarakat."
-                align="center"
-            />
+            <div data-parallax-speed="25">
+                <x-frontend.section-heading
+                    eyebrow="Transparansi"
+                    title="Data & Laporan Desa"
+                    subtitle="Statistik, anggaran, dan dokumen publik yang dapat diakses serta diunduh masyarakat."
+                    align="center"
+                />
+            </div>
 
-            <div class="mt-10 grid gap-6 md:grid-cols-3">
+            <div class="mt-10 grid gap-6 md:grid-cols-3" data-parallax-speed="-25">
                 <a href="{{ route('statistics.index') }}" class="group rounded-2xl border border-outline-variant/50 bg-surface p-6 transition hover:-translate-y-1 hover:border-primary hover:shadow-lg">
                     <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-surface-container text-primary">
                         <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>

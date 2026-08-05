@@ -39,27 +39,37 @@ document.addEventListener('alpine:init', () => {
         },
     }));
 
-    Alpine.data('parallaxScrolling', () => ({
-        offset: 0,
+    Alpine.data('pageParallax', () => ({
+        items: [],
         init() {
-            this.updateScroll = () => {
-                const rect = this.$el.getBoundingClientRect();
-                const vh = window.innerHeight;
+            this.items = Array.from(this.$el.querySelectorAll('[data-parallax-speed]'));
+            this.onScroll = () => {
+                if (this._raf) cancelAnimationFrame(this._raf);
+                this._raf = requestAnimationFrame(() => this.apply());
+            };
+            this.apply();
+            window.addEventListener('scroll', this.onScroll, { passive: true });
+            window.addEventListener('resize', this.onScroll, { passive: true });
+        },
+        apply() {
+            const vh = window.innerHeight;
+            this.items.forEach((el) => {
+                const speed = parseFloat(el.dataset.parallaxSpeed) || 0;
+                const rect = el.getBoundingClientRect();
                 if (rect.top < vh && rect.bottom > 0) {
                     const progress = (vh - rect.top) / (vh + rect.height);
-                    const target = (progress - 0.5) * 300;
-                    if (Math.abs(target - this.offset) > 0.5) {
-                        this.offset = target;
+                    const target = (progress - 0.5) * speed;
+                    if (Math.abs(target - (el._parallaxOffset || 0)) > 0.5) {
+                        el._parallaxOffset = target;
+                        el.style.transform = `translateY(${target.toFixed(1)}px)`;
                     }
                 }
-            };
-            window.addEventListener('scroll', this.updateScroll, { passive: true });
-            window.addEventListener('resize', this.updateScroll, { passive: true });
-            this.updateScroll();
+            });
         },
         destroy() {
-            window.removeEventListener('scroll', this.updateScroll);
-            window.removeEventListener('resize', this.updateScroll);
+            window.removeEventListener('scroll', this.onScroll);
+            window.removeEventListener('resize', this.onScroll);
+            if (this._raf) cancelAnimationFrame(this._raf);
         },
     }));
 
