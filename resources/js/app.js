@@ -47,14 +47,19 @@ document.addEventListener('alpine:init', () => {
                 const vh = window.innerHeight;
                 if (rect.top < vh && rect.bottom > 0) {
                     const progress = (vh - rect.top) / (vh + rect.height);
-                    this.offset = (progress - 0.5) * 150;
+                    const target = (progress - 0.5) * 300;
+                    if (Math.abs(target - this.offset) > 0.5) {
+                        this.offset = target;
+                    }
                 }
             };
             window.addEventListener('scroll', this.updateScroll, { passive: true });
+            window.addEventListener('resize', this.updateScroll, { passive: true });
             this.updateScroll();
         },
         destroy() {
             window.removeEventListener('scroll', this.updateScroll);
+            window.removeEventListener('resize', this.updateScroll);
         },
     }));
 
