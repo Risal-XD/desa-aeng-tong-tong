@@ -2,19 +2,6 @@
 
 <header class="sticky top-0 z-40 border-b border-outline-variant/30 bg-surface/90 backdrop-blur">
     <nav class="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6" aria-label="Navigasi utama">
-        <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-            <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary-container text-on-primary shadow-md transition group-hover:scale-105">
-                <svg class="h-5 w-5 text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M14.5 2 20 7.5L8 19.5 3 21l1.5-5L14.5 2z"/>
-                    <path d="M12 8l4 4"/>
-                </svg>
-            </span>
-            <span class="leading-tight">
-                <span class="block font-display text-base font-semibold text-on-surface">Desa Aeng Tong-Tong</span>
-                <span class="block text-xs text-on-surface-variant">Pusat Keris Nusantara</span>
-            </span>
-        </a>
-
         <div class="hidden items-center gap-1 lg:flex" x-data="{ aboutOpen: false }">
             <a href="{{ route('home') }}" class="rounded-md px-3 py-2 text-sm font-medium transition {{ request()->routeIs('home') ? 'text-primary font-semibold' : 'text-on-surface-variant hover:text-on-surface' }}">
                 Beranda
