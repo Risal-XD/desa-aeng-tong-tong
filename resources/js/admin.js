@@ -42,6 +42,26 @@ window.Swal = Swal;
 window.Chart = Chart;
 window.pdfjsLib = pdfjsLib;
 
+document.addEventListener('alpine:init', () => {
+    Alpine.data('card3D', () => ({
+        rotateX: 0,
+        rotateY: 0,
+        handleMove(e) {
+            const rect = this.$el.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const xc = rect.width / 2;
+            const yc = rect.height / 2;
+            this.rotateX = -((y - yc) / yc) * 10;
+            this.rotateY = ((x - xc) / xc) * 10;
+        },
+        handleLeave() {
+            this.rotateX = 0;
+            this.rotateY = 0;
+        }
+    }));
+});
+
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
     'pdfjs-dist/build/pdf.worker.min.mjs',
     import.meta.url,

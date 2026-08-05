@@ -16,11 +16,11 @@
         }
     </style>
 </head>
-<body class="relative flex min-h-full items-center justify-center overflow-hidden bg-primary px-4 py-12 text-on-primary">
-    <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(134,175,153,0.28),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(125,86,45,0.24),transparent_38%)]"></div>
-    <div class="pointer-events-none absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(255,255,255,.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.05)_1px,transparent_1px)] [background-size:32px_32px]"></div>
+<body class="relative flex min-h-screen items-center justify-center bg-primary px-4 py-12 text-on-primary">
+    <div class="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_top_left,rgba(134,175,153,0.28),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(125,86,45,0.24),transparent_38%)]"></div>
+    <div class="pointer-events-none fixed inset-0 opacity-30 [background-image:linear-gradient(rgba(255,255,255,.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.05)_1px,transparent_1px)] [background-size:32px_32px]"></div>
 
-    <main class="relative w-full max-w-md">
+    <main class="relative w-full max-w-md [perspective:1200px]">
         <div class="mb-8 text-center">
             <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-on-primary/20 bg-on-primary/10 shadow-2xl backdrop-blur">
                 <svg class="h-8 w-8 text-secondary-container" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -32,7 +32,13 @@
             <p class="mt-2 text-sm text-on-primary-container">Desa Aeng Tong-Tong</p>
         </div>
 
-        <section class="relative overflow-hidden rounded-3xl border border-on-primary/15 bg-primary-container/25 p-px shadow-2xl backdrop-blur-xl">
+        <section
+            x-data="card3D"
+            @mousemove="handleMove($event)"
+            @mouseleave="handleLeave()"
+            :style="`transform: rotateX(${rotateX}deg) rotateY(${rotateY}deg); transition: transform 100ms ease-out;`"
+            class="relative overflow-hidden rounded-3xl border border-on-primary/15 bg-primary-container/25 p-px shadow-2xl backdrop-blur-xl [transform-style:preserve-3d]"
+        >
             <span class="login-beam pointer-events-none absolute left-0 top-0 h-20 w-20 rounded-full bg-secondary-container/90 blur-xl"></span>
             <div class="relative rounded-[1.4rem] bg-primary/90 p-6 sm:p-8">
                 <div>
