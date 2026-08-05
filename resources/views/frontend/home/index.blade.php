@@ -161,14 +161,14 @@
         </section>
     @endif
 
-    {{-- Pinterest Masonry Gallery --}}
+    {{-- Pinterest Masonry Gallery (Clean & No Duplicates) --}}
     @if ($heroPhotos->isNotEmpty())
         <section class="relative overflow-hidden bg-surface py-20 sm:py-24" data-parallax-speed="25">
             <div class="mx-auto max-w-6xl px-4 sm:px-6">
                 <x-frontend.section-heading
                     eyebrow="Galeri Desa"
                     title="Galeri Aeng Tong-Tong"
-                    subtitle="Koleksi foto dokumentasi desa dalam tata letak Pinterest masonry yang dinamis. Klik foto untuk memperbesar."
+                    subtitle="Dokumentasi foto keindahan dan aktivitas Desa Aeng Tong-Tong."
                     align="center"
                 />
             </div>
@@ -179,12 +179,9 @@
             >
                 <div class="pinterest-grid">
                     <template x-for="(it, i) in items" :key="i">
-                        <div class="pinterest-card group cursor-pointer" @click="openItem(it)">
-                            <div class="overflow-hidden rounded-2xl border border-outline-variant/40 bg-surface-container-low shadow-sm transition duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
-                                <img :src="it.src" :alt="it.alt" :class="it.aspect" class="w-full object-cover pointer-events-none select-none transition duration-300 group-hover:scale-105" draggable="false">
-                                <div class="p-3">
-                                    <h3 class="line-clamp-1 font-display text-sm font-semibold text-on-surface" x-text="it.alt"></h3>
-                                </div>
+                        <div class="pinterest-card group cursor-pointer" @click="openItem(it)" data-aos="fade-up" :data-aos-delay="i * 50">
+                            <div class="overflow-hidden rounded-2xl border border-outline-variant/30 bg-surface-container-low shadow-sm transition duration-300 group-hover:-translate-y-1 group-hover:shadow-lg">
+                                <img :src="it.src" :alt="it.alt" :class="it.aspect" class="w-full object-cover pointer-events-none select-none transition duration-500 group-hover:scale-105" draggable="false">
                             </div>
                         </div>
                     </template>

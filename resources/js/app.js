@@ -79,20 +79,12 @@ document.addEventListener('alpine:init', () => {
         items: [],
         init() {
             const aspectRatios = ['aspect-[4/3]', 'aspect-[3/4]', 'aspect-square', 'aspect-[16/10]', 'aspect-[9/12]'];
-            const base = (photos || []).map((p, i) => ({
+            // Tampilkan foto asli murni tanpa duplikasi
+            this.items = (photos || []).map((p, i) => ({
                 src: p.image ? '/storage/' + p.image : 'https://images.unsplash.com/photo-1755331039789-7e5680e26e8f?q=80&w=774',
                 alt: p.title || 'Galeri Desa',
                 aspect: aspectRatios[i % aspectRatios.length],
             }));
-            // Jika foto sedikit, duplikat agar grid pinterest ramai & bervariasi
-            let list = [...base];
-            while (list.length < 12 && list.length > 0) {
-                list = list.concat(base.map((it, idx) => ({
-                    ...it,
-                    aspect: aspectRatios[(list.length + idx) % aspectRatios.length]
-                })));
-            }
-            this.items = list;
         },
         openItem(it) {
             this.enlarged = it;
