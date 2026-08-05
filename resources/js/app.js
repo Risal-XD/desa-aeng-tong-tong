@@ -73,18 +73,30 @@ document.addEventListener('alpine:init', () => {
         },
     }));
 
-    Alpine.data('pinterestGallery', (photos) => ({
+    Alpine.data('pinterestMarquee', (photos) => ({
         photos,
         enlarged: null,
-        items: [],
+        row1: [],
+        row2: [],
         init() {
-            const aspectRatios = ['aspect-[4/3]', 'aspect-[3/4]', 'aspect-square', 'aspect-[16/10]', 'aspect-[9/12]'];
-            // Tampilkan foto asli murni tanpa duplikasi
-            this.items = (photos || []).map((p, i) => ({
+            const aspectRatios = ['aspect-[4/3]', 'aspect-[3/4]', 'aspect-square', 'aspect-[16/10]'];
+            const base = (photos || []).map((p, i) => ({
                 src: p.image ? '/storage/' + p.image : 'https://images.unsplash.com/photo-1755331039789-7e5680e26e8f?q=80&w=774',
                 alt: p.title || 'Galeri Desa',
                 aspect: aspectRatios[i % aspectRatios.length],
             }));
+            
+            // Bagi jadi 2 row dan duplikat agar loop mulus
+            const half = Math.ceil(base.length / 2);
+            const r1 = base.slice(0, half);
+            const r2 = base.slice(half);
+            
+            // Pastikan tidak kosong
+            const list1 = r1.length ? r1 : base;
+            const list2 = r2.length ? r2 : base;
+
+            this.row1 = [...list1, ...list1];
+            this.row2 = [...list2, ...list2];
         },
         openItem(it) {
             this.enlarged = it;
