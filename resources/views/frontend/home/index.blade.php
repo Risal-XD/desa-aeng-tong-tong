@@ -161,40 +161,33 @@
         </section>
     @endif
 
-    {{-- Marquee Gallery --}}
+    {{-- Pinterest Masonry Gallery --}}
     @if ($heroPhotos->isNotEmpty())
         <section class="relative overflow-hidden bg-surface py-20 sm:py-24" data-parallax-speed="25">
             <div class="mx-auto max-w-6xl px-4 sm:px-6">
                 <x-frontend.section-heading
                     eyebrow="Galeri Desa"
                     title="Galeri Aeng Tong-Tong"
-                    subtitle="Koleksi foto desa yang mengalir terus — setiap foto muncul dari kiri dan bergerak ke kanan. Klik untuk memperbesar."
+                    subtitle="Koleksi foto dokumentasi desa dalam tata letak Pinterest masonry yang dinamis. Klik foto untuk memperbesar."
                     align="center"
                 />
             </div>
 
             <div
                 class="mx-auto mt-12 max-w-6xl px-4 sm:px-6"
-                x-data="marqueeGallery(@js($heroPhotos->map(fn ($p) => ['title' => $p->title, 'image' => $p->image])->values()))"
+                x-data="pinterestGallery(@js($heroPhotos->map(fn ($p) => ['title' => $p->title, 'image' => $p->image])->values()))"
             >
-                <div
-                    class="marquee-viewport relative"
-                    @mouseenter="pause()"
-                    @mouseleave="play()"
-                >
-                    <div class="marquee-track" :class="{ 'marquee-paused': paused }">
-                        <template x-for="(it, i) in loopItems" :key="i">
-                            <div class="marquee-card group" @click="openItem(it)">
-                                <div class="relative overflow-hidden rounded-2xl border border-outline-variant/40 bg-surface-container-low shadow-sm transition group-hover:shadow-lg">
-                                    <img :src="it.src" :alt="it.alt" class="h-56 w-full object-cover pointer-events-none select-none" draggable="false">
-                                    <div class="p-4">
-                                        <p class="text-xs font-semibold uppercase tracking-widest text-primary">Galeri Desa</p>
-                                        <h3 class="mt-1 line-clamp-1 font-display text-base font-semibold text-on-surface" x-text="it.alt"></h3>
-                                    </div>
+                <div class="pinterest-grid">
+                    <template x-for="(it, i) in items" :key="i">
+                        <div class="pinterest-card group cursor-pointer" @click="openItem(it)">
+                            <div class="overflow-hidden rounded-2xl border border-outline-variant/40 bg-surface-container-low shadow-sm transition duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
+                                <img :src="it.src" :alt="it.alt" :class="it.aspect" class="w-full object-cover pointer-events-none select-none transition duration-300 group-hover:scale-105" draggable="false">
+                                <div class="p-3">
+                                    <h3 class="line-clamp-1 font-display text-sm font-semibold text-on-surface" x-text="it.alt"></h3>
                                 </div>
                             </div>
-                        </template>
-                    </div>
+                        </div>
+                    </template>
                 </div>
 
                 {{-- Modal perbesar foto --}}

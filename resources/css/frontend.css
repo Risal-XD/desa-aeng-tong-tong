@@ -93,40 +93,22 @@
     }
 }
 
-/* Marquee Gallery */
-.marquee-viewport {
-    overflow: hidden;
-    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+/* Pinterest Masonry Gallery */
+.pinterest-grid {
+    column-count: 2;
+    column-gap: 1rem;
 }
-.marquee-track {
-    display: flex;
-    gap: 1.5rem;
-    width: max-content;
-    animation: marquee-right 40s linear infinite;
-    will-change: transform;
-}
-.marquee-track.marquee-paused {
-    animation-play-state: paused;
-}
-.marquee-card {
-    width: 320px;
-    flex-shrink: 0;
-    cursor: pointer;
-}
-@keyframes marquee-right {
-    from {
-        transform: translateX(-50%);
-    }
-    to {
-        transform: translateX(0);
+@media (min-width: 640px) {
+    .pinterest-grid {
+        column-count: 3;
     }
 }
-@media (prefers-reduced-motion: reduce) {
-    .marquee-track {
-        animation: none;
-        width: auto;
-        flex-wrap: wrap;
-        justify-content: center;
+@media (min-width: 1024px) {
+    .pinterest-grid {
+        column-count: 4;
     }
+}
+.pinterest-card {
+    break-inside: avoid;
+    margin-bottom: 1rem;
 }
