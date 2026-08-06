@@ -1,6 +1,12 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 
+/* Cegah "scroll lompat ke bawah dengan sendirinya" akibat layout shift */
+/* (scroll anchoring browser yang mengompensasi perubahan tinggi konten) */
+html {
+    overflow-anchor: none;
+}
+
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source "../**/*.blade.php";

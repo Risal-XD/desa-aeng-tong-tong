@@ -15,8 +15,9 @@
                 <div class="min-h-[7.5rem] sm:min-h-[10rem]" data-parallax-speed="30">
                     <h1 x-data="typewriter('Selamat Datang di\nDesa Aeng Tong-Tong', 100, 0)" class="font-display text-4xl font-semibold leading-tight text-white sm:text-5xl whitespace-pre-line" x-text="displayText"></h1>
                 </div>
-                <div class="min-h-[6rem]" data-parallax-speed="50">
-                    <p x-data="typewriter('Desa wisata sentra kerajinan keris di Kecamatan Saronggi, Kabupaten Sumenep, Jawa Timur. Menjaga warisan budaya para Mpu sekaligus membangun kesejahteraan masyarakat.', 60, 2800)" class="mt-5 max-w-xl text-sm leading-relaxed text-on-primary-container sm:text-base text-justify" x-text="displayText"></p>
+                <div class="relative" data-parallax-speed="50">
+                    <p class="invisible mt-5 max-w-xl text-sm leading-relaxed text-justify sm:text-base" x-text="'Desa wisata sentra kerajinan keris di Kecamatan Saronggi, Kabupaten Sumenep, Jawa Timur. Menjaga warisan budaya para Mpu sekaligus membangun kesejahteraan masyarakat.'"></p>
+                    <p x-data="typewriter('Desa wisata sentra kerajinan keris di Kecamatan Saronggi, Kabupaten Sumenep, Jawa Timur. Menjaga warisan budaya para Mpu sekaligus membangun kesejahteraan masyarakat.', 60, 2800)" class="absolute inset-x-0 top-0 mt-5 max-w-xl text-sm leading-relaxed text-on-primary-container sm:text-base text-justify" x-text="displayText"></p>
                 </div>
                 <div class="mt-8 flex flex-wrap gap-3">
                     <a href="{{ route('about.sejarah') }}" class="rounded-lg bg-secondary px-6 py-3 text-sm font-semibold text-on-secondary shadow-sm transition hover:bg-secondary-container hover:text-on-secondary-container">
@@ -89,19 +90,23 @@
             <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(255,255,255,0.1),transparent_55%)]"></div>
 
             <div class="relative mx-auto max-w-6xl px-4 py-16 text-center sm:px-6 sm:py-20">
-                <template x-for="(banner, index) in banners" :key="index">
-                    <div x-show="index === current" x-cloak x-transition.opacity>
-                        <p class="mx-auto mb-4 inline-flex items-center gap-2 rounded-full border border-outline-variant px-3 py-1 text-xs font-semibold text-on-tertiary-container">
-                            <span class="h-1.5 w-1.5 rounded-full bg-secondary"></span>
-                            <span x-text="(current + 1) + ' / ' + banners.length"></span>
-                        </p>
-                        <h2 class="font-display text-3xl font-semibold text-white sm:text-4xl" x-text="banner.title"></h2>
-                        <p x-show="banner.description" x-cloak class="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-on-tertiary-container sm:text-base" x-text="banner.description"></p>
-                        <a x-show="banner.link" :href="banner.link" x-cloak class="mt-8 inline-block rounded-lg bg-secondary px-6 py-3 text-sm font-semibold text-on-secondary transition hover:bg-secondary-container hover:text-on-secondary-container">
-                            Lihat Selengkapnya
-                        </a>
-                    </div>
-                </template>
+                <div class="grid grid-cols-1 grid-rows-1">
+                    <template x-for="(banner, index) in banners" :key="'c-'+index">
+                        <div class="col-start-1 row-start-1 transition-opacity duration-700 ease-out"
+                            :class="index === current ? 'opacity-100' : 'opacity-0 pointer-events-none select-none'"
+                            :aria-hidden="index === current ? 'false' : 'true'">
+                            <p class="mx-auto mb-4 inline-flex items-center gap-2 rounded-full border border-outline-variant px-3 py-1 text-xs font-semibold text-on-tertiary-container">
+                                <span class="h-1.5 w-1.5 rounded-full bg-secondary"></span>
+                                <span x-text="(current + 1) + ' / ' + banners.length"></span>
+                            </p>
+                            <h2 class="font-display text-3xl font-semibold text-white sm:text-4xl" x-text="banner.title"></h2>
+                            <p x-show="banner.description" x-cloak class="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-on-tertiary-container sm:text-base" x-text="banner.description"></p>
+                            <a x-show="banner.link" :href="banner.link" x-cloak class="mt-8 inline-block rounded-lg bg-secondary px-6 py-3 text-sm font-semibold text-on-secondary transition hover:bg-secondary-container hover:text-on-secondary-container">
+                                Lihat Selengkapnya
+                            </a>
+                        </div>
+                    </template>
+                </div>
 
                 <div x-show="banners.length > 1" x-cloak class="mt-8 flex items-center justify-center gap-3">
                     <button type="button" @click="prev" class="flex h-10 w-10 items-center justify-center rounded-full border border-outline-variant text-on-tertiary transition hover:border-secondary hover:text-white" aria-label="Sebelumnya">
