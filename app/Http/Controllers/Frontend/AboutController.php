@@ -19,7 +19,7 @@ class AboutController extends Controller
     public function sejarah(): View
     {
         $village = $this->profileService->getPublicVillage();
-        $heroImage = 'images/sejarah-keris.jpeg';
+        $heroImage = 'images/kerisbg.png';
 
         return view('frontend.about.sejarah', compact('village', 'heroImage'));
     }
