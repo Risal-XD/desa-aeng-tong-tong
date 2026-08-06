@@ -2,12 +2,8 @@
 
 <header class="sticky top-0 z-40 border-b border-outline-variant/30 bg-surface/95 backdrop-blur shadow-sm">
     <nav class="mx-auto flex h-24 max-w-6xl items-center justify-between gap-6 px-4 sm:px-6" aria-label="Navigasi utama">
-        <a href="{{ route('home') }}" class="flex items-center gap-3.5 group py-3">
-            <img src="{{ asset('images/logo1.png') }}" alt="Logo KKN Desa Aeng Tong-Tong" class="h-16 w-16 object-contain transition group-hover:scale-105">
-            <span class="leading-tight hidden sm:block">
-                <span class="block font-display text-base font-bold text-on-surface">KKN DESA AENG TONG-TONG</span>
-                <span class="block text-xs text-on-surface-variant font-medium">Universitas Wiraraja</span>
-            </span>
+        <a href="{{ route('home') }}" class="group flex items-center gap-3">
+            <img src="{{ asset('images/logo1.png') }}" alt="Logo KKN Desa Aeng Tong-Tong" class="h-20 w-20 object-contain transition group-hover:scale-105">
         </a>
 
         <div class="hidden items-center gap-1 lg:flex" x-data="{ aboutOpen: false }">
