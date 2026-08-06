@@ -19,10 +19,7 @@ class AboutController extends Controller
     public function sejarah(): View
     {
         $village = $this->profileService->getPublicVillage();
-        $heroImage = Cache::remember('frontend.sejarah.hero_image', 300, fn () => Gallery::active()
-            ->whereNotNull('image')
-            ->where('title', 'like', '%keris%')
-            ->first()?->image);
+        $heroImage = 'images/sejarah-keris.jpeg';
 
         return view('frontend.about.sejarah', compact('village', 'heroImage'));
     }
