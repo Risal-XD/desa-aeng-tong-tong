@@ -24,9 +24,7 @@ class KerisController extends Controller
             ->orderBy('sort_order')
             ->orderBy('id')
             ->get();
-        $heroImage = Cache::remember('frontend.keris.hero_image', 300, fn () => Gallery::active()
-            ->whereNotNull('image')
-            ->first()?->image);
+        $heroImage = 'images/kerisbg.png';
 
         return view('frontend.keris.index', compact('village', 'artisans', 'heroImage'));
     }

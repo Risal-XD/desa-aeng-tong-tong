@@ -24,9 +24,7 @@ class TourismController extends Controller
             ->orderBy('is_featured', 'desc')
             ->latest('id')
             ->paginate(9);
-        $heroImage = Cache::remember('frontend.tourism.hero_image', 300, fn () => Gallery::active()
-            ->whereNotNull('image')
-            ->first()?->image);
+        $heroImage = 'images/kerisbg.png';
 
         return view('frontend.tourism.index', compact('village', 'destinations', 'heroImage'));
     }

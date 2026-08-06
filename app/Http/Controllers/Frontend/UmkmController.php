@@ -25,9 +25,7 @@ class UmkmController extends Controller
             ->orderBy('sort_order')
             ->orderBy('id')
             ->paginate(12);
-        $heroImage = Cache::remember('frontend.umkm.hero_image', 300, fn () => Gallery::active()
-            ->whereNotNull('image')
-            ->first()?->image);
+        $heroImage = 'images/kerisbg.png';
 
         return view('frontend.umkms.index', compact('village', 'umkms', 'heroImage'));
     }

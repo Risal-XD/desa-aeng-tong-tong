@@ -27,9 +27,7 @@ class AboutController extends Controller
     public function visiMisi(): View
     {
         $village = $this->profileService->getPublicVillage();
-        $heroImage = Cache::remember('frontend.visi_misi.hero_image', 300, fn () => Gallery::active()
-            ->whereNotNull('image')
-            ->first()?->image);
+        $heroImage = 'images/kerisbg.png';
 
         return view('frontend.about.visi-misi', compact('village', 'heroImage'));
     }
@@ -38,9 +36,7 @@ class AboutController extends Controller
     {
         $village = $this->profileService->getPublicVillage();
         $structureTree = $village ? $this->profileService->buildStructureTree($village) : collect();
-        $heroImage = Cache::remember('frontend.struktur.hero_image', 300, fn () => Gallery::active()
-            ->whereNotNull('image')
-            ->first()?->image);
+        $heroImage = 'images/kerisbg.png';
 
         return view('frontend.about.struktur', compact('village', 'structureTree', 'heroImage'));
     }
@@ -49,9 +45,7 @@ class AboutController extends Controller
     {
         $village = $this->profileService->getPublicVillage();
         $groups = $village ? $this->profileService->groupOfficialsByStructure($village) : [];
-        $heroImage = Cache::remember('frontend.perangkat.hero_image', 300, fn () => Gallery::active()
-            ->whereNotNull('image')
-            ->first()?->image);
+        $heroImage = 'images/kerisbg.png';
 
         return view('frontend.about.perangkat', compact('village', 'groups', 'heroImage'));
     }

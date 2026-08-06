@@ -34,9 +34,7 @@ class StatisticController extends Controller
             ->orderByDesc('year')
             ->orderBy('category')
             ->get();
-        $heroImage = Cache::remember('frontend.statistics.hero_image', 300, fn () => Gallery::active()
-            ->whereNotNull('image')
-            ->first()?->image);
+        $heroImage = 'images/kerisbg.png';
 
         return view('frontend.statistics.index', compact('village', 'categories', 'years', 'statistics', 'heroImage'));
     }

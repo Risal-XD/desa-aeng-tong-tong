@@ -20,9 +20,7 @@ class PotentialController extends Controller
     {
         $village = $this->profileService->getPublicVillage();
         $potentials = $village?->potentials ?? collect();
-        $heroImage = Cache::remember('frontend.potential.hero_image', 300, fn () => Gallery::active()
-            ->whereNotNull('image')
-            ->first()?->image);
+        $heroImage = 'images/kerisbg.png';
 
         return view('frontend.potential.index', compact('village', 'potentials', 'heroImage'));
     }
