@@ -1,7 +1,7 @@
 @props(['village' => null])
 
 <header class="sticky top-0 z-40 border-b border-outline-variant/30 bg-surface/95 backdrop-blur shadow-sm">
-    <nav class="mx-auto flex h-24 max-w-6xl items-center justify-between gap-6 px-4 sm:px-6" aria-label="Navigasi utama">
+    <nav class="flex h-24 w-full items-center justify-between gap-6 px-4 sm:px-8" aria-label="Navigasi utama">
         <a href="{{ route('home') }}" class="group flex items-center gap-3">
             <img src="{{ asset('images/logo1.png') }}" alt="Logo KKN Desa Aeng Tong-Tong" class="h-20 w-20 object-contain transition group-hover:scale-105">
             <img src="{{ asset('images/logo2.png') }}" alt="Logo Kedua" class="h-20 w-20 object-contain transition group-hover:scale-105">
