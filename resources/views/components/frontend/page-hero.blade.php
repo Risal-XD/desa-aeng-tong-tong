@@ -1,11 +1,12 @@
 @props(['title', 'subtitle' => null, 'image' => null, 'imagePosition' => 'center', 'backgroundSize' => 'cover'])
 
 @php
-    $imageUrl = $image ? (str_starts_with($image, 'images/') ? asset($image) : asset('storage/'.$image)) : null;
+    $bgImage = $image ?? 'images/kerisbg.png';
+    $imageUrl = str_starts_with($bgImage, 'images/') ? asset($bgImage) : asset('storage/'.$bgImage);
 @endphp
 
 <section class="relative overflow-hidden" :style="image ? `background-image: url('{{ $imageUrl }}'); background-size: {{ $backgroundSize }}; background-position: {{ $imagePosition }};` : ''">
-    @if ($image)
+    @if ($bgImage)
         <img src="{{ $imageUrl }}" alt="{{ $title }}" class="absolute inset-0 h-full w-full object-cover" style="object-position: {{ $imagePosition }};" />
     @else
         <div class="absolute inset-0 bg-ink-950"></div>
