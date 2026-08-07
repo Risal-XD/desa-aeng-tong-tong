@@ -16,7 +16,7 @@
         @if ($village?->history?->history_content)
             <div class="grid gap-10 lg:grid-cols-3">
                 <div class="lg:col-span-2">
-                    <div class="prose prose-ink max-w-none rounded-2xl border border-ink-200 bg-white p-6 text-sm leading-relaxed text-ink-600 shadow-sm sm:p-8">
+                    <div class="prose prose-ink max-w-none rounded-2xl border border-ink-200 bg-white p-6 text-sm leading-relaxed text-justify text-ink-600 shadow-sm sm:p-8">
                         {!! $village->history->history_content !!}
                     </div>
                 </div>
