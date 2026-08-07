@@ -12,10 +12,10 @@
                     <span class="h-1.5 w-1.5 rounded-full bg-secondary"></span>
                     Juara 1 ADWI 2022 · Rekor MURI
                 </p>
-                <div class="min-h-[7.5rem] sm:min-h-[10rem]" data-parallax-speed="30">
+                <div>
                     <h1 x-data="typewriter('Selamat Datang di\nDesa Aeng Tong-Tong', 100, 0)" class="font-display text-4xl font-semibold uppercase leading-tight text-white sm:text-5xl whitespace-pre-line" x-text="displayText"></h1>
                 </div>
-                <div class="relative" data-parallax-speed="50">
+                <div class="relative">
                     <p class="invisible mt-5 max-w-xl text-sm leading-relaxed text-justify sm:text-base" x-text="'Desa wisata sentra kerajinan keris di Kecamatan Saronggi, Kabupaten Sumenep, Jawa Timur. Menjaga warisan budaya para Mpu sekaligus membangun kesejahteraan masyarakat.'"></p>
                     <p x-data="typewriter('Desa wisata sentra kerajinan keris di Kecamatan Saronggi, Kabupaten Sumenep, Jawa Timur. Menjaga warisan budaya para Mpu sekaligus membangun kesejahteraan masyarakat.', 60, 2800)" class="absolute inset-x-0 top-0 mt-5 max-w-xl text-sm leading-relaxed text-on-primary-container sm:text-base text-justify" x-text="displayText"></p>
                 </div>
@@ -29,7 +29,7 @@
                 </div>
             </div>
 
-            <div class="hidden lg:block -mt-16">
+            <div class="hidden lg:block pt-10">
                 <div x-data="fadeSlider(@js($heroPhotos->map(fn ($photo) => [
                     'title' => $photo->title,
                     'image' => $photo->image ? asset('storage/'.$photo->image) : null,
