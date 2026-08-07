@@ -29,7 +29,7 @@
                 </div>
             </div>
 
-            <div class="hidden lg:block">
+            <div class="hidden lg:block pt-12">
                 <div x-data="fadeSlider(@js($heroPhotos->map(fn ($photo) => [
                     'title' => $photo->title,
                     'image' => $photo->image ? asset('storage/'.$photo->image) : null,
