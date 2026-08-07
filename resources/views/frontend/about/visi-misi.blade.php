@@ -5,7 +5,7 @@
 
 @section('content')
     <x-frontend.page-hero
-        title="Visi &amp; Misi"
+        title="Visi & Misi"
         subtitle="Arah dan tujuan pembangunan Desa Aeng Tong-Tong."
         :image="$heroImage"
         imagePosition="right center"

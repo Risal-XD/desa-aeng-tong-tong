@@ -347,7 +347,7 @@
                 <div class="lg:col-span-2" data-parallax-speed="30">
                     <x-frontend.section-heading
                         eyebrow="Arah Pembangunan"
-                        title="Visi &amp; Misi"
+                        title="Visi & Misi"
                     />
                     <a href="{{ route('about.visi-misi') }}" class="inline-flex items-center gap-2 text-sm font-semibold text-primary transition hover:text-primary-container">
                         Selengkapnya
