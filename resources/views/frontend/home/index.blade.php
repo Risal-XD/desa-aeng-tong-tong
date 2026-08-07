@@ -6,8 +6,8 @@
     {{-- Hero --}}
     <section class="relative overflow-hidden bg-primary text-on-primary">
         <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(59,130,246,0.1),transparent_55%),radial-gradient(ellipse_at_bottom_right,rgba(16,185,129,0.1),transparent_60%)]"></div>
-        <div class="relative mx-auto grid max-w-6xl items-start gap-10 px-4 pt-10 pb-20 sm:px-6 lg:grid-cols-[1.3fr_1fr] lg:pt-12 lg:pb-24">
-            <div>
+        <div class="relative mx-auto max-w-6xl px-4 pt-10 pb-20 sm:px-6 lg:py-24">
+            <div class="lg:max-w-2xl">
                 <p class="mb-4 inline-flex items-center gap-2 rounded-full border border-primary-container bg-primary-container/20 px-3 py-1 text-xs font-semibold text-inverse-primary">
                     <span class="h-1.5 w-1.5 rounded-full bg-secondary"></span>
                     Juara 1 ADWI 2022 · Rekor MURI
@@ -29,7 +29,7 @@
                 </div>
             </div>
 
-            <div class="hidden lg:block">
+            <div class="hidden lg:absolute lg:right-6 lg:top-12 lg:block w-full max-w-md">
                 <div x-data="fadeSlider(@js($heroPhotos->map(fn ($photo) => [
                     'title' => $photo->title,
                     'image' => $photo->image ? asset('storage/'.$photo->image) : null,
