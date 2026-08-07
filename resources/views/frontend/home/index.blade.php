@@ -12,7 +12,7 @@
                     <span class="h-1.5 w-1.5 rounded-full bg-secondary"></span>
                     Juara 1 ADWI 2022 · Rekor MURI
                 </p>
-                <div class="min-h-[7.5rem] sm:min-h-[10rem]" data-parallax-speed="30">
+                <div class="min-h-[5.75rem] sm:min-h-[6.5rem]" data-parallax-speed="30">
                     <h1 x-data="typewriter('Selamat Datang di\nDesa Aeng Tong-Tong', 100, 0)" class="font-display text-[2.3rem] font-semibold uppercase leading-tight text-white sm:text-[2.6rem] whitespace-pre-line" x-text="displayText"></h1>
                 </div>
                 <div class="relative" data-parallax-speed="50">
