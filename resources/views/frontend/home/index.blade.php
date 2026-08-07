@@ -29,11 +29,11 @@
                 </div>
             </div>
 
-            <div class="hidden justify-self-end lg:block" data-parallax-speed="-40">
+            <div class="hidden lg:block" data-parallax-speed="-40">
                 <div x-data="fadeSlider(@js($heroPhotos->map(fn ($photo) => [
                     'title' => $photo->title,
                     'image' => $photo->image ? asset('storage/'.$photo->image) : null,
-                ])->values()))" class="relative mx-auto max-w-sm">
+                ])->values()))" class="relative ml-auto max-w-sm">
                     <div class="absolute -inset-4 rounded-3xl bg-surface-container-high blur-2xl"></div>
                     <div class="relative aspect-[4/3] overflow-hidden rounded-3xl border border-outline-variant bg-surface-container-low shadow-xl">
                         <template x-for="(photo, index) in photos" :key="index">
