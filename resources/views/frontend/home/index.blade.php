@@ -33,7 +33,7 @@
                 <div x-data="fadeSlider(@js($heroPhotos->map(fn ($photo) => [
                     'title' => $photo->title,
                     'image' => $photo->image ? asset('storage/'.$photo->image) : null,
-                ])->values()))" class="relative mx-auto max-w-lg">
+                ])->values()))" class="relative mx-auto max-w-md">
                     <div class="absolute -inset-4 rounded-3xl bg-surface-container-high blur-2xl"></div>
                     <div class="relative aspect-[4/3] overflow-hidden rounded-3xl border border-outline-variant bg-surface-container-low shadow-xl">
                         <template x-for="(photo, index) in photos" :key="index">
