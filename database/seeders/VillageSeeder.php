@@ -57,7 +57,9 @@ class VillageSeeder extends Seeder
     private function seedHistory(Village $village): void
     {
         $village->history()->updateOrCreate([], [
-            'history_content' => '<p>Sejarah Desa Aeng Tong-Tong tidak lepas dari tradisi pembuatan keris yang diwariskan turun-temurun oleh para Mpu. Keahlian membuat keris menjadikan desa ini memiliki identitas budaya yang kuat.</p>',
+            'history_content' => '<p>Aengtongtong adalah sebuah desa di Kecamatan Saronggi, Kabupaten Sumenep, Provinsi Jawa Timur. Aengtongtong dalam bahasa Madura berasal dari kata “aeng” yang berarti air, sementara “tong –tong” adalah bejana yang dibawa dengan cara dijinjing karena letak geografis Desa Aengtongtong yang ada di lereng bukit dan berbatu-batu, menyebabkan warga harus membawa semacam gentong untuk mendapatkan air di mata air yang terletak di bagian barat Desa Aengtongtong, dalam arti masyarakatnya waktu jaman dulu gemar menggotong air atau membawa air.
+
+Desa Aengtongtong terkenal akan industri kreatif pembuatan Keris terbesar dengan empu keris terbanyak di dunia, sehingga Sumenep dikenal dengan kota Keris. Budaya penempaan Keris dimulai pada masa Aria Wiraraja yang merupakan Bangsawan Wengker dipindah tugaskan ke ujung pulau Madura dengan membawa beserta orang-orang Wengker yang pandai membuat Keris.</p>',
             'founder_name' => 'Mpu yang dihormati masyarakat desa',
             'founded_year' => 1800,
             'status' => 'published',
