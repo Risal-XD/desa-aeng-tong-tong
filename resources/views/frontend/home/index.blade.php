@@ -6,16 +6,16 @@
     {{-- Hero --}}
     <section class="relative overflow-hidden bg-primary text-on-primary">
         <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(59,130,246,0.1),transparent_55%),radial-gradient(ellipse_at_bottom_right,rgba(16,185,129,0.1),transparent_60%)]"></div>
-        <div class="relative mx-auto max-w-6xl px-4 pt-10 pb-20 sm:px-6 lg:py-24">
-            <div class="lg:max-w-2xl">
+        <div class="relative mx-auto grid max-w-6xl items-center gap-10 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:py-24">
+            <div>
                 <p class="mb-4 inline-flex items-center gap-2 rounded-full border border-primary-container bg-primary-container/20 px-3 py-1 text-xs font-semibold text-inverse-primary">
                     <span class="h-1.5 w-1.5 rounded-full bg-secondary"></span>
                     Juara 1 ADWI 2022 · Rekor MURI
                 </p>
-                <div>
-                    <h1 x-data="typewriter('Selamat Datang di\nDesa Aeng Tong-Tong', 100, 0)" class="font-display text-4xl font-semibold uppercase leading-tight text-white sm:text-5xl whitespace-pre-line" x-text="displayText"></h1>
+                <div class="min-h-[7.5rem] sm:min-h-[10rem]" data-parallax-speed="30">
+                    <h1 x-data="typewriter('Selamat Datang di\nDesa Aeng Tong-Tong', 100, 0)" class="font-display text-4xl font-semibold leading-tight text-white sm:text-5xl whitespace-pre-line" x-text="displayText"></h1>
                 </div>
-                <div class="relative">
+                <div class="relative" data-parallax-speed="50">
                     <p class="invisible mt-5 max-w-xl text-sm leading-relaxed text-justify sm:text-base" x-text="'Desa wisata sentra kerajinan keris di Kecamatan Saronggi, Kabupaten Sumenep, Jawa Timur. Menjaga warisan budaya para Mpu sekaligus membangun kesejahteraan masyarakat.'"></p>
                     <p x-data="typewriter('Desa wisata sentra kerajinan keris di Kecamatan Saronggi, Kabupaten Sumenep, Jawa Timur. Menjaga warisan budaya para Mpu sekaligus membangun kesejahteraan masyarakat.', 60, 2800)" class="absolute inset-x-0 top-0 mt-5 max-w-xl text-sm leading-relaxed text-on-primary-container sm:text-base text-justify" x-text="displayText"></p>
                 </div>
@@ -29,11 +29,11 @@
                 </div>
             </div>
 
-            <div class="hidden lg:absolute lg:right-6 lg:top-12 lg:block w-full max-w-md">
+            <div class="hidden lg:block" data-parallax-speed="-40">
                 <div x-data="fadeSlider(@js($heroPhotos->map(fn ($photo) => [
                     'title' => $photo->title,
                     'image' => $photo->image ? asset('storage/'.$photo->image) : null,
-                ])->values()))" class="relative ml-auto max-w-sm">
+                ])->values()))" class="relative mx-auto max-w-sm">
                     <div class="absolute -inset-4 rounded-3xl bg-surface-container-high blur-2xl"></div>
                     <div class="relative aspect-[4/3] overflow-hidden rounded-3xl border border-outline-variant bg-surface-container-low shadow-xl">
                         <template x-for="(photo, index) in photos" :key="index">
