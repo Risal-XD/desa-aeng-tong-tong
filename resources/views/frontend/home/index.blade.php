@@ -6,13 +6,13 @@
     {{-- Hero --}}
     <section class="relative overflow-hidden bg-primary text-on-primary">
         <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(59,130,246,0.1),transparent_55%),radial-gradient(ellipse_at_bottom_right,rgba(16,185,129,0.1),transparent_60%)]"></div>
-        <div class="relative mx-auto grid max-w-6xl items-center gap-10 px-4 py-20 sm:px-6 lg:grid-cols-[1.15fr_1fr] lg:py-24">
+        <div class="relative mx-auto grid max-w-6xl items-center gap-10 px-4 py-20 sm:px-6 lg:grid-cols-[3fr_2fr] lg:py-24">
             <div>
                 <p class="mb-4 inline-flex items-center gap-2 rounded-full border border-primary-container bg-primary-container/20 px-3 py-1 text-xs font-semibold text-inverse-primary">
                     <span class="h-1.5 w-1.5 rounded-full bg-secondary"></span>
                     Juara 1 ADWI 2022 · Rekor MURI
                 </p>
-                <div class="min-h-[5rem] sm:min-h-[7rem]" data-parallax-speed="30">
+                <div class="min-h-[4.5rem] sm:min-h-[8rem]" data-parallax-speed="30">
                     <h1 x-data="typewriter('Selamat Datang di\nDesa Aeng Tong-Tong', 100, 0)" class="font-display text-3xl font-semibold uppercase leading-snug text-white sm:text-5xl whitespace-pre-line" x-text="displayText"></h1>
                 </div>
                 <div class="relative" data-parallax-speed="50">
