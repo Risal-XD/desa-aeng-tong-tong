@@ -6,7 +6,7 @@
     {{-- Hero --}}
     <section class="relative overflow-hidden bg-primary text-on-primary">
         <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(59,130,246,0.1),transparent_55%),radial-gradient(ellipse_at_bottom_right,rgba(16,185,129,0.1),transparent_60%)]"></div>
-        <div class="relative mx-auto grid max-w-6xl items-center gap-10 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:py-24">
+        <div class="relative mx-auto grid max-w-6xl items-center gap-10 px-4 pb-32 pt-20 sm:px-6 lg:grid-cols-2 lg:pb-44 lg:pt-24">
             <div>
                 <p class="mb-4 inline-flex items-center gap-2 rounded-full border border-primary-container bg-primary-container/20 px-3 py-1 text-xs font-semibold text-inverse-primary">
                     <span class="h-1.5 w-1.5 rounded-full bg-secondary"></span>
@@ -71,54 +71,6 @@
             </div>
         </div>
     </section>
-
-    {{-- Banner Slider --}}
-    @if ($banners->isNotEmpty())
-        <section x-data="bannerSlider(@js($banners->map(fn ($banner) => [
-            'title' => $banner->title,
-            'description' => $banner->description,
-            'image' => $banner->image ? asset('storage/'.$banner->image) : null,
-            'link' => $banner->link,
-            'first' => mb_substr($banner->title, 0, 1),
-        ])->values()))" class="relative overflow-hidden bg-tertiary text-on-tertiary">
-            <template x-for="(banner, index) in banners" :key="index">
-                <div x-show="index === current" x-cloak x-transition.opacity class="absolute inset-0">
-                    <img x-show="banner.image" :src="banner.image" :alt="banner.title" x-cloak class="h-full w-full object-cover opacity-30">
-                    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.4),transparent_70%)]"></div>
-                </div>
-            </template>
-            <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(255,255,255,0.1),transparent_55%)]"></div>
-
-            <div class="relative mx-auto max-w-6xl px-4 py-16 text-center sm:px-6 sm:py-20">
-                <div class="grid grid-cols-1 grid-rows-1">
-                    <template x-for="(banner, index) in banners" :key="'c-'+index">
-                        <div class="col-start-1 row-start-1 transition-opacity duration-700 ease-out"
-                            :class="index === current ? 'opacity-100' : 'opacity-0 pointer-events-none select-none'"
-                            :aria-hidden="index === current ? 'false' : 'true'">
-                            <p class="mx-auto mb-4 inline-flex items-center gap-2 rounded-full border border-outline-variant px-3 py-1 text-xs font-semibold text-on-tertiary-container">
-                                <span class="h-1.5 w-1.5 rounded-full bg-secondary"></span>
-                                <span x-text="(current + 1) + ' / ' + banners.length"></span>
-                            </p>
-                            <h2 class="font-display text-3xl font-semibold text-white sm:text-4xl" x-text="banner.title"></h2>
-                            <p x-show="banner.description" x-cloak class="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-on-tertiary-container sm:text-base" x-text="banner.description"></p>
-                            <a x-show="banner.link" :href="banner.link" x-cloak class="mt-8 inline-block rounded-lg bg-secondary px-6 py-3 text-sm font-semibold text-on-secondary transition hover:bg-secondary-container hover:text-on-secondary-container">
-                                Lihat Selengkapnya
-                            </a>
-                        </div>
-                    </template>
-                </div>
-
-                <div x-show="banners.length > 1" x-cloak class="mt-8 flex items-center justify-center gap-3">
-                    <button type="button" @click="prev" class="flex h-10 w-10 items-center justify-center rounded-full border border-outline-variant text-on-tertiary transition hover:border-secondary hover:text-white" aria-label="Sebelumnya">
-                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-                    </button>
-                    <button type="button" @click="next" class="flex h-10 w-10 items-center justify-center rounded-full border border-outline-variant text-on-tertiary transition hover:border-secondary hover:text-white" aria-label="Berikutnya">
-                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-                    </button>
-                </div>
-            </div>
-        </section>
-    @endif
 
     {{-- Gambaran Umum --}}
     @if ($village?->profile?->overview)
