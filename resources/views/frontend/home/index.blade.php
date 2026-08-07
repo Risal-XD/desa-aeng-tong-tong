@@ -13,7 +13,7 @@
                     Juara 1 ADWI 2022 · Rekor MURI
                 </p>
                 <div class="min-h-[7.5rem] sm:min-h-[10rem]" data-parallax-speed="30">
-                    <h1 x-data="typewriter('Selamat Datang di\nDesa Aeng Tong-Tong', 100, 0)" class="font-display text-3xl font-semibold uppercase leading-tight text-white sm:text-4xl whitespace-pre-line" x-text="displayText"></h1>
+                    <h1 x-data="typewriter('Selamat Datang di\nDesa Aeng Tong-Tong', 100, 0)" class="font-display text-[2.1rem] font-semibold uppercase leading-tight text-white sm:text-4xl whitespace-pre-line" x-text="displayText"></h1>
                 </div>
                 <div class="relative" data-parallax-speed="50">
                     <p class="invisible mt-5 max-w-xl text-sm leading-relaxed text-justify sm:text-base" x-text="'Desa wisata sentra kerajinan keris di Kecamatan Saronggi, Kabupaten Sumenep, Jawa Timur. Menjaga warisan budaya para Mpu sekaligus membangun kesejahteraan masyarakat.'"></p>
