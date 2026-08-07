@@ -111,7 +111,10 @@ class MediaSeeder extends Seeder
 
     private function seedBanners(Village $village, User $author): void
     {
-        $items = [];
+        $items = [
+            ['title' => 'Selamat Datang di Desa Aeng Tong-Tong', 'description' => 'Desa dengan potensi wisata dan budaya yang luar biasa.', 'position' => 'slider', 'sort_order' => 1],
+            ['title' => 'Festival Keris 2026', 'description' => 'Saksikan kemegahan budaya keris di desa kami.', 'position' => 'slider', 'sort_order' => 2],
+        ];
 
         foreach ($items as $item) {
             Banner::updateOrCreate(
