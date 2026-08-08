@@ -22,7 +22,7 @@
                     <p x-data="typewriter('Desa wisata sentra kerajinan keris di Kecamatan Saronggi, Kabupaten Sumenep, Jawa Timur. Menjaga warisan budaya para Mpu sekaligus membangun kesejahteraan masyarakat.', 60, 2800)" class="absolute inset-x-0 top-0 mt-5 max-w-xl text-sm leading-relaxed text-white sm:text-base text-justify" x-text="displayText"></p>
                 </div>
                 <div class="mt-8 flex flex-wrap gap-3">
-                    <a href="{{ route('about.sejarah') }}" class="rounded-lg bg-secondary px-6 py-3 text-sm font-semibold text-on-secondary shadow-sm transition hover:bg-secondary-container hover:text-on-secondary-container">
+                    <a href="{{ route('about.sejarah') }}" class="rounded-lg border border-outline px-6 py-3 text-sm font-semibold text-white transition hover:bg-on-primary/10">
                         Jelajahi Desa
                     </a>
                     <a href="{{ route('potensi') }}" class="rounded-lg border border-outline px-6 py-3 text-sm font-semibold text-white transition hover:bg-on-primary/10">
