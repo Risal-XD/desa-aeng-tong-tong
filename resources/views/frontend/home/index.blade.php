@@ -18,7 +18,7 @@
                     <h1 x-data="typewriter('Selamat Datang di\nDesa Aeng Tong-Tong', 100, 0)" class="font-display text-[2.3rem] font-semibold uppercase leading-tight text-white sm:text-[2.6rem] whitespace-pre-line" x-text="displayText"></h1>
                 </div>
                 <div class="relative" data-parallax-speed="50">
-                    <p class="mt-5 max-w-xl text-sm leading-relaxed text-justify sm:text-base" x-text="'Desa wisata sentra kerajinan keris di Kecamatan Saronggi, Kabupaten Sumenep, Jawa Timur. Menjaga warisan budaya para Mpu sekaligus membangun kesejahteraan masyarakat.'"></p>
+                    <p class="invisible mt-5 max-w-xl text-sm leading-relaxed text-justify sm:text-base" x-text="'Desa wisata sentra kerajinan keris di Kecamatan Saronggi, Kabupaten Sumenep, Jawa Timur. Menjaga warisan budaya para Mpu sekaligus membangun kesejahteraan masyarakat.'"></p>
                     <p x-data="typewriter('Desa wisata sentra kerajinan keris di Kecamatan Saronggi, Kabupaten Sumenep, Jawa Timur. Menjaga warisan budaya para Mpu sekaligus membangun kesejahteraan masyarakat.', 60, 2800)" class="absolute inset-x-0 top-0 mt-5 max-w-xl text-sm leading-relaxed text-on-primary-container sm:text-base text-justify" x-text="displayText"></p>
                 </div>
                 <div class="mt-8 flex flex-wrap gap-3">
