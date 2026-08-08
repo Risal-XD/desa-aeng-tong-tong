@@ -4,8 +4,10 @@
 
 @section('content')
     {{-- Hero --}}
-    <section class="relative flex min-h-screen items-center overflow-hidden bg-primary text-on-primary">
-        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(59,130,246,0.1),transparent_55%),radial-gradient(ellipse_at_bottom_right,rgba(16,185,129,0.1),transparent_60%)]"></div>
+    <section class="relative flex min-h-screen items-center overflow-hidden bg-primary text-on-primary border-4 border-green-500">
+        <div class="absolute inset-0 bg-green-500 overflow-hidden">
+            <video autoplay muted loop class="w-full h-full object-cover" src="{{ asset('foto/bgcinematic.mp4') }}"></video>
+        </div>
         <div class="relative mx-auto grid w-full max-w-6xl items-center gap-10 px-4 py-24 sm:px-6 lg:grid-cols-2 lg:py-28">
             <div>
                 <p class="mb-4 inline-flex items-center gap-2 rounded-full border border-primary-container bg-primary-container/20 px-3 py-1 text-xs font-semibold text-inverse-primary">
