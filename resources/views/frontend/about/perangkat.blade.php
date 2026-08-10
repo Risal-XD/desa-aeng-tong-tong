@@ -29,14 +29,14 @@
                                     @endif
                             </div>
                             <div class="flex-1 p-8 lg:p-10">
-                                <h3 class="text-2xl font-bold text-ink-900">{{ $chief->name }}</h3>
+                                <h3 class="text-2xl font-bold text-ink-900">Hadi Sudirfan, S.Pd.I</h3>
                                 <p class="mt-1 text-sm font-semibold uppercase tracking-wide text-brand-600">Kepala Desa {{ $village->name ?? 'Aeng Tong-Tong' }}</p>
-                                <p class="mt-4 text-ink-600">Memimpin Desa Aeng Tong-Tong dengan komitmen kuat terhadap pelestarian budaya dan kemajuan masyarakat. Berdedikasi untuk mempertahankan identitas desa sebagai pusat pengrajin keris tradisional sekaligus mendorong inovasi dalam pelayanan publik dan ekonomi lokal.</p>
+                                <p class="mt-4 text-ink-600 text-right">Sebagai Kepala Desa {{ $village->name ?? '' }}, beliau memiliki peran dalam memimpin penyelenggaraan pemerintahan desa, pemberdayaan masyarakat, serta pengembangan potensi desa sebagai desa wisata berbasis budaya dan kerajinan keris.</p>
                                 <hr class="my-6 border-ink-200">
                                 <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-sm">
                                     <div>
-                                        <dt class="text-xs font-semibold uppercase tracking-wide text-ink-500">Nama Lengkap</dt>
-                                        <dd class="mt-1 font-semibold text-ink-900">{{ $chief->name }}</dd>
+                                    <dt class="text-xs font-semibold uppercase tracking-wide text-ink-500">Nama Lengkap</dt>
+                                    <dd class="mt-1 font-semibold text-ink-900">Hadi Sudirfan, S.Pd.I</dd>
                                     </div>
                                     <div>
                                         <dt class="text-xs font-semibold uppercase tracking-wide text-ink-500">Jabatan</dt>
@@ -51,12 +51,12 @@
                                         <dd class="mt-1 font-semibold text-ink-900">{{ $chief->period ?? '2020 - 2026' }}</dd>
                                     </div>
                                     <div>
-                                        <dt class="text-xs font-semibold uppercase tracking-wide text-ink-500">Email</dt>
-                                        <dd class="mt-1 text-ink-700">{{ $chief->email ?? 'kades@aengtongtong.desa.id' }}</dd>
+                                    <dt class="text-xs font-semibold uppercase tracking-wide text-ink-500">Email</dt>
+                                    <dd class="mt-1 text-ink-700">{{ $chief->email ?? '' }}</dd>
                                     </div>
                                     <div>
-                                        <dt class="text-xs font-semibold uppercase tracking-wide text-ink-500">Telepon</dt>
-                                        <dd class="mt-1 text-ink-700">{{ $chief->phone ?? '+62 812-3456-7890' }}</dd>
+                                    <dt class="text-xs font-semibold uppercase tracking-wide text-ink-500">Telepon</dt>
+                                    <dd class="mt-1 text-ink-700">{{ $chief->phone ?? '' }}</dd>
                                     </div>
                                 </dl>
                             </div>
