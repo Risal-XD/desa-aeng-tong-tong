@@ -72,19 +72,39 @@
                         </h2>
                         <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                             @foreach ($group['officials'] as $official)
-                                <div class="group rounded-2xl border border-ink-200 bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:border-brand-300 hover:shadow-lg">
-                                    @if ($official->photo)
-                                        <img src="{{ asset('storage/'.$official->photo) }}" alt="{{ $official->name }}" class="mx-auto h-20 w-20 rounded-lg object-cover">
-                                    @else
-                                        <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-lg bg-brand-100 font-display text-2xl font-semibold text-brand-700">
-                                            {{ collect(array_filter(explode(' ', trim($official->name))))->map(fn ($w) => mb_strtoupper(mb_substr($w, 0, 1)))->take(2)->implode('') }}
-                                        </div>
-                                    @endif
-                                    <h3 class="mt-4 font-semibold text-ink-900">{{ $official->name }}</h3>
-                                    <p class="mt-1 text-sm text-brand-600">{{ $official->position }}</p>
-                                    @if ($official->nip)
-                                        <p class="mt-2 text-xs text-ink-400">NIP. {{ $official->nip }}</p>
-                                    @endif
+                                <div class="group rounded-2xl border border-ink-200 bg-white overflow-hidden shadow-sm transition hover:-translate-y-1 hover:border-brand-300 hover:shadow-lg">
+                                    <div class="aspect-[3/4] w-full bg-gray-100 overflow-hidden">
+                                        @if ($official->photo)
+                                            <img src="{{ asset('storage/'.$official->photo) }}" alt="{{ $official->name }}" class="h-full w-full object-cover">
+                                        @else
+                                            <div class="flex h-full w-full items-center justify-center bg-brand-100 font-display text-4xl font-semibold text-brand-700">
+                                                {{ collect(array_filter(explode(' ', trim($official->name))))->map(fn ($w) => mb_strtoupper(mb_substr($w, 0, 1)))->take(2)->implode('') }}
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="p-5 text-center">
+                                        <h3 class="font-semibold text-ink-900">{{ $official->name }}</h3>
+                                        <p class="mt-1 text-xs font-semibold uppercase tracking-wide text-brand-600">{{ $official->position }}</p>
+                                        @if ($official->email || $official->phone)
+                                            <div class="mt-4 space-y-1 text-xs text-ink-500">
+                                                @if ($official->email)
+                                                    <p class="flex items-center justify-center gap-1.5">
+                                                        <svg class="h-3.5 w-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+                                                        <span>{{ $official->email }}</span>
+                                                    </p>
+                                                @endif
+                                                @if ($official->phone)
+                                                    <p class="flex items-center justify-center gap-1.5">
+                                                        <svg class="h-3.5 w-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                                        <span>{{ $official->phone }}</span>
+                                                    </p>
+                                                @endif
+                                            </div>
+                                        @endif
+                                        @if ($official->nip)
+                                            <p class="mt-3 text-xs text-ink-400">NIP. {{ $official->nip }}</p>
+                                        @endif
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
