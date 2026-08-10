@@ -92,7 +92,7 @@
                     @endforeach
                 </div>
             </div>
-        @endforeach
+@endforeach
         @endif
     @else
         <div class="rounded-2xl border border-ink-200 bg-white p-10 text-center shadow-sm">
