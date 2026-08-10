@@ -114,35 +114,19 @@
             </div>
         @endforeach
     </section>
-    </section>
 
     {{-- Lokasi Desa Section --}}
-    <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6" data-aos="fade-up">
-        <h2 class="mb-6 font-display text-2xl font-semibold text-ink-900">Lokasi Desa</h2>
-        <p class="mb-4 text-ink-600">Kunjungi Desa Aeng Tong-Tong dan temukan lokasi Balai Desa kami.</p>
-        <div class="grid gap-8 lg:grid-cols-2">
-            <div class="space-y-4">
-                <h3 class="text-xl font-semibold text-ink-800">Balai Desa Aeng Tong-Tong</h3>
-                <p class="text-ink-600">
-                    Desa Aeng Tong-Tong,<br>
-                    Kecamatan Saronggi,<br>
-                    Kabupaten Sumenep,<br>
-                    Jawa Timur, Indonesia
-                </p>
-                <p class="text-ink-600"><strong>Latitude:</strong> -7.0836785</p>
-                <p class="text-ink-600"><strong>Longitude:</strong> 113.7923879</p>
-                <a href="https://www.google.com/maps/place/Balai+Desa+Aeng+Tong-Tong/@-7.0836732,113.789813,17z/data=!3m1!4b1!4m6!3m5!1s0x2dd9e0f1c0000001:0xb87b864f563299d8!8m2!3d-7.0836785!4d113.7923879!16s%2Fg%2F11c2pmnf94" target="_blank" class="inline-block bg-primary text-on-primary px-4 py-2 rounded-lg shadow hover:bg-primary-dark transition">Petunjuk Arah</a>
-            </div>
-            <div class="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden shadow-lg">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3950.740211018331!2d113.7923879!3d-7.0836785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd9e0f1c0000001%3A0xb87b864f563299d8!2sBalai%20Desa%20Aeng%20Tong-Tong!5e0!3m2!1sid!2sid!4v1723199999999"
-                    width="100%"
-                    height="100%"
-                    style="border:0;"
-                    allowfullscreen=""
-                    loading="lazy"
-                ></iframe>
-            </div>
+    <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6" data-aos="fade-up">
+        <h2 class="mb-6 font-display text-2xl font-semibold text-ink-900 uppercase">Lokasi Desa</h2>
+        <div class="h-96 w-full rounded-2xl overflow-hidden shadow-lg border border-ink-200">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3950.740211018331!2d113.7923879!3d-7.0836785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd9e0f1c0000001%3A0xb87b864f563299d8!2sBalai%20Desa%20Aeng%20Tong-Tong!5e0!3m2!1sid!2sid!4v1723199999999"
+                width="100%"
+                height="100%"
+                style="border:0;"
+                allowfullscreen=""
+                loading="lazy"
+            ></iframe>
         </div>
     </section>
 @endsection
