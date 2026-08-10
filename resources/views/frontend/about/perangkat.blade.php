@@ -20,20 +20,11 @@
             // Data dummy perangkat desa jika data dari DB baru ada Kepala Desa
             $defaultPerangkatGroups = [
                 [
-                    'position' => 'Sekretariat Desa',
+                    'position' => 'Perangkat Desa',
                     'officials' => [
                         (object)['name' => 'Achmad Fauzi', 'position' => 'SEKRETARIS DESA', 'email' => 'a.fauzi@desa.id', 'phone' => '+62 812-0001', 'photo' => null],
                         (object)['name' => 'Siti Aminah', 'position' => 'KAUR KEUANGAN', 'email' => 's.aminah@desa.id', 'phone' => '+62 812-0002', 'photo' => null],
                         (object)['name' => 'Bambang S.', 'position' => 'KAUR PERENCANAAN', 'email' => 'bambang.s@desa.id', 'phone' => '+62 812-0003', 'photo' => null],
-                    ]
-                ],
-                [
-                    'position' => 'Pelaksana Kewilayahan',
-                    'officials' => [
-                        (object)['name' => 'Agus Salim', 'position' => 'KEPALA DUSUN I', 'email' => 'a.salim@desa.id', 'phone' => '+62 812-0007', 'photo' => null],
-                        (object)['name' => 'Supriyadi', 'position' => 'KEPALA DUSUN II', 'email' => 'supriyadi@desa.id', 'phone' => '+62 812-0008', 'photo' => null],
-                        (object)['name' => 'Nurul Huda', 'position' => 'KEPALA DUSUN III', 'email' => 'n.huda@desa.id', 'phone' => '+62 812-0009', 'photo' => null],
-                        (object)['name' => 'Ahmad Zaini', 'position' => 'KEPALA DUSUN IV', 'email' => 'a.zaini@desa.id', 'phone' => '+62 812-0010', 'photo' => null],
                     ]
                 ]
             ];
