@@ -116,9 +116,9 @@
     </section>
 
     {{-- Lokasi Desa Section --}}
-    <section class="mx-auto max-w-6xl px-4 -mt-8 pb-16 sm:px-6" data-aos="fade-up">
+    <section class="mx-auto max-w-6xl px-4 pt-4 pb-28 sm:px-6" data-aos="fade-up">
         <h2 class="mb-6 font-display text-2xl font-semibold text-ink-900 uppercase">Lokasi Desa</h2>
-        <div class="h-[500px] w-full rounded-2xl overflow-hidden shadow-lg border border-ink-200">
+        <div class="h-[650px] w-full rounded-2xl overflow-hidden shadow-xl border border-ink-200">
             <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3950.740211018331!2d113.7923879!3d-7.0836785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd9e0f1c0000001%3A0xb87b864f563299d8!2sBalai%20Desa%20Aeng%20Tong-Tong!5e0!3m2!1sid!2sid!4v1723199999999"
                 width="100%"
