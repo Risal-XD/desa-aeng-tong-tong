@@ -116,7 +116,7 @@
     </section>
 
     {{-- Lokasi Desa Section --}}
-    <section class="mx-auto max-w-6xl px-4 pt-4 pb-28 sm:px-6" data-aos="fade-up">
+    <section class="mx-auto max-w-6xl px-4 pt-4 pb-48 sm:px-6 mb-16" data-aos="fade-up">
         <h2 class="mb-6 font-display text-2xl font-semibold text-ink-900 uppercase">Lokasi Desa</h2>
         <div class="h-[650px] w-full rounded-2xl overflow-hidden shadow-xl border border-ink-200">
             <iframe
