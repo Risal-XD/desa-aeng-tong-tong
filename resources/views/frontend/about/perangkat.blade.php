@@ -93,6 +93,7 @@
                 </div>
             </div>
         @endforeach
+        @endif
     @else
         <div class="rounded-2xl border border-ink-200 bg-white p-10 text-center shadow-sm">
             <p class="text-sm text-ink-500">Data perangkat desa belum tersedia.</p>
