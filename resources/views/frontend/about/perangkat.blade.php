@@ -22,13 +22,11 @@
                         <h2 class="mb-6 font-display text-2xl font-semibold text-ink-900">Kepala Desa</h2>
                         <div class="flex flex-col lg:flex-row bg-white rounded-2xl shadow-sm overflow-hidden">
                             <div class="w-full lg:w-2/5 flex-shrink-0">
-                                @if ($chief->photo)
-                                    <img src="{{ asset('storage/'.$chief->photo) }}" alt="{{ $chief->name }}" class="w-full h-full object-cover">
-                                @else
-                                    <div class="flex items-center justify-center w-full h-full min-h-[400px] bg-gray-200 text-gray-500">
-                                        {{ $chief->name }}
-                                    </div>
-                                @endif
+                                    @if ($chief->photo)
+                                        <img src="{{ asset('storage/'.$chief->photo) }}" alt="{{ $chief->name }}" class="w-full h-full object-cover">
+                                    @else
+                                        <img src="{{ asset('foto/Kades.jpeg') }}" alt="{{ $chief->name }}" class="w-full h-full object-cover">
+                                    @endif
                             </div>
                             <div class="flex-1 p-8 lg:p-10">
                                 <h3 class="text-2xl font-bold text-ink-900">{{ $chief->name }}</h3>
