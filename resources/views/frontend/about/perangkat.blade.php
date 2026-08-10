@@ -32,6 +32,25 @@
                                 <h3 class="text-3xl font-bold text-ink-900 uppercase">HADI SUDIRFAN, S.PD.I</h3>
                                 <p class="mt-1 text-sm font-semibold uppercase tracking-wide text-brand-600">KEPALA DESA {{ mb_strtoupper($village->name ?? 'AENG TONG-TONG') }}</p>
                                 <p class="mt-4 text-ink-900 text-justify">Sebagai Kepala Desa {{ $village->name ?? '' }}, beliau memiliki peran dalam memimpin penyelenggaraan pemerintahan desa, pemberdayaan masyarakat, serta pengembangan potensi desa sebagai desa wisata berbasis budaya dan kerajinan keris.</p>
+                                <hr class="my-8 border-ink-200">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-12">
+                                    <div>
+                                        <label class="text-xs font-bold uppercase tracking-widest text-ink-500">Nama Lengkap</label>
+                                        <p class="text-lg font-bold text-ink-900 uppercase">HADI SUDIRFAN, S.PD.I</p>
+                                    </div>
+                                    <div>
+                                        <label class="text-xs font-bold uppercase tracking-widest text-ink-500">Jabatan</label>
+                                        <p class="text-lg font-bold text-ink-900 uppercase">KEPALA DESA</p>
+                                    </div>
+                                    <div>
+                                        <label class="text-xs font-bold uppercase tracking-widest text-ink-500">Desa</label>
+                                        <p class="text-lg font-bold text-ink-900 uppercase">{{ mb_strtoupper($village->name ?? 'AENG TONG-TONG') }}</p>
+                                    </div>
+                                    <div>
+                                        <label class="text-xs font-bold uppercase tracking-widest text-ink-500">Periode</label>
+                                        <p class="text-lg font-bold text-ink-900 uppercase">{{ $chief->period ?? '2020 - 2026' }}</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     @endif
