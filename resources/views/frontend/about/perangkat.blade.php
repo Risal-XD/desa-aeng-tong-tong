@@ -31,7 +31,7 @@
                             <div class="flex-1 p-8 lg:p-10">
                                 <h3 class="text-2xl font-bold text-ink-900">Hadi Sudirfan, S.Pd.I</h3>
                                 <p class="mt-1 text-sm font-semibold uppercase tracking-wide text-brand-600">Kepala Desa {{ $village->name ?? 'Aeng Tong-Tong' }}</p>
-                                <p class="mt-4 text-ink-600 text-right">Sebagai Kepala Desa {{ $village->name ?? '' }}, beliau memiliki peran dalam memimpin penyelenggaraan pemerintahan desa, pemberdayaan masyarakat, serta pengembangan potensi desa sebagai desa wisata berbasis budaya dan kerajinan keris.</p>
+                                <p class="mt-4 text-ink-600 text-justify">Sebagai Kepala Desa {{ $village->name ?? '' }}, beliau memiliki peran dalam memimpin penyelenggaraan pemerintahan desa, pemberdayaan masyarakat, serta pengembangan potensi desa sebagai desa wisata berbasis budaya dan kerajinan keris.</p>
                                 <hr class="my-6 border-ink-200">
                                 <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-sm">
                                     <div>
