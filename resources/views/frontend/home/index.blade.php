@@ -15,7 +15,7 @@
                     Juara 1 ADWI 2022 · Rekor MURI
                 </p>
                 <div class="min-h-[5.75rem] sm:min-h-[6.5rem]" data-parallax-speed="30">
-                    <h1 x-data="typewriter('Selamat Datang di\nDesa Aeng Tong-Tong', 50, 0)" class="font-display text-[2.3rem] font-semibold uppercase leading-tight text-white sm:text-[2.6rem] whitespace-pre-line" x-text="displayText"></h1>
+                    <h1 x-data="typewriter('Selamat Datang di\nDesa Aeng Tong-Tong', 50, 0)" class="font-display text-[2.3rem] font-semibold uppercase leading-tight text-white sm:text-[2.6rem] max-sm:text-[1.8rem] whitespace-pre-line" x-text="displayText"></h1>
                 </div>
                 <div class="relative" data-parallax-speed="50">
                     <p class="invisible mt-5 max-w-xl text-sm leading-relaxed text-justify sm:text-base" x-text="'Desa wisata sentra kerajinan keris di Kecamatan Saronggi, Kabupaten Sumenep, Jawa Timur. Menjaga warisan budaya para Mpu sekaligus membangun kesejahteraan masyarakat.'"></p>
@@ -373,16 +373,16 @@
             @if ($latestStatistics->isNotEmpty())
                 <div class="mt-10 grid gap-4 md:grid-cols-2">
                     @foreach ($latestStatistics->take(2) as $statistic)
-                        <a href="{{ route('statistics.show', $statistic) }}" class="group rounded-2xl border border-outline-variant/50 bg-surface p-6 shadow-sm transition hover:-translate-y-1 hover:border-primary hover:shadow-lg">
+                        <a href="{{ route('statistics.show', $statistic) }}" class="group min-w-0 rounded-2xl border border-outline-variant/50 bg-surface p-6 shadow-sm transition hover:-translate-y-1 hover:border-primary hover:shadow-lg">
                             <div class="flex items-start justify-between">
-                                <div>
+                                <div class="min-w-0">
                                     <p class="text-xs font-semibold uppercase tracking-widest text-primary">{{ $statistic->category->label() }} · {{ $statistic->year }}</p>
                                     <h4 class="mt-1 font-display text-base font-semibold text-on-surface">{{ $statistic->name }}</h4>
                                 </div>
-                                <span class="rounded-lg bg-surface-container px-2 py-1 text-[10px] font-bold text-primary">Lihat detail</span>
+                                <span class="shrink-0 rounded-lg bg-surface-container px-2 py-1 text-[10px] font-bold text-primary">Lihat detail</span>
                             </div>
                             @if ($statistic->populationStatistics->isNotEmpty())
-                                <div class="mt-5 h-52">
+                                <div class="mt-5 h-52 overflow-hidden">
                                     <canvas x-data="chartBar(@js($statistic->populationStatistics->pluck('label')->all()), @js($statistic->populationStatistics->map(fn ($row) => (float) $row->value)->all()), @js($statistic->name))"></canvas>
                                 </div>
                             @endif

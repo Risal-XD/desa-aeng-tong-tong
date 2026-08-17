@@ -8,8 +8,8 @@
     <x-frontend.page-hero title="UMKM" />
 
     <section class="mx-auto max-w-4xl px-4 py-16 sm:px-6">
-        <article class="grid gap-8 sm:grid-cols-3">
-            <div class="sm:col-span-1">
+        <article class="grid grid-cols-1 gap-8 sm:grid-cols-3">
+            <div class="min-w-0 sm:col-span-1">
                 <div class="flex h-40 w-40 items-center justify-center overflow-hidden rounded-2xl bg-brand-100">
                     @if ($umkm->logo)
                         <img src="{{ asset('storage/'.$umkm->logo) }}" alt="{{ $umkm->name }}" class="h-full w-full object-cover">
@@ -26,7 +26,7 @@
                 @endif
             </div>
 
-            <div class="sm:col-span-2">
+            <div class="min-w-0 sm:col-span-2">
                 @if ($umkm->cover_image)
                     <div class="overflow-hidden rounded-2xl">
                         <img src="{{ asset('storage/'.$umkm->cover_image) }}" alt="{{ $umkm->name }}" class="h-56 w-full object-cover">
