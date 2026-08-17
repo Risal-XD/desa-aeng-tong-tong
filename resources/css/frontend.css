@@ -332,8 +332,7 @@ html {
         linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 42%);
 }
 .stf__parent img, .stf__parent canvas, .stf__item {
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: high-quality;
+    image-rendering: auto;
     -webkit-font-smoothing: antialiased;
 }
 .ebooklet-loader {
