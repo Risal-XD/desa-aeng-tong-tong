@@ -19,12 +19,15 @@ if [ ! -s /var/www/html/storage/database/database.sqlite ]; then
     mkdir -p /var/www/html/storage/database
     cp /seed/database.sqlite /var/www/html/storage/database/database.sqlite
 fi
+chown -R www-data:www-data /var/www/html/storage/database
+chmod 664 /var/www/html/storage/database/database.sqlite
 
 if [ ! -e /var/www/html/storage/app/public/.seeded ]; then
     mkdir -p /var/www/html/storage/app/public
     cp -rn /seed/public/. /var/www/html/storage/app/public/
     touch /var/www/html/storage/app/public/.seeded
 fi
+chown -R www-data:www-data /var/www/html/storage/app/public
 
 # Pastikan public/storage mengarah ke folder upload
 php artisan storage:link || true
