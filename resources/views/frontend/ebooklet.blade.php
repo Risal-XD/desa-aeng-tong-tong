@@ -99,14 +99,14 @@
                     const el = this.$refs.book;
                     if (!this.pageFlip) {
                         this.pageFlip = new PageFlip(el, {
-                            width: 550,
-                            height: 780,
+                            width: 1240,
+                            height: 1754,
                             size: 'stretch',
                             minWidth: 315,
-                            maxWidth: 1000,
+                            maxWidth: 2481,
                             minHeight: 420,
-                            maxHeight: 1350,
-                            maxShadowOpacity: 0.5,
+                            maxHeight: 3508,
+                            maxShadowOpacity: 0.3,
                             showCover: false,
                             flippingTime: 650,
                             mobileScrollSupport: true,
