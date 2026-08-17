@@ -2,8 +2,10 @@
 set -e
 
 # Salin data awal ke volume saat pertama kali dijalankan (data dari image /seed)
-if [ ! -s /var/www/html/database/database.sqlite ]; then
-    cp /seed/database.sqlite /var/www/html/database/database.sqlite
+# Database disimpan di dalam /var/www/html/storage agar satu volume mencakup keduanya.
+if [ ! -s /var/www/html/storage/database/database.sqlite ]; then
+    mkdir -p /var/www/html/storage/database
+    cp /seed/database.sqlite /var/www/html/storage/database/database.sqlite
 fi
 
 if [ ! -e /var/www/html/storage/app/public/.seeded ]; then
