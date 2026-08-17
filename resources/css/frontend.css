@@ -333,7 +333,6 @@ html {
 }
 .stf__parent img, .stf__parent canvas, .stf__item {
     image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
     image-rendering: high-quality;
     -webkit-font-smoothing: antialiased;
 }
