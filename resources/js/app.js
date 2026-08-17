@@ -341,13 +341,15 @@ document.addEventListener('alpine:init', () => {
                         const pages = [];
                         for (let i = 1; i <= pdf.numPages; i++) {
                             const page = await pdf.getPage(i);
-                            const dpr = window.devicePixelRatio || 1;
-                            const viewport = page.getViewport({ scale: Math.max(3, dpr * 1.5) });
+                            const viewport = page.getViewport({ scale: 6 });
                             if (i === 1) this._viewAspect = viewport.width / viewport.height;
                             const canvas = document.createElement('canvas');
                             canvas.width = Math.floor(viewport.width);
                             canvas.height = Math.floor(viewport.height);
                             const ctx = canvas.getContext('2d');
+                            ctx.imageSmoothingEnabled = false;
+                            ctx.webkitImageSmoothingEnabled = false;
+                            ctx.mozImageSmoothingEnabled = false;
                             await page.render({ canvasContext: ctx, viewport }).promise;
                             const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
                             const url = URL.createObjectURL(blob);
