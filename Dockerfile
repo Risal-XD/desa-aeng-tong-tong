@@ -10,7 +10,7 @@ RUN npm run build
 FROM php:8.2-apache AS app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        libpng-dev libjpeg62-turbo-dev libfreetype6-dev libzip-dev libicu-dev \
+        libpng-dev libjpeg62-turbo-dev libfreetype6-dev libzip-dev libicu-dev libsqlite3-dev \
     && docker-php-ext-configure gd --with-jpeg --with-freetype \
     && docker-php-ext-install -j"$(nproc)" gd intl zip pdo pdo_sqlite mbstring exif fileinfo bcmath \
     && a2enmod rewrite headers \
