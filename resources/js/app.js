@@ -10,6 +10,7 @@ window.Alpine = Alpine;
 window.Swal = Swal;
 window.AOS = AOS;
 window.Chart = Chart;
+window.PageFlip = PageFlip;
 
 document.addEventListener('alpine:init', () => {
     Alpine.store('mobileNav', {
