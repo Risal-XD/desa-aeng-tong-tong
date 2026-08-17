@@ -35,6 +35,7 @@
         'logout' => '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>',
         'chevrons' => '<path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/>',
         'link' => '<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
+        'book' => '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',
     ];
 
     $nav = [
@@ -65,6 +66,7 @@
         ['label' => 'Statistik Desa', 'icon' => 'chart', 'route' => 'admin.data-report.statistics.index', 'perm' => 'statistic-view'],
         ['label' => 'APBDes', 'icon' => 'wallet', 'route' => 'admin.data-report.apbdes.index', 'perm' => 'apbdes-view'],
         ['label' => 'Dokumen', 'icon' => 'file', 'route' => 'admin.data-report.documents.index', 'perm' => 'document-view'],
+        ['label' => 'E-Booklet', 'icon' => 'book', 'route' => 'admin.data-report.ebooklet.index', 'perm' => 'setting-view'],
         'sep',
         ['label' => 'Pesan Masuk', 'icon' => 'message', 'route' => 'admin.service.messages.index', 'perm' => 'message-view'],
         ['label' => 'Kontak Desa', 'icon' => 'phone', 'route' => 'admin.service.contacts.index', 'perm' => 'contact-view'],

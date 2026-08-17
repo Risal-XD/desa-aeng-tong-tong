@@ -1,11 +1,11 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'Visi & Misi')
+@section('title', 'Visi & Misi Desa')
 @section('meta_description', 'Visi dan misi pembangunan Desa Aeng Tong-Tong.')
 
 @section('content')
     <x-frontend.page-hero
-        title="Visi & Misi"
+        title="Visi & Misi Desa"
         subtitle="Arah dan tujuan pembangunan Desa Aeng Tong-Tong."
         :image="$heroImage"
         imagePosition="right center"

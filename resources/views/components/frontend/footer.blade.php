@@ -14,8 +14,12 @@
     ];
 @endphp
 
-<footer class="mt-auto border-t border-outline-variant/30 bg-primary text-on-primary">
-    <div class="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-3">
+<footer class="mt-auto border-t border-outline-variant/30 bg-primary text-on-primary relative overflow-hidden">
+    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+        <img src="/storage/foto/footernew.png" alt="" class="h-full w-full object-cover opacity-60" />
+        <div class="absolute inset-0" style="background-color: rgba(27, 67, 50, 0.55);"></div>
+    </div>
+    <div class="relative mx-auto grid content-center max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-3">
         <div>
             <div class="flex items-center gap-3">
                 <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-surface-tint font-display text-lg font-semibold text-on-primary">AT</span>
@@ -30,19 +34,18 @@
             </p>
         </div>
 
-        <div>
-            <h3 class="text-sm font-semibold uppercase tracking-wider text-on-primary">Navigasi</h3>
-            <ul class="mt-4 grid grid-cols-2 gap-2 text-sm text-on-primary-container">
-                <li><a href="{{ route('home') }}" class="transition hover:text-on-primary">Beranda</a></li>
-                <li><a href="{{ route('about.sejarah') }}" class="transition hover:text-on-primary">Sejarah</a></li>
-                <li><a href="{{ route('about.visi-misi') }}" class="transition hover:text-on-primary">Visi &amp; Misi</a></li>
-                <li><a href="{{ route('about.struktur') }}" class="transition hover:text-on-primary">Struktur</a></li>
-                <li><a href="{{ route('about.perangkat') }}" class="transition hover:text-on-primary">Perangkat</a></li>
-                <li><a href="{{ route('potensi') }}" class="transition hover:text-on-primary">Potensi</a></li>
-                <li><a href="{{ route('kontak') }}" class="transition hover:text-on-primary">Kontak</a></li>
-                <li><a href="{{ route('faq') }}" class="transition hover:text-on-primary">FAQ</a></li>
-            </ul>
-        </div>
+<div>
+    <h3 class="text-sm font-semibold uppercase tracking-wider text-on-primary">Navigasi</h3>
+    <ul class="mt-4 space-y-2 text-sm text-on-primary-container">
+        <li><a href="{{ route('home') }}" class="transition hover:text-on-primary">Beranda</a></li>
+        <li><a href="{{ route('about.sejarah') }}" class="transition hover:text-on-primary">Sejarah</a></li>
+        <li><a href="{{ route('about.visi-misi') }}" class="transition hover:text-on-primary">Visi & Misi</a></li>
+        <li><a href="{{ route('about.perangkat') }}" class="transition hover:text-on-primary">Perangkat</a></li>
+        <li><a href="{{ route('potensi') }}" class="transition hover:text-on-primary">Potensi</a></li>
+        <li><a href="{{ route('kontak') }}" class="transition hover:text-on-primary">Kontak</a></li>
+        <li><a href="{{ route('faq') }}" class="transition hover:text-on-primary">FAQ</a></li>
+    </ul>
+</div>
 
         <div>
             <h3 class="text-sm font-semibold uppercase tracking-wider text-on-primary">Kontak</h3>

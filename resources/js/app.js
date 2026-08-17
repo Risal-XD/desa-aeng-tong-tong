@@ -4,6 +4,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import Swal from 'sweetalert2';
 import Chart from 'chart.js/auto';
+import { PageFlip } from 'page-flip';
 
 window.Alpine = Alpine;
 window.Swal = Swal;
@@ -110,7 +111,7 @@ document.addEventListener('alpine:init', () => {
         photos,
         current: 0,
         init() {
-            this.timer = setInterval(() => this.next(), 4000);
+            this.timer = setInterval(() => this.next(), 2000);
         },
         destroy() {
             clearInterval(this.timer);
@@ -203,9 +204,11 @@ document.addEventListener('alpine:init', () => {
                             y: {
                                 beginAtZero: true,
                                 grid: { color: 'rgba(120, 113, 108, 0.12)' },
+                                ticks: { font: { size: 9 }, color: '#737373', maxTicksLimit: 5 },
                             },
                             x: {
-                                grid: { display: false },
+                                grid: { color: 'rgba(120, 113, 108, 0.08)' },
+                                ticks: { font: { size: 9 }, color: '#525252', maxRotation: 0, minRotation: 0 },
                             },
                         },
                     },
@@ -246,6 +249,174 @@ document.addEventListener('alpine:init', () => {
                     },
                 });
             });
+        },
+    }));
+
+    Alpine.data('ebookletFlipbook', (config) => ({
+        open: false,
+        loading: true,
+        error: null,
+        totalPages: 0,
+        currentPage: 1,
+        pageFlip: null,
+        scale: 1,
+        blobs: [],
+        config,
+
+        get workerSrc() {
+            return new URL('pdfjs-dist/build/pdf.worker.min.mjs', import.meta.url).toString();
+        },
+
+        init() {
+            // Viewer hanya terbuka ketika pengguna mengklik buku.
+        },
+
+        destroy() {
+            this.closeViewer();
+        },
+
+        revokeBlobs() {
+            this.blobs.forEach((url) => URL.revokeObjectURL(url));
+            this.blobs = [];
+        },
+
+        nextPage() {
+            if (this.pageFlip) this.pageFlip.flipNext('bottom');
+        },
+
+        prevPage() {
+            if (this.pageFlip) this.pageFlip.flipPrev('top');
+        },
+
+        zoomIn() {
+            this.scale = Math.min(2, this.scale + 0.2);
+            this.applyZoom();
+        },
+
+        zoomOut() {
+            this.scale = Math.max(0.5, this.scale - 0.2);
+            this.applyZoom();
+        },
+
+        applyZoom() {
+            if (this.pageFlip) {
+                const rect = this.pageFlip.getBoundsRect();
+                const el = this.$refs.book;
+                if (el) {
+                    el.style.width = rect.width * this.scale + 'px';
+                    el.style.height = rect.height * this.scale + 'px';
+                }
+            }
+        },
+
+        openViewer() {
+            this.open = true;
+            this.loading = true;
+            this.error = null;
+            this.totalPages = 0;
+            this.currentPage = 1;
+
+            (async () => {
+                let pdfjs = null;
+                try {
+                    pdfjs = await import('pdfjs-dist');
+                } catch (err) {
+                    this.error = 'Gagal memuat modul pdf.js: ' + (err?.message || err);
+                    this.loading = false;
+                    console.error(err);
+                    return;
+                }
+
+                const { GlobalWorkerOptions, getDocument } = pdfjs;
+                GlobalWorkerOptions.workerSrc = this.workerSrc;
+
+                let attempt = 0;
+                while (attempt < 3) {
+                    attempt++;
+                    try {
+                        const base = new URL(this.config.pdfUrl, window.location.href).href;
+
+                        const pdf = await getDocument({ url: base, rangeChunkSize: 65536 }).promise;
+
+                        const pages = [];
+                        for (let i = 1; i <= pdf.numPages; i++) {
+                            const page = await pdf.getPage(i);
+                            const viewport = page.getViewport({ scale: 3 });
+                            if (i === 1) this._viewAspect = viewport.width / viewport.height;
+                            const canvas = document.createElement('canvas');
+                            canvas.width = Math.floor(viewport.width);
+                            canvas.height = Math.floor(viewport.height);
+                            const ctx = canvas.getContext('2d');
+                            await page.render({ canvasContext: ctx, viewport }).promise;
+                            const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.92));
+                            const url = URL.createObjectURL(blob);
+                            this.blobs.push(url);
+                            pages.push(url);
+                            await new Promise((resolve) => setTimeout(resolve, 0));
+                        }
+
+                        this.totalPages = pages.length;
+
+                        try {
+                            this.$nextTick(() => {
+                                const el = this.$refs.book;
+                                const stage = el ? el.parentElement : null;
+                                const stageW = stage ? Math.max(340, stage.clientWidth - 16) : 900;
+                                const stageH = stage ? Math.max(420, stage.clientHeight - 8) : 640;
+                                const aspect = this._viewAspect || Math.SQRT1_2;
+                                const pageH = Math.min(stageH, 860);
+                                const pageW = pageH * aspect;
+                                const bookW = Math.min(stageW, pageW * 2);
+                                const bookH = (bookW / 2) / aspect;
+
+                                if (el) {
+                                    el.style.width = bookW + 'px';
+                                    el.style.height = bookH + 'px';
+                                }
+
+                                if (!this.pageFlip) {
+                                    this.pageFlip = new PageFlip(el, {
+                                        width: bookW,
+                                        height: bookH,
+                                        maxShadowOpacity: 0.5,
+                                        showCover: false,
+                                        flippingTime: 650,
+                                        showPageCorners: true,
+                                        mobileScrollSupport: true,
+                                        swipeDistance: 25,
+                                        clickEventForward: false,
+                                    });
+                                    this.pageFlip.on('flip', (e) => {
+                                        if (this.pageFlip) this.currentPage = this.pageFlip.getCurrentPageIndex() + 1;
+                                    });
+                                }
+                                this.pageFlip.loadFromImages(pages);
+                                this.loading = false;
+                            });
+                            return;
+                        } catch (err) {
+                            throw new Error('menyiapkan viewer: ' + (err?.message || err));
+                        }
+                    } catch (err) {
+                        console.error('Percobaan ' + attempt + ' gagal:', err);
+                        if (attempt >= 3) {
+                            this.error = 'Gagal memuat e-booklet: ' + (err?.message || err);
+                            this.loading = false;
+                        } else {
+                            await new Promise((resolve) => setTimeout(resolve, 800));
+                        }
+                    }
+                }
+            })();
+        },
+
+        closeViewer() {
+            this.open = false;
+            if (this.pageFlip) {
+                this.pageFlip.destroy();
+                this.pageFlip = null;
+            }
+            this.revokeBlobs();
         },
     }));
 });

@@ -48,7 +48,12 @@ class HomeController extends Controller
             ->limit(3)
             ->get());
 
-        $heroPhotos = Cache::remember('frontend.home.hero_photos', self::CACHE_TTL, fn () => Gallery::active()
+        $heroPhotos = collect(range(1, 9))->map(fn (int $n) => (object) [
+            'title' => 'Foto ' . $n,
+            'image' => 'foto/card/' . $n . '.jpg',
+        ])->values();
+
+        $galleryPhotos = Cache::remember('frontend.home.gallery_photos', self::CACHE_TTL, fn () => Gallery::active()
             ->whereNotNull('image')
             ->orderBy('is_cover', 'desc')
             ->latest('id')
@@ -63,6 +68,7 @@ class HomeController extends Controller
             'upcomingAgendas' => $upcomingAgendas,
             'latestStatistics' => $latestStatistics,
             'heroPhotos' => $heroPhotos,
+            'galleryPhotos' => $galleryPhotos,
         ]);
     }
 }

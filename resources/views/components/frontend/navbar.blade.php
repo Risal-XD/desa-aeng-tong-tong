@@ -20,13 +20,16 @@
                 <div x-show="aboutOpen" x-transition x-cloak class="absolute left-0 top-full w-64 rounded-xl border border-outline-variant/30 bg-surface-container-lowest p-2 shadow-xl">
                     <a href="{{ route('about.sejarah') }}" class="block rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-wide text-on-surface-variant transition hover:bg-surface-container-low hover:text-primary">Sejarah Desa</a>
                     <a href="{{ route('about.visi-misi') }}" class="block rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-wide text-on-surface-variant transition hover:bg-surface-container-low hover:text-primary">Visi &amp; Misi</a>
-                    <a href="{{ route('about.struktur') }}" class="block rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-wide text-on-surface-variant transition hover:bg-surface-container-low hover:text-primary">Struktur Organisasi</a>
                     <a href="{{ route('about.perangkat') }}" class="block rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-wide text-on-surface-variant transition hover:bg-surface-container-low hover:text-primary">Perangkat Desa</a>
                 </div>
             </div>
 
             <a href="{{ route('potensi') }}" class="rounded-md px-3 py-2 text-sm font-semibold uppercase tracking-wider transition {{ request()->routeIs('potensi') ? 'text-primary' : 'text-on-surface-variant hover:text-on-surface' }}">
                 Potensi
+            </a>
+
+            <a href="{{ route('ebooklet') }}" class="rounded-md px-3 py-2 text-sm font-semibold uppercase tracking-wider transition {{ request()->routeIs('ebooklet') ? 'text-primary' : 'text-on-surface-variant hover:text-on-surface' }}">
+                E-Booklet
             </a>
 
             <div class="relative" x-data="{ infoOpen: false }" @mouseenter="infoOpen = true" @mouseleave="infoOpen = false">
@@ -40,18 +43,6 @@
                     <a href="{{ route('agendas.index') }}" class="block rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-wide text-on-surface-variant transition hover:bg-surface-container-low hover:text-primary">Agenda</a>
                     <a href="{{ route('galleries.index') }}" class="block rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-wide text-on-surface-variant transition hover:bg-surface-container-low hover:text-primary">Galeri Foto</a>
                     <a href="{{ route('videos.index') }}" class="block rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-wide text-on-surface-variant transition hover:bg-surface-container-low hover:text-primary">Video</a>
-                </div>
-            </div>
-
-            <div class="relative" x-data="{ economyOpen: false }" @mouseenter="economyOpen = true" @mouseleave="economyOpen = false">
-                <button type="button" class="flex items-center gap-1 rounded-md px-3 py-2 text-sm font-semibold uppercase tracking-wider transition {{ request()->routeIs('tourism.*', 'keris.*', 'umkms.*') ? 'text-primary' : 'text-on-surface-variant hover:text-on-surface' }}">
-                    Ekonomi
-                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </button>
-                <div x-show="economyOpen" x-transition x-cloak class="absolute left-0 top-full w-56 rounded-xl border border-outline-variant/30 bg-surface-container-lowest p-2 shadow-xl">
-                    <a href="{{ route('tourism.index') }}" class="block rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-wide text-on-surface-variant transition hover:bg-surface-container-low hover:text-primary">Wisata</a>
-                    <a href="{{ route('keris.index') }}" class="block rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-wide text-on-surface-variant transition hover:bg-surface-container-low hover:text-primary">Kerajinan Keris &amp; Mpu</a>
-                    <a href="{{ route('umkms.index') }}" class="block rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-wide text-on-surface-variant transition hover:bg-surface-container-low hover:text-primary">UMKM</a>
                 </div>
             </div>
 
@@ -102,11 +93,11 @@
                 <div x-show="open" x-cloak class="space-y-1 border-l-2 border-brand-200 pl-3">
                     <a href="{{ route('about.sejarah') }}" class="block rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-wide text-ink-600 hover:text-brand-700">Sejarah Desa</a>
                     <a href="{{ route('about.visi-misi') }}" class="block rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-wide text-ink-600 hover:text-brand-700">Visi &amp; Misi</a>
-                    <a href="{{ route('about.struktur') }}" class="block rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-wide text-ink-600 hover:text-brand-700">Struktur Organisasi</a>
                     <a href="{{ route('about.perangkat') }}" class="block rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-wide text-ink-600 hover:text-brand-700">Perangkat Desa</a>
                 </div>
             </div>
             <a href="{{ route('potensi') }}" class="block rounded-lg px-3 py-2.5 text-sm font-semibold uppercase tracking-wider text-ink-700 transition hover:bg-brand-50 hover:text-brand-700">Potensi</a>
+            <a href="{{ route('ebooklet') }}" class="block rounded-lg px-3 py-2.5 text-sm font-semibold uppercase tracking-wider text-ink-700 transition hover:bg-brand-50 hover:text-brand-700">E-Booklet</a>
             <div x-data="{ open: @js(request()->routeIs('news.*', 'announcements.*', 'agendas.*', 'galleries.*', 'videos.*')) }">
                 <button type="button" @click="open = !open" class="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-sm font-semibold uppercase tracking-wider text-ink-700 transition hover:bg-brand-50 hover:text-brand-700">
                     Informasi
@@ -118,17 +109,6 @@
                     <a href="{{ route('agendas.index') }}" class="block rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-wide text-ink-600 hover:text-brand-700">Agenda</a>
                     <a href="{{ route('galleries.index') }}" class="block rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-wide text-ink-600 hover:text-brand-700">Galeri Foto</a>
                     <a href="{{ route('videos.index') }}" class="block rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-wide text-ink-600 hover:text-brand-700">Video</a>
-                </div>
-            </div>
-            <div x-data="{ open: @js(request()->routeIs('tourism.*', 'keris.*', 'umkms.*')) }">
-                <button type="button" @click="open = !open" class="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-sm font-semibold uppercase tracking-wider text-ink-700 transition hover:bg-brand-50 hover:text-brand-700">
-                    Ekonomi
-                    <svg class="h-4 w-4" :class="open ? 'rotate-180' : ''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </button>
-                <div x-show="open" x-cloak class="space-y-1 border-l-2 border-brand-200 pl-3">
-                    <a href="{{ route('tourism.index') }}" class="block rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-wide text-ink-600 hover:text-brand-700">Wisata</a>
-                    <a href="{{ route('keris.index') }}" class="block rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-wide text-ink-600 hover:text-brand-700">Kerajinan Keris &amp; Mpu</a>
-                    <a href="{{ route('umkms.index') }}" class="block rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-wide text-ink-600 hover:text-brand-700">UMKM</a>
                 </div>
             </div>
             <div x-data="{ open: @js(request()->routeIs('statistics.*', 'apbdes.*', 'documents.*')) }">

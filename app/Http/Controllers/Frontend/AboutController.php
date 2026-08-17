@@ -32,15 +32,6 @@ class AboutController extends Controller
         return view('frontend.about.visi-misi', compact('village', 'heroImage'));
     }
 
-    public function struktur(): View
-    {
-        $village = $this->profileService->getPublicVillage();
-        $structureTree = $village ? $this->profileService->buildStructureTree($village) : collect();
-        $heroImage = 'images/kerisbg.png';
-
-        return view('frontend.about.struktur', compact('village', 'structureTree', 'heroImage'));
-    }
-
     public function perangkat(): View
     {
         $village = $this->profileService->getPublicVillage();

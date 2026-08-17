@@ -46,6 +46,24 @@
                             :preview="$general['site_logo'] ?? null ? asset('storage/'.$general['site_logo']) : null"
                         />
                     </div>
+                    <div class="mt-4">
+                        <x-admin.file-input
+                            name="general[ebooklet_cover]"
+                            label="Cover E-Booklet"
+                            accept="image/*"
+                            hint="PNG/JPG/WebP rasio 3:4, maks. 8 MB"
+                            :preview="$general['ebooklet_cover'] ?? null ? asset('storage/'.$general['ebooklet_cover']) : null"
+                        />
+                    </div>
+                    <div class="mt-4">
+                        <x-admin.file-input
+                            name="general[ebooklet_pdf]"
+                            label="File PDF E-Booklet"
+                            accept=".pdf,application/pdf"
+                            hint="PDF, maks. 60 MB — dipakai untuk viewer baca/dibalik di halaman e-booklet."
+                            :preview="$general['ebooklet_pdf'] ?? null ? asset('storage/'.$general['ebooklet_pdf']) : null"
+                        />
+                    </div>
                 </div>
 
                 <div x-show="tab === 'seo'" x-cloak>

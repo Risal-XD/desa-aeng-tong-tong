@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\Content\NewsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Data\ApbdesController;
 use App\Http\Controllers\Admin\Data\DocumentController as AdminDocumentController;
+use App\Http\Controllers\Admin\Data\EBookletController;
 use App\Http\Controllers\Admin\Data\StatisticController;
 use App\Http\Controllers\Admin\Economy\KerisController;
 use App\Http\Controllers\Admin\Economy\TourismController;
@@ -36,6 +37,7 @@ use App\Http\Controllers\Frontend\AnnouncementController as FrontendAnnouncement
 use App\Http\Controllers\Frontend\ApbdesController as FrontendApbdesController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\DocumentController as FrontendDocumentController;
+use App\Http\Controllers\Frontend\EBookletController as FrontendEBookletController;
 use App\Http\Controllers\Frontend\FaqController;
 use App\Http\Controllers\Frontend\GalleryController as FrontendGalleryController;
 use App\Http\Controllers\Frontend\HomeController;
@@ -64,7 +66,6 @@ Route::get('/robots.txt', [SitemapController::class, 'robots']);
 Route::prefix('tentang')->name('about.')->group(function () {
     Route::get('sejarah', [AboutController::class, 'sejarah'])->name('sejarah');
     Route::get('visi-misi', [AboutController::class, 'visiMisi'])->name('visi-misi');
-    Route::get('struktur-organisasi', [AboutController::class, 'struktur'])->name('struktur');
     Route::get('perangkat-desa', [AboutController::class, 'perangkat'])->name('perangkat');
 });
 
@@ -94,6 +95,8 @@ Route::get('statistik', [FrontendStatisticController::class, 'index'])->name('st
 Route::get('statistik/{statistic:slug}', [FrontendStatisticController::class, 'show'])->name('statistics.show');
 Route::get('apbdes', [FrontendApbdesController::class, 'index'])->name('apbdes.index');
 Route::get('dokumen', [FrontendDocumentController::class, 'index'])->name('documents.index');
+Route::view('e-booklet', 'frontend.ebooklet')->name('ebooklet');
+Route::get('e-booklet/pdf', [FrontendEBookletController::class, 'pdf'])->name('ebooklet.pdf');
 Route::get('dokumen/{document:slug}/unduh', [FrontendDocumentController::class, 'download'])->name('documents.download');
 
 /*
@@ -241,6 +244,11 @@ Route::prefix('admin')
                 Route::resource('documents', AdminDocumentController::class)
                     ->parameters(['document' => 'document'])
                     ->except(['show']);
+
+                Route::get('ebooklet', [EBookletController::class, 'index'])
+                    ->name('ebooklet.index');
+                Route::put('ebooklet', [EBookletController::class, 'update'])
+                    ->name('ebooklet.update');
             });
 
             // ===== Layanan =====

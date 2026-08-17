@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             DataReportSeeder::class,
             SettingSeeder::class,
             MessageSeeder::class,
+            PopulationStatisticSeeder::class,
         ]);
     }
 }

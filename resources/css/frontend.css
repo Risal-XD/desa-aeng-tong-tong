@@ -1,11 +1,19 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 
+/* Sembunyikan elemen x-show/x-cloak sampai Alpine siap (cegah flash/muncul sendiri) */
+[x-cloak] {
+    display: none !important;
+}
+
 /* Cegah "scroll lompat ke bawah dengan sendirinya" akibat layout shift */
 /* (scroll anchoring browser yang mengompensasi perubahan tinggi konten) */
 html {
     overflow-anchor: none;
 }
+
+/* Cegah x-show/x-cloak muncul sebelum Alpine siap (FOUC) */
+[x-cloak] { display: none !important; }
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -122,6 +130,9 @@ html {
 .marquee-row-2 {
     animation: scroll-left 45s linear infinite;
 }
+.marquee-row-seq {
+    animation: scroll-left 40s linear infinite;
+}
 .marquee-row-track:hover {
     animation-play-state: paused;
 }
@@ -171,5 +182,202 @@ html {
         width: auto;
         flex-wrap: wrap;
         justify-content: center;
+    }
+}
+
+/* ===== 3D Book (designali-in/book) ===== */
+.book-root {
+    --book-color: #1b4332;
+    --text-color: #ffffff;
+    --book-depth: 18px;
+    --book-width: 176px;
+    display: inline-block;
+    width: fit-content;
+    perspective: 900px;
+}
+.book-inner {
+    position: relative;
+    aspect-ratio: 49 / 60;
+    width: fit-content;
+    min-width: var(--book-width);
+    transform-style: preserve-3d;
+    transition: transform 500ms ease-out;
+}
+.book-root:hover .book-inner {
+    transform: rotateY(-20deg) scale(1.066) translateX(-8px);
+}
+.book-cover {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 4px 2px 2px 4px;
+    background-color: var(--book-color);
+    box-shadow:
+        0 1.8px 3.6px rgba(0, 0, 0, 0.05),
+        0 10.8px 21.6px rgba(0, 0, 0, 0.08),
+        inset 0 -0.9px 0 rgba(0, 0, 0, 0.1),
+        inset 0 1.8px 1.8px hsla(0, 0%, 100%, 0.1),
+        inset 3.6px 0 3.6px rgba(0, 0, 0, 0.1);
+}
+.book-bind {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 8.2%;
+    min-width: 8.2%;
+    mix-blend-mode: overlay;
+    background-image:
+        linear-gradient(90deg, hsla(0, 0%, 100%, 0), hsla(0, 0%, 100%, 0) 12%, hsla(0, 0%, 100%, 0.25) 29.25%, hsla(0, 0%, 100%, 0) 50.5%, hsla(0, 0%, 100%, 0) 75.25%, hsla(0, 0%, 100%, 0.25) 91%, hsla(0, 0%, 100%, 0)),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.1) 12%, transparent 30%, rgba(0, 0, 0, 0.02) 50%, rgba(0, 0, 0, 0.2) 73.5%, rgba(0, 0, 0, 0.5) 75.25%, rgba(0, 0, 0, 0.15) 85.25%, transparent);
+}
+.book-pages {
+    position: absolute;
+    top: 3px;
+    width: calc(var(--book-depth) - 2px);
+    height: calc(100% - 12px);
+    background-image: repeating-linear-gradient(90deg, #fff, #efefef 1px, #fff 3px, #9a9a9a 0);
+    transform: translateX(calc(var(--book-width) - var(--book-depth) / 2 - 3px)) rotateY(90deg) translateX(calc(var(--book-depth) / 2));
+}
+.book-back {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px 2px 2px 4px;
+    background-color: var(--book-color);
+    transform: translateZ(calc(-1 * var(--book-depth)));
+}
+@media (prefers-reduced-motion: reduce) {
+    .book-root:hover .book-inner {
+        transform: none;
+    }
+}
+
+/* ===== E-Booklet Flipbook Viewer ===== */
+.ebooklet-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(10, 14, 20, 0.85);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+.ebooklet-modal {
+    width: min(96vw, 980px);
+    height: min(90vh, 760px);
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+}
+.ebooklet-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    background: #f8f7f4;
+}
+.ebooklet-toolbar .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    height: 34px;
+    padding: 0 10px;
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #34343a;
+    background: #fff;
+    border: 1px solid #e2e0da;
+    cursor: pointer;
+    transition: background 150ms ease, color 150ms ease;
+}
+.ebooklet-toolbar .btn:hover {
+    background: #ecebe6;
+}
+.ebooklet-toolbar .count {
+    flex: 1;
+    text-align: center;
+    font-size: 13px;
+    color: #6f6d66;
+    white-space: nowrap;
+}
+.ebooklet-stage {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background:
+        radial-gradient(circle at 50% 28%, rgba(255, 255, 255, 0.10), transparent 55%),
+        radial-gradient(ellipse at center, #3a4048 0%, #171a1d 72%, #0d0e10 100%);
+}
+.ebooklet-stage::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(115deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.02) 38%, transparent 62%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 42%);
+}
+.ebooklet-stage .stf__parent {
+    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.65), 0 4px 18px rgba(0, 0, 0, 0.4);
+    border-radius: 6px;
+    overflow: hidden;
+}
+.ebooklet-loader {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    color: #e8e3dc;
+    font-size: 14px;
+    background: rgba(17, 20, 23, 0.92);
+}
+.ebooklet-loader .spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 255, 255, 0.18);
+    border-top-color: #d48a1e;
+    border-radius: 50%;
+    animation: ebooklet-spin 800ms linear infinite;
+}
+.ebooklet-error {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffb4ab;
+    font-size: 14px;
+    text-align: center;
+    padding: 24px;
+    background: rgba(17, 20, 23, 0.92);
+}
+@keyframes ebooklet-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+@media (max-width: 640px) {
+    .ebooklet-stage {
+        padding: 10px;
+    }
+    .ebooklet-modal {
+        height: 94vh;
     }
 }

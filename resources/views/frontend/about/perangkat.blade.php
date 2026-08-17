@@ -21,16 +21,37 @@
             $defaultPerangkatGroups = [
                 [
                     'position' => 'Perangkat Desa',
-                    'officials' => [
-                        (object)['name' => 'Achmad Fauzi', 'position' => 'SEKRETARIS DESA', 'email' => 'a.fauzi@desa.id', 'phone' => '+62 812-0001', 'photo' => null],
-                        (object)['name' => 'Siti Aminah', 'position' => 'KAUR KEUANGAN', 'email' => 's.aminah@desa.id', 'phone' => '+62 812-0002', 'photo' => null],
-                        (object)['name' => 'Bambang S.', 'position' => 'KAUR PERENCANAAN', 'email' => 'bambang.s@desa.id', 'phone' => '+62 812-0003', 'photo' => null],
-                    ]
+                    'officials' => collect([
+                        ['Abdus Siddik', 1],
+                        ['Sadili', 2],
+                        ['Fengki Andriadi', 3],
+                        ['Hermanto', 4],
+                        ['Masluki', 5],
+                        ['Wafiqurrahman', 6],
+                        ['Wawan Noviyanto', 7],
+                        ['Moh Khudzaifi', 8],
+                        ['Suhabib', 9],
+                        ['Joko Harmanto', 11],
+                        ['Junaidi', 12],
+                        ['Sabda Rianto', 13],
+                        ['Rahmaniyatun', 14],
+                        ['Nanang Setiyadi', 15],
+                        ['Sugianto', 16],
+                        ['Perangkat Desa', 17],
+                    ])->map(fn ($item) => (object)[
+                        'name' => $item[0],
+                        'position' => 'Perangkat Desa',
+                        'email' => null,
+                        'phone' => null,
+                        'photo' => sprintf('foto/aparat desa/%02d.jpg', $item[1]),
+                    ])->all(),
                 ]
             ];
 
-            $otherGroups = collect($groups)->filter(fn($g) => $g['position'] !== 'Kepala Desa');
-            $displayGroups = $otherGroups->isNotEmpty() ? $otherGroups : $defaultPerangkatGroups;
+            $perangkatGroup = collect($groups)->firstWhere('position', 'Perangkat Desa');
+            $displayGroups = !empty($perangkatGroup['officials'])
+                ? collect([$perangkatGroup])
+                : collect($defaultPerangkatGroups);
         @endphp
 
         {{-- Section Kepala Desa --}}
@@ -44,18 +65,18 @@
                 @endif
             </div>
             <div class="flex-1 p-8 lg:p-10">
-                <h3 class="text-3xl font-bold text-ink-900 uppercase">HADI SUDIRFAN, S.PD.I</h3>
-                <p class="mt-1 text-sm font-semibold uppercase tracking-wide text-brand-600">KEPALA DESA {{ mb_strtoupper($village->name ?? 'AENG TONG-TONG') }}</p>
+                <h3 class="text-3xl font-bold text-ink-900 uppercase">{{ mb_strtoupper($chief->name ?? 'HADI SUDIRFAN, S.PD.I') }}</h3>
+                <p class="mt-1 text-sm font-semibold uppercase tracking-wide text-brand-600">{{ mb_strtoupper($chief->position ?? 'KEPALA DESA') }} {{ mb_strtoupper($village->name ?? 'AENG TONG-TONG') }}</p>
                 <p class="mt-4 text-ink-900 text-justify">Sebagai Kepala Desa {{ $village->name ?? '' }}, beliau memiliki peran dalam memimpin penyelenggaraan pemerintahan desa, pemberdayaan masyarakat, serta pengembangan potensi desa sebagai desa wisata berbasis budaya dan kerajinan keris.</p>
                 <hr class="my-8 border-ink-200">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-12">
                     <div>
                         <label class="text-xs font-bold uppercase tracking-widest text-ink-500">Nama Lengkap</label>
-                        <p class="text-lg font-bold text-ink-900 uppercase">HADI SUDIRFAN, S.PD.I</p>
+                        <p class="text-lg font-bold text-ink-900 uppercase">{{ mb_strtoupper($chief->name ?? 'HADI SUDIRFAN, S.PD.I') }}</p>
                     </div>
                     <div>
                         <label class="text-xs font-bold uppercase tracking-widest text-ink-500">Jabatan</label>
-                        <p class="text-lg font-bold text-ink-900 uppercase">KEPALA DESA</p>
+                        <p class="text-lg font-bold text-ink-900 uppercase">{{ mb_strtoupper($chief->position ?? 'KEPALA DESA') }}</p>
                     </div>
                     <div>
                         <label class="text-xs font-bold uppercase tracking-widest text-ink-500">Desa</label>
@@ -79,37 +100,27 @@
                 <h2 class="mb-8 border-b border-ink-200 pb-4 font-display text-2xl font-semibold text-ink-900">
                     {{ $groupName }}
                 </h2>
-                <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    @foreach ($officials as $official)
-                        <div class="group rounded-2xl border border-ink-200 bg-white overflow-hidden shadow-sm transition hover:-translate-y-1 hover:border-brand-300 hover:shadow-lg">
-                            <div class="aspect-[3/4] w-full bg-gray-100 overflow-hidden">
-                                @if (isset($official->photo) && $official->photo)
-                                    <img src="{{ asset('storage/'.$official->photo) }}" alt="{{ $official->name }}" class="h-full w-full object-cover">
-                                @else
-                                    <img src="{{ asset('foto/Kades.jpeg') }}" alt="{{ $official->name }}" class="h-full w-full object-cover opacity-90">
-                                @endif
-                            </div>
-                            <div class="p-6 text-center">
-                                <h3 class="text-lg font-bold text-ink-900">{{ $official->name }}</h3>
-                                <p class="mt-1 text-xs font-bold uppercase tracking-widest text-brand-600">{{ $official->position }}</p>
-                                <hr class="my-5 border-ink-100">
-                                <div class="space-y-2 text-xs text-ink-500">
-                                    @if(isset($official->email) && $official->email)
-                                        <p class="flex items-center justify-center gap-2">
-                                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
-                                            <span>{{ $official->email }}</span>
-                                        </p>
-                                    @endif
-                                    @if(isset($official->phone) && $official->phone)
-                                        <p class="flex items-center justify-center gap-2">
-                                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                                            <span>{{ $official->phone }}</span>
-                                        </p>
-                                    @endif
+
+                <div class="marquee-row-viewport py-2">
+                    <div class="marquee-row-track marquee-row-seq">
+                        @for ($i = 0; $i < 2; $i++)
+                            @foreach ($officials as $official)
+                                <div class="group w-56 flex-shrink-0 overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-brand-300 hover:shadow-lg sm:w-64">
+                                    <div class="aspect-[3/4] w-full overflow-hidden bg-gray-100">
+                                        @if (isset($official->photo) && $official->photo)
+                                            <img src="{{ str_starts_with($official->photo, 'foto/') ? asset($official->photo) : asset('storage/'.$official->photo) }}" alt="{{ $official->name }}" class="h-full w-full object-cover">
+                                        @else
+                                            <img src="{{ asset('foto/Kades.jpeg') }}" alt="{{ $official->name }}" class="h-full w-full object-cover opacity-90">
+                                        @endif
+                                    </div>
+                                    <div class="p-5 text-center">
+                                        <h3 class="text-lg font-bold text-ink-900">{{ $official->name }}</h3>
+                                        <p class="mt-1 text-xs font-bold uppercase tracking-widest text-brand-600">{{ $official->position }}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    @endforeach
+                            @endforeach
+                        @endfor
+                    </div>
                 </div>
             </div>
         @endforeach

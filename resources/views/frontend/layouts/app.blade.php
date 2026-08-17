@@ -60,7 +60,7 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=be-vietnam-pro:400,500,600,700|work-sans:400,500,600" rel="stylesheet">
 
-    @vite(['resources/css/frontend.css', 'resources/js/app.js'])
+    @vite(['resources/css/frontend.css', 'resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 
     @php

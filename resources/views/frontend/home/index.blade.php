@@ -15,11 +15,11 @@
                     Juara 1 ADWI 2022 · Rekor MURI
                 </p>
                 <div class="min-h-[5.75rem] sm:min-h-[6.5rem]" data-parallax-speed="30">
-                    <h1 x-data="typewriter('Selamat Datang di\nDesa Aeng Tong-Tong', 100, 0)" class="font-display text-[2.3rem] font-semibold uppercase leading-tight text-white sm:text-[2.6rem] whitespace-pre-line" x-text="displayText"></h1>
+                    <h1 x-data="typewriter('Selamat Datang di\nDesa Aeng Tong-Tong', 50, 0)" class="font-display text-[2.3rem] font-semibold uppercase leading-tight text-white sm:text-[2.6rem] whitespace-pre-line" x-text="displayText"></h1>
                 </div>
                 <div class="relative" data-parallax-speed="50">
                     <p class="invisible mt-5 max-w-xl text-sm leading-relaxed text-justify sm:text-base" x-text="'Desa wisata sentra kerajinan keris di Kecamatan Saronggi, Kabupaten Sumenep, Jawa Timur. Menjaga warisan budaya para Mpu sekaligus membangun kesejahteraan masyarakat.'"></p>
-                    <p x-data="typewriter('Desa wisata sentra kerajinan keris di Kecamatan Saronggi, Kabupaten Sumenep, Jawa Timur. Menjaga warisan budaya para Mpu sekaligus membangun kesejahteraan masyarakat.', 60, 2800)" class="absolute inset-x-0 top-0 mt-5 max-w-xl text-sm leading-relaxed text-white sm:text-base text-justify" x-text="displayText"></p>
+                    <p x-data="typewriter('Desa wisata sentra kerajinan keris di Kecamatan Saronggi, Kabupaten Sumenep, Jawa Timur. Menjaga warisan budaya para Mpu sekaligus membangun kesejahteraan masyarakat.', 30)" class="absolute inset-x-0 top-0 mt-5 max-w-xl text-sm leading-relaxed text-white sm:text-base text-justify" x-text="displayText"></p>
                 </div>
                 <div class="mt-8 flex flex-wrap gap-3">
                     <a href="{{ route('about.sejarah') }}" class="rounded-lg border border-outline px-6 py-3 text-sm font-semibold text-white transition hover:bg-on-primary/10">
@@ -34,7 +34,7 @@
             <div class="hidden lg:block" data-parallax-speed="-40">
                 <div x-data="fadeSlider(@js($heroPhotos->map(fn ($photo) => [
                     'title' => $photo->title,
-                    'image' => $photo->image ? asset('storage/'.$photo->image) : null,
+                    'image' => $photo->image ? (str_starts_with($photo->image, 'foto/') ? asset($photo->image) : asset('storage/'.$photo->image)) : null,
                 ])->values()))" class="relative mx-auto max-w-sm">
                     <div class="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/20 bg-black/40 shadow-2xl">
                         <template x-for="(photo, index) in photos" :key="index">
@@ -49,7 +49,7 @@
                                 x-transition:leave-end="opacity-0"
                                 class="absolute inset-0"
                             >
-                                <img x-show="photo.image" :src="photo.image" :alt="photo.title" x-cloak class="h-full w-full object-cover">
+                                <img x-show="photo.image" :src="photo.image" :alt="photo.title" loading="lazy" decoding="async" class="h-full w-full object-cover">
                                 <div x-show="!photo.image" x-cloak class="flex h-full w-full items-center justify-center bg-gradient-to-br from-primary to-secondary">
                                     <span class="font-display text-6xl font-semibold text-on-primary/90" x-text="photo.title.charAt(0)"></span>
                                 </div>
@@ -113,20 +113,20 @@
     @endif
 
     {{-- Dual-Row Pinterest Marquee Gallery (Natural Aspect Ratio) --}}
-    @if ($heroPhotos->isNotEmpty())
+    @if ($galleryPhotos->isNotEmpty())
         <section class="relative overflow-hidden bg-surface py-20 sm:py-24" data-parallax-speed="25">
             <div class="mx-auto max-w-6xl px-4 sm:px-6">
                 <x-frontend.section-heading
                     eyebrow="Galeri Desa"
-                    title="Galeri Aeng Tong-Tong"
-                    subtitle="Dokumentasi foto keindahan desa dengan orientasi asli (lanskap dan potret) yang mengalir halus."
+                    title="Galeri Keris Desa Aeng Tong-Tong"
+                    subtitle="Dokumentasi seni keris pusaka para Mpu dan suasana keseharian Desa Aeng Tong-Tong dalam balutan foto."
                     align="center"
                 />
             </div>
 
             <div
                 class="mx-auto mt-12 max-w-7xl px-2 sm:px-4"
-                x-data="pinterestMarquee(@js($heroPhotos->map(fn ($p) => ['title' => $p->title, 'image' => $p->image])->values()))"
+                x-data="pinterestMarquee(@js($galleryPhotos->map(fn ($p) => ['title' => $p->title, 'image' => $p->image])->values()))"
             >
                 <div class="marquee-row-viewport space-y-4">
                     {{-- Row 1: Bergerak ke kanan --}}
@@ -371,29 +371,22 @@
             </div>
 
             @if ($latestStatistics->isNotEmpty())
-                <div class="mt-10 grid gap-4 md:grid-cols-3">
-                    @foreach ($latestStatistics as $statistic)
-                        <div class="rounded-2xl border border-outline-variant/50 bg-surface p-6 shadow-sm">
-                            <p class="text-xs font-semibold uppercase tracking-widest text-primary">
-                                {{ $statistic->category->label() }} · {{ $statistic->year }}
-                            </p>
-                            <h4 class="mt-1 font-display text-base font-semibold text-on-surface">{{ $statistic->name }}</h4>
+                <div class="mt-10 grid gap-4 md:grid-cols-2">
+                    @foreach ($latestStatistics->take(2) as $statistic)
+                        <a href="{{ route('statistics.show', $statistic) }}" class="group rounded-2xl border border-outline-variant/50 bg-surface p-6 shadow-sm transition hover:-translate-y-1 hover:border-primary hover:shadow-lg">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <p class="text-xs font-semibold uppercase tracking-widest text-primary">{{ $statistic->category->label() }} · {{ $statistic->year }}</p>
+                                    <h4 class="mt-1 font-display text-base font-semibold text-on-surface">{{ $statistic->name }}</h4>
+                                </div>
+                                <span class="rounded-lg bg-surface-container px-2 py-1 text-[10px] font-bold text-primary">Lihat detail</span>
+                            </div>
                             @if ($statistic->populationStatistics->isNotEmpty())
-                                <dl class="mt-4 grid grid-cols-2 gap-3">
-                                    @foreach ($statistic->populationStatistics->take(4) as $row)
-                                        <div class="rounded-xl bg-surface-container-low p-3">
-                                            <dt class="text-xs text-on-surface-variant">{{ $row->label }}</dt>
-                                            <dd class="mt-1 text-sm font-semibold text-on-surface">
-                                                {{ number_format((float) $row->value, 0, ',', '.') }}
-                                                @if ($row->unit)
-                                                    <span class="text-xs font-normal text-on-surface-variant">{{ $row->unit }}</span>
-                                                @endif
-                                            </dd>
-                                        </div>
-                                    @endforeach
-                                </dl>
+                                <div class="mt-5 h-52">
+                                    <canvas x-data="chartBar(@js($statistic->populationStatistics->pluck('label')->all()), @js($statistic->populationStatistics->map(fn ($row) => (float) $row->value)->all()), @js($statistic->name))"></canvas>
+                                </div>
                             @endif
-                        </div>
+                        </a>
                     @endforeach
                 </div>
             @endif
@@ -405,10 +398,10 @@
         <div class="mx-auto max-w-4xl px-4 text-center sm:px-6">
             <h2 class="font-display text-2xl font-semibold text-white sm:text-3xl">Ingin mengenal lebih dekat?</h2>
             <p class="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-on-primary-container">
-                Kunjungi halaman struktur organisasi untuk mengenal perangkat desa, atau hubungi kami melalui halaman kontak.
+                Kunjungi halaman perangkat desa untuk mengenal perangkat desa, atau hubungi kami melalui halaman kontak.
             </p>
             <div class="mt-8 flex flex-wrap justify-center gap-3">
-                <a href="{{ route('about.struktur') }}" class="rounded-lg bg-secondary px-6 py-3 text-sm font-semibold text-on-secondary transition hover:bg-secondary-container hover:text-on-secondary-container">Struktur Organisasi</a>
+                <a href="{{ route('about.perangkat') }}" class="rounded-lg bg-secondary px-6 py-3 text-sm font-semibold text-on-secondary transition hover:bg-secondary-container hover:text-on-secondary-container">Perangkat Desa</a>
                 <a href="{{ route('kontak') }}" class="rounded-lg border border-outline px-6 py-3 text-sm font-semibold text-white transition hover:bg-on-primary/10">Hubungi Kami</a>
             </div>
         </div>

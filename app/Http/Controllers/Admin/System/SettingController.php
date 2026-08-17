@@ -42,9 +42,19 @@ class SettingController extends Controller
             $this->settings->set('site_logo', $path, 'general', 'string');
         }
 
+        if ($request->hasFile('general.ebooklet_cover')) {
+            $path = $this->upload->store($request->file('general.ebooklet_cover'), 'images/settings');
+            $this->settings->set('ebooklet_cover', $path, 'general', 'string');
+        }
+
+        if ($request->hasFile('general.ebooklet_pdf')) {
+            $path = $this->upload->store($request->file('general.ebooklet_pdf'), 'documents');
+            $this->settings->set('ebooklet_pdf', $path, 'general', 'string');
+        }
+
         foreach (['general', 'seo', 'contact', 'sosmed'] as $group) {
             $values = $request->validated($group) ?? [];
-            unset($values['site_logo']);
+            unset($values['site_logo'], $values['ebooklet_cover'], $values['ebooklet_pdf']);
             $this->settings->setMany($values, $group);
         }
 

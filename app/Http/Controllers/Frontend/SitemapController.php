@@ -58,7 +58,6 @@ class SitemapController extends Controller
             'home' => 1.0,
             'about.sejarah' => 0.7,
             'about.visi-misi' => 0.7,
-            'about.struktur' => 0.7,
             'about.perangkat' => 0.7,
             'news.index' => 0.9,
             'announcements.index' => 0.8,

@@ -3,9 +3,12 @@
 @php
     $bgImage = $image ?? 'images/kerisbg.png';
     $imageUrl = str_starts_with($bgImage, 'images/') ? asset($bgImage) : asset('storage/'.$bgImage);
+    $bgStyle = $bgImage
+        ? "background-image: url('{$imageUrl}'); background-size: {$backgroundSize}; background-position: {$imagePosition};"
+        : '';
 @endphp
 
-<section class="relative overflow-hidden" :style="image ? `background-image: url('{{ $imageUrl }}'); background-size: {{ $backgroundSize }}; background-position: {{ $imagePosition }};` : ''">
+<section class="relative overflow-hidden" style="{{ $bgStyle }}">
     @if ($bgImage)
         <img src="{{ $imageUrl }}" alt="{{ $title }}" class="absolute inset-0 h-full w-full object-cover" style="object-position: {{ $imagePosition }};" />
     @else

@@ -20,6 +20,8 @@ class SettingUpdateRequest extends FormRequest
             'general.site_tagline' => ['nullable', 'string', 'max:191'],
             'general.site_description' => ['nullable', 'string', 'max:500'],
             'general.site_logo' => ['nullable', 'image', 'mimes:jpeg,png,svg,webp', 'max:2048'],
+            'general.ebooklet_cover' => ['nullable', 'image', 'mimes:jpeg,png,webp', 'max:8192'],
+            'general.ebooklet_pdf' => ['nullable', 'file', 'mimes:pdf', 'max:61440'],
             'seo' => ['sometimes', 'array'],
             'seo.meta_title' => ['nullable', 'string', 'max:191'],
             'seo.meta_description' => ['nullable', 'string', 'max:500'],
