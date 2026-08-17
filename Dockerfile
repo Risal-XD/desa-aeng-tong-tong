@@ -37,8 +37,5 @@ COPY storage/app/public /seed/public
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-# Volume persisten: data DB & upload yang dibawa Railway
-VOLUME ["/var/www/html/storage", "/var/www/html/database"]
-
 EXPOSE 80
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
