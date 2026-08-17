@@ -86,16 +86,51 @@
     </section>
 
     <div
-        x-data="ebookletFlipbook({
-            pdfUrl: @js($ebookletPdf ? route('ebooklet.pdf', [], false) : null),
-            width: 380,
-            height: 600,
-        })"
+        x-data="{
+            open: false,
+            images: {{ Js::from(collect(range(1, 52))->map(fn($i) => asset('buku/buku pamor_page-'.str_pad($i, 4, '0', STR_PAD_LEFT).'.jpg'))) }},
+            pageFlip: null,
+            currentPage: 1,
+            totalPages: 52,
+            init() {},
+            openViewer() {
+                this.open = true;
+                this.$nextTick(() => {
+                    const el = this.$refs.book;
+                    if (!this.pageFlip) {
+                        this.pageFlip = new PageFlip(el, {
+                            width: 550,
+                            height: 780,
+                            size: 'stretch',
+                            minWidth: 315,
+                            maxWidth: 1000,
+                            minHeight: 420,
+                            maxHeight: 1350,
+                            maxShadowOpacity: 0.5,
+                            showCover: false,
+                            flippingTime: 650,
+                            mobileScrollSupport: true,
+                        });
+                        this.pageFlip.loadFromImages(this.images);
+                        this.pageFlip.on('flip', (e) => {
+                            this.currentPage = e.data + 1;
+                        });
+                    }
+                });
+            },
+            closeViewer() {
+                this.open = false;
+                if (this.pageFlip) {
+                    this.pageFlip.destroy();
+                    this.pageFlip = null;
+                }
+            },
+            nextPage() { if (this.pageFlip) this.pageFlip.flipNext(); },
+            prevPage() { if (this.pageFlip) this.pageFlip.flipPrev(); }
+        }"
         @open-ebooklet.window="openViewer()"
     >
         <template x-if="open">
-            <div class="ebooklet-overlay" @keydown.escape.window="closeViewer()" @click.self="closeViewer()" x-cloak>
-                <div class="ebooklet-modal">
             <div class="ebooklet-overlay" @keydown.escape.window="closeViewer()" @click.self="closeViewer()" x-cloak>
                 <button type="button" class="ebooklet-close" @click="closeViewer()" aria-label="Tutup e-booklet">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 6 6 18M6 6l12 12"/></svg>
@@ -109,39 +144,16 @@
                         <button type="button" class="ebooklet-side-button ebooklet-side-button-right" @click="nextPage()" aria-label="Halaman berikutnya">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m9 6 6 6-6 6"/></svg>
                         </button>
-                        <template x-if="loading">
-                            <div class="ebooklet-loader">
-                                <div class="spinner"></div>
-                                <span>Memuat e-booklet…</span>
-                            </div>
-                        </template>
-                        <template x-if="error">
-                            <div class="ebooklet-error" x-text="error"></div>
-                        </template>
                     </div>
                     <div class="ebooklet-toolbar" aria-label="Kontrol e-booklet">
                         <button type="button" class="btn" @click="prevPage()" aria-label="Halaman sebelumnya">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m15 18-6-6 6-6"/></svg>
                         </button>
-                        <span class="count" x-text="totalPages ? currentPage + '/' + totalPages : '…'"></span>
+                        <span class="count" x-text="currentPage + '/' + totalPages"></span>
                         <button type="button" class="btn" @click="nextPage()" aria-label="Halaman berikutnya">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m9 6 6 6-6 6"/></svg>
                         </button>
-                        <span class="ebooklet-toolbar-divider"></span>
-                        <button type="button" class="btn" @click="zoomIn()" aria-label="Perbesar">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6"/><path d="M11 8v6M8 11h6M20 20l-4.2-4.2"/></svg>
-                        </button>
-                        <button type="button" class="btn" @click="zoomOut()" aria-label="Perkecil">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6"/><path d="M8 11h6M20 20l-4.2-4.2"/></svg>
-                        </button>
-                        @if ($ebookletPdf)
-                            <a href="{{ route('ebooklet.pdf', [], false) }}" target="_blank" rel="noopener" class="btn" aria-label="Unduh PDF">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
-                            </a>
-                        @endif
                     </div>
-                </div>
-            </div>
                 </div>
             </div>
         </template>
