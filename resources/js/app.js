@@ -341,7 +341,7 @@ document.addEventListener('alpine:init', () => {
                         const pages = [];
                         for (let i = 1; i <= pdf.numPages; i++) {
                             const page = await pdf.getPage(i);
-                            const viewport = page.getViewport({ scale: 4 });
+                            const viewport = page.getViewport({ scale: 5 });
                             if (i === 1) this._viewAspect = viewport.width / viewport.height;
                             const canvas = document.createElement('canvas');
                             canvas.width = Math.floor(viewport.width);
@@ -366,8 +366,8 @@ document.addEventListener('alpine:init', () => {
                                 const aspect = this._viewAspect || Math.SQRT1_2;
                                 const pageH = Math.min(stageH, 860);
                                 const pageW = pageH * aspect;
-                                const bookW = Math.min(stageW, pageW);
-                                const bookH = pageH;
+                                const bookW = Math.min(stageW, pageW * 2);
+                                const bookH = (bookW / 2) / aspect;
 
                                 if (el) {
                                     el.style.width = bookW + 'px';
@@ -376,7 +376,7 @@ document.addEventListener('alpine:init', () => {
 
                                 if (!this.pageFlip) {
                                     this.pageFlip = new PageFlip(el, {
-                                        width: bookW,
+                                        width: bookW / 2,
                                         height: bookH,
                                         maxShadowOpacity: 0.5,
                                         showCover: false,
