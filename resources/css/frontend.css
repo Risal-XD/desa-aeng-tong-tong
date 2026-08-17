@@ -331,10 +331,10 @@ html {
         linear-gradient(115deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.02) 38%, transparent 62%),
         linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 42%);
 }
-.ebooklet-stage .stf__parent {
-    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.65), 0 4px 18px rgba(0, 0, 0, 0.4);
-    border-radius: 6px;
-    overflow: hidden;
+.stf__parent canvas {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
 }
 .ebooklet-loader {
     position: absolute;

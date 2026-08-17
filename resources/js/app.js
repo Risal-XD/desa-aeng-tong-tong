@@ -341,7 +341,8 @@ document.addEventListener('alpine:init', () => {
                         const pages = [];
                         for (let i = 1; i <= pdf.numPages; i++) {
                             const page = await pdf.getPage(i);
-                            const viewport = page.getViewport({ scale: 6 });
+                            const dpr = window.devicePixelRatio || 1;
+                            const viewport = page.getViewport({ scale: Math.max(3, dpr * 1.5) });
                             if (i === 1) this._viewAspect = viewport.width / viewport.height;
                             const canvas = document.createElement('canvas');
                             canvas.width = Math.floor(viewport.width);
