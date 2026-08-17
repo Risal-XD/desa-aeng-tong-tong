@@ -366,8 +366,8 @@ document.addEventListener('alpine:init', () => {
                                 const aspect = this._viewAspect || Math.SQRT1_2;
                                 const pageH = Math.min(stageH, 860);
                                 const pageW = pageH * aspect;
-                                const bookW = Math.min(stageW, pageW * 2);
-                                const bookH = (bookW / 2) / aspect;
+                                const bookW = Math.min(stageW, pageW);
+                                const bookH = pageH;
 
                                 if (el) {
                                     el.style.width = bookW + 'px';
