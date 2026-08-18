@@ -106,8 +106,9 @@
                             maxWidth: 2481,
                             minHeight: 420,
                             maxHeight: 3508,
-                            maxShadowOpacity: 0.3,
+                            maxShadowOpacity: 0,
                             showCover: false,
+                            showPageCorners: false,
                             flippingTime: 650,
                             mobileScrollSupport: true,
                         });
