@@ -147,15 +147,6 @@
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m9 6 6 6-6 6"/></svg>
                         </button>
                     </div>
-                    <div class="ebooklet-toolbar" aria-label="Kontrol e-booklet">
-                        <button type="button" class="btn" @click="prevPage()" aria-label="Halaman sebelumnya">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m15 18-6-6 6-6"/></svg>
-                        </button>
-                        <span class="count" x-text="currentPage + '/' + totalPages"></span>
-                        <button type="button" class="btn" @click="nextPage()" aria-label="Halaman berikutnya">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m9 6 6 6-6 6"/></svg>
-                        </button>
-                    </div>
                 </div>
             </div>
         </template>
