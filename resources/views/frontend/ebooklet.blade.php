@@ -107,6 +107,7 @@
                             minHeight: 420,
                             maxHeight: 3508,
                             maxShadowOpacity: 0,
+                            drawShadow: false,
                             showCover: false,
                             showPageCorners: false,
                             flippingTime: 650,
