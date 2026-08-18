@@ -114,6 +114,21 @@
                             mobileScrollSupport: true,
                         });
                         this.pageFlip.loadFromImages(this.images);
+                        const dpr = window.devicePixelRatio || 1;
+                        const ui = this.pageFlip.ui;
+                        if (ui && dpr > 1) {
+                            const patchResize = function () {
+                                const style = getComputedStyle(this.canvas);
+                                const w = parseInt(style.getPropertyValue('width'), 10);
+                                const h = parseInt(style.getPropertyValue('height'), 10);
+                                this.canvas.width = Math.round(w * dpr);
+                                this.canvas.height = Math.round(h * dpr);
+                                this.canvas.getContext('2d').setTransform(dpr, 0, 0, dpr, 0, 0);
+                            };
+                            ui.resizeCanvas = patchResize;
+                            ui.resizeCanvas();
+                            this.pageFlip.render.update();
+                        }
                         this.pageFlip.on('flip', (e) => {
                             this.currentPage = e.data + 1;
                         });
