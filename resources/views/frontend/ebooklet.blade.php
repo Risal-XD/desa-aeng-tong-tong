@@ -99,8 +99,8 @@
                     const el = this.$refs.book;
                     if (!this.pageFlip) {
                         this.pageFlip = new PageFlip(el, {
-                            width: 1240,
-                            height: 1754,
+                            width: 2481,
+                            height: 3508,
                             size: 'stretch',
                             minWidth: 315,
                             maxWidth: 2481,
